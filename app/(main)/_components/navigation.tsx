@@ -116,7 +116,7 @@ export const Navigation = () => {
                     <UserItem />
                 </div>
                 <div className="mt-4">
-                    <p>Documents</p>
+                    <p>Classes</p>
                 </div>
                 <div
                     // div when hover on sidebar, resizing logic
