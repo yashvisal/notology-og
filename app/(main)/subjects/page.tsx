@@ -3,6 +3,7 @@
 import { useQuery } from "convex/react";
 import { CreateSubjectDialog } from "../_components/new-subject-button";
 import { api } from "@/convex/_generated/api";
+import SubjectCard from "../_components/subject-card";
 
 const SubjectsPage = () => {
 
@@ -16,6 +17,7 @@ const SubjectsPage = () => {
                 </h1>
                 <CreateSubjectDialog />
             </div>
+            <SubjectCard />
             {subjects?.map((subject) => (
                 <p key={subject._id}>
                     {subject.name}
