@@ -9,9 +9,12 @@ export const getSubjects = query({
       throw new Error("Not authenticated");
     }
 
-    // const userId = identity.subject;
+    const userId = identity.subject;
 
-    const subjects = await ctx.db.query("subjects").filter((q) => q.eq(q.field("userId"), identity.subject)).collect();
+    const subjects = await ctx.db
+    .query("subjects")
+    .filter((q) => q.eq(q.field("userId"), userId))
+    .collect();
     
     return subjects;
   }
