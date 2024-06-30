@@ -11,7 +11,7 @@ export const getSubjects = query({
 
     // const userId = identity.subject;
 
-    const subjects = await ctx.db.query("subjects").collect(); // .filter((q) => q.eq(q.field("userId"), userId)).collect();
+    const subjects = await ctx.db.query("subjects").filter((q) => q.eq(q.field("userId"), identity.subject)).collect();
     
     return subjects;
   }
@@ -20,7 +20,6 @@ export const getSubjects = query({
 export const createSubject = mutation({
   args: {
     name: v.string(),
-    description: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -33,7 +32,6 @@ export const createSubject = mutation({
 
     const subject = await ctx.db.insert("subjects", {
       name: args.name,
-      description: args.description,
       userId,
       isArchived: false,
     });
