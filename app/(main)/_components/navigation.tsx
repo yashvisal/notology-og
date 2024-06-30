@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 
-import { ChevronsLeft, MenuIcon, PlusCircle, PlusIcon } from "lucide-react";
+import { Book, ChevronsLeft, MenuIcon, PlusCircle, PlusIcon, Search, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -16,8 +16,11 @@ import { toast } from "sonner";
 export const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
+    
     const classes = useQuery(api.classes.getClasses);
     const createClass = useMutation(api.classes.createClass);
+    const documents = useQuery(api.documents.getDocuments);
+    const createDocument = useMutation(api.documents.createDocument);
     
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -131,15 +134,31 @@ export const Navigation = () => {
                 <div>
                     <UserItem />
                     <Item 
+                        label="Search"
+                        icon={Search}
+                        isSearch
+                        onClick={() => {}}
+                    />
+                    <Item 
+                        label="Classes"
+                        icon={Book}
+                        onClick={() => {}}
+                    />
+                    <Item 
+                        label="Settings"
+                        icon={Settings}
+                        onClick={() => {}}
+                    />
+                    <Item // to be replaced with class item with button on its side to handle creating new documents under it
                         onClick={handleCreateClass}
                         label="New Class"
                         icon={PlusCircle}
                     />
                 </div>
                 <div className="mt-4">
-                    {classes?.map((classItem) => (
-                        <p key={classItem._id}>
-                            {classItem.name}
+                    {documents?.map((document) => (
+                        <p key={document._id}>
+                            {document.title}
                         </p>
                     ))}
                 </div>
