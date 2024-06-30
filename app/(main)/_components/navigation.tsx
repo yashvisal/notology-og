@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 
 import { Book, ChevronsLeft, MenuIcon, PlusCircle, PlusIcon, Search, Settings } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
@@ -15,6 +15,7 @@ import { toast } from "sonner";
 
 export const Navigation = () => {
     const pathname = usePathname();
+    const router = useRouter();
     const isMobile = useMediaQuery("(max-width: 768px)");
     
     const subjects = useQuery(api.subjects.getSubjects);
@@ -101,22 +102,12 @@ export const Navigation = () => {
         }
     };
 
-    const handleCreateSubject = () => {
-        const promise = createSubject({ name: "New Subject"});
-
-        toast.promise(promise, {
-            loading: "Creating...",
-            success: "Subject created!",
-            error: "Failed to create subject",
-        });
-    };
-
     return (
         <>
             <aside
                 ref={sidebarRef}
                 className={cn(
-                    "group/sidebar h-full bg-secondary overflow-y-auto relative flex w-60 flex-col z-[99999]",
+                    "group/sidebar h-full bg-secondary overflow-y-auto relative flex w-60 flex-col z-[50]",
                     isResetting && "transition-all ease-in-out duration-300",
                     isMobile && "w-0"
                 )}
@@ -142,23 +133,18 @@ export const Navigation = () => {
                     <Item 
                         label="Subjects"
                         icon={Book}
-                        onClick={() => {}}
+                        onClick={() => router.push("/subjects")}
                     />
                     <Item 
                         label="Settings"
                         icon={Settings}
                         onClick={() => {}}
                     />
-                    <Item // to be replaced with class item with button on its side to handle creating new documents under it
-                        onClick={handleCreateSubject}
-                        label="New Subject"
-                        icon={PlusCircle}
-                    />
                 </div>
                 <div className="mt-4">
-                    {documents?.map((document) => (
-                        <p key={document._id}>
-                            {document.title}
+                    {subjects?.map((subject) => (
+                        <p key={subject._id}>
+                            {subject.name}
                         </p>
                     ))}
                 </div>
@@ -172,7 +158,7 @@ export const Navigation = () => {
             <div
                 ref={navbarRef}
                 className={cn(
-                    "absolute top-0 z-[99999] left-60 w-[calc(100%-240px)]",
+                    "absolute top-0 z-[50] left-60 w-[calc(100%-240px)]",
                     isResetting && "transition-all ease-in-out duration-3000",
                     isMobile && "left-0 w-full"
                 )}
@@ -185,3 +171,5 @@ export const Navigation = () => {
         </>
     );
 };
+
+// changed z values from z-[99999] to z-[49]

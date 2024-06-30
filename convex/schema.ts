@@ -4,7 +4,6 @@ import { v } from "convex/values";
 export default defineSchema({
   subjects: defineTable({
     name: v.string(),
-    description: v.optional(v.string()),
     userId: v.string(),
     isArchived: v.boolean(),
   })
@@ -30,7 +29,6 @@ export default defineSchema({
   fileUploads: defineTable({
     fileName: v.string(),
     fileUrl: v.string(),
-    fileType: v.string(),
     subjectId: v.id("subjects"),
     userId: v.string(),
   })

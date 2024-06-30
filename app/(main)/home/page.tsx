@@ -7,6 +7,7 @@ import { PlusCircle } from "lucide-react";
 import Image from "next/image";
 import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
+import { CreateSubjectDialog } from "../_components/new-subject-button";
 
 
 const HomePage = () => {
