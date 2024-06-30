@@ -2,19 +2,22 @@
 
 import { cn } from "@/lib/utils";
 
-import { ChevronsLeft, MenuIcon } from "lucide-react";
+import { ChevronsLeft, MenuIcon, PlusCircle, PlusIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
 import { UserItem } from "./user-item";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { Item } from "./item";
+import { toast } from "sonner";
 
 export const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
     const classes = useQuery(api.classes.getClasses);
+    const createClass = useMutation(api.classes.createClass);
     
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
@@ -95,6 +98,16 @@ export const Navigation = () => {
         }
     };
 
+    const handleCreateClass = () => {
+        const promise = createClass({ name: "New Class"});
+
+        toast.promise(promise, {
+            loading: "Creating...",
+            success: "Class created!",
+            error: "Failed to create class",
+        });
+    };
+
     return (
         <>
             <aside
@@ -117,6 +130,11 @@ export const Navigation = () => {
                 </div>
                 <div>
                     <UserItem />
+                    <Item 
+                        onClick={handleCreateClass}
+                        label="New Class"
+                        icon={PlusCircle}
+                    />
                 </div>
                 <div className="mt-4">
                     {classes?.map((classItem) => (

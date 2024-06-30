@@ -18,8 +18,8 @@ const DocumentsPage = () => {
 
         toast.promise(promise, {
             loading: "Creating...",
-            success: "Class added!",
-            error: "Failed to add class",
+            success: "Class created!",
+            error: "Failed to create class",
         });
     }
 
