@@ -22,7 +22,7 @@ export const Heading = () => {
             )}
             {isAuthenticated && !isLoading && (
                 <Button asChild>
-                    <Link href="/documents">
+                    <Link href="/home">
                         Enter Schol
                         <ArrowRight className="h-4 w-4 ml-2"/>
                     </Link>

@@ -9,7 +9,7 @@ import { api } from "@/convex/_generated/api";
 import { toast } from "sonner";
 
 
-const DocumentsPage = () => {
+const HomePage = () => {
     const { user } = useUser();
     const createSubject = useMutation(api.subjects.createSubject);
 
@@ -51,4 +51,4 @@ const DocumentsPage = () => {
     );
 }
  
-export default DocumentsPage;
+export default HomePage;
