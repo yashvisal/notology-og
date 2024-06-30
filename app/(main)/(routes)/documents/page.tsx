@@ -11,15 +11,15 @@ import { toast } from "sonner";
 
 const DocumentsPage = () => {
     const { user } = useUser();
-    const create = useMutation(api.classes.createClass);
+    const createSubject = useMutation(api.subjects.createSubject);
 
     const onCreate = () => {
-        const promise = create({ name: "New Class" });
+        const promise = createSubject({ name: "New Subject" });
 
         toast.promise(promise, {
             loading: "Creating...",
-            success: "Class created!",
-            error: "Failed to create class",
+            success: "Subject created!",
+            error: "Failed to create subject",
         });
     }
 
@@ -45,7 +45,7 @@ const DocumentsPage = () => {
             </h2>
             <Button onClick={onCreate}>
                 <PlusCircle className="w-4 h-4 mr-2" />
-                Add a new class!
+                Add a new subject!
             </Button>
         </div>
     );

@@ -21,7 +21,7 @@ export const createDocument = mutation({
     args: {
         title: v.string(),
         parentDocument: v.optional(v.id("documents")),
-        classId: v.id("classes"),
+        subjectId: v.id("subjects"),
     },
     handler: async (ctx, args) => {
         const identity = await ctx.auth.getUserIdentity();
@@ -34,7 +34,7 @@ export const createDocument = mutation({
 
         const document = await ctx.db.insert("documents", {
             title: args.title,
-            classId: args.classId,
+            subjectId: args.subjectId,
             parentDocument: args.parentDocument,
             userId,
             isArchived: false,

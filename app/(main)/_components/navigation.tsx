@@ -17,8 +17,8 @@ export const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
     
-    const classes = useQuery(api.classes.getClasses);
-    const createClass = useMutation(api.classes.createClass);
+    const subjects = useQuery(api.subjects.getSubjects);
+    const createSubject = useMutation(api.subjects.createSubject);
     const documents = useQuery(api.documents.getDocuments);
     const createDocument = useMutation(api.documents.createDocument);
     
@@ -101,13 +101,13 @@ export const Navigation = () => {
         }
     };
 
-    const handleCreateClass = () => {
-        const promise = createClass({ name: "New Class"});
+    const handleCreateSubject = () => {
+        const promise = createSubject({ name: "New Subject"});
 
         toast.promise(promise, {
             loading: "Creating...",
-            success: "Class created!",
-            error: "Failed to create class",
+            success: "Subject created!",
+            error: "Failed to create subject",
         });
     };
 
@@ -140,7 +140,7 @@ export const Navigation = () => {
                         onClick={() => {}}
                     />
                     <Item 
-                        label="Classes"
+                        label="Subjects"
                         icon={Book}
                         onClick={() => {}}
                     />
@@ -150,8 +150,8 @@ export const Navigation = () => {
                         onClick={() => {}}
                     />
                     <Item // to be replaced with class item with button on its side to handle creating new documents under it
-                        onClick={handleCreateClass}
-                        label="New Class"
+                        onClick={handleCreateSubject}
+                        label="New Subject"
                         icon={PlusCircle}
                     />
                 </div>

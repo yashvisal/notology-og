@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
-export const getClasses = query({
+export const getSubjects = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
 
@@ -11,13 +11,13 @@ export const getClasses = query({
 
     // const userId = identity.subject;
 
-    const classes = await ctx.db.query("classes").collect(); // .filter((q) => q.eq(q.field("userId"), userId)).collect();
+    const subjects = await ctx.db.query("subjects").collect(); // .filter((q) => q.eq(q.field("userId"), userId)).collect();
     
-    return classes;
+    return subjects;
   }
 });
 
-export const createClass = mutation({
+export const createSubject = mutation({
   args: {
     name: v.string(),
     description: v.optional(v.string()),
@@ -31,13 +31,13 @@ export const createClass = mutation({
 
     const userId = identity.subject;
 
-    const newClass = await ctx.db.insert("classes", {
+    const subject = await ctx.db.insert("subjects", {
       name: args.name,
       description: args.description,
       userId,
       isArchived: false,
     });
 
-    return newClass;
+    return subject;
   }
 });
