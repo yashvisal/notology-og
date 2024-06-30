@@ -14,7 +14,7 @@ const DocumentsPage = () => {
     const create = useMutation(api.classes.createClass);
 
     const onCreate = () => {
-        const promise = create({ name: "New Class"});
+        const promise = create({ name: "New Class" });
 
         toast.promise(promise, {
             loading: "Creating...",

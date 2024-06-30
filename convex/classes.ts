@@ -1,5 +1,21 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
+
+export const getClasses = query({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    // const userId = identity.subject;
+
+    const classes = await ctx.db.query("classes").collect(); // .filter((q) => q.eq(q.field("userId"), userId)).collect();
+    
+    return classes;
+  }
+});
 
 export const createClass = mutation({
   args: {
