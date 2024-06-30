@@ -15,6 +15,7 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as documents from "../documents.js";
+import type * as files from "../files.js";
 import type * as subjects from "../subjects.js";
 
 /**
@@ -27,6 +28,7 @@ import type * as subjects from "../subjects.js";
  */
 declare const fullApi: ApiFromModules<{
   documents: typeof documents;
+  files: typeof files;
   subjects: typeof subjects;
 }>;
 export declare const api: FilterApi<

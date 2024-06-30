@@ -12,7 +12,7 @@ import {
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
-import { FileIcon, TrashIcon } from "lucide-react";
+import { FileIcon, PlusIcon, TrashIcon } from "lucide-react";
 
 export function SubjectCards() {
     const subjects = useQuery(api.subjects.getSubjects);
@@ -33,26 +33,34 @@ export function SubjectCards() {
   }
 
 function SubjectCard({ subject }: { subject: Doc<"subjects"> }) {
-    //const files = useQuery(api.files.getFilesBySubject, { subjectId: subject._id });
+    const files = useQuery(api.files.getFilesBySubject, { subjectId: subject._id });
   
     return (
-      <Card className="w-full max-w-lg text-[#3F3F3F] dark:text-[#CFCFCF]">
-        <CardHeader className="pb-4">
-          <CardTitle>{subject.name}</CardTitle>
-          <CardDescription>Files added:</CardDescription>
+      <Card className="w-full max-w-lg text-[#3F3F3F] dark:text-[#CFCFCF] flex flex-col">
+        <CardHeader className="pb-1 flex-shrink-0">
+            <div className="flex justify-between items-center">
+                <CardTitle className="truncate text-xl pr-1" title={subject.name}>
+                    {subject.name}
+                </CardTitle>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-2">
+                    <PlusIcon className="w-4 h-4" />
+                    <span className="sr-only">Add file</span>
+                </Button>
+            </div>
+            <CardDescription>Files added:</CardDescription>
         </CardHeader>
-        {/* <CardContent className="grid gap-0 pt-0">
-          {files?.map((file) => (
-            <div key={file._id} className="flex items-center gap-2 group hover:bg-accent hover:text-accent-foreground rounded-md p-1 transition-colors">
-              <FileIcon className="w-4 h-4" />
-              <span className="text-sm">{file.fileName}</span>
-              <Button variant="ghost" size="icon" className="rounded-full ml-auto invisible group-hover:visible">
+        <CardContent className="pt-0 flex-grow overflow-y-auto max-h-[200px]">
+            {files?.map((file) => (
+            <div key={file._id} className="flex items-center gap-2 group hover:bg-accent hover:text-accent-foreground rounded-md transition-colors">
+              <FileIcon className="w-4 h-4 ml-2" />
+              <span className="text-sm truncate flex grow mr-2">{file.fileName}</span>
+              <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                 <TrashIcon className="w-4 h-4 hover:text-destructive" />
                 <span className="sr-only">Delete file</span>
               </Button>
             </div>
           ))}
-        </CardContent> */}
-      </Card>
+        </CardContent>
+    </Card>
     );
   }
