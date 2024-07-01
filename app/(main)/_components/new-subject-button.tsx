@@ -20,31 +20,60 @@ import { PlusCircleIcon } from "lucide-react";
 import { toast } from "sonner";
 
 export function CreateSubjectDialog() {
-  const router = useRouter()
-  const createSubject = useMutation(api.subjects.createSubject)
-  const [name, setName] = useState("")
-  const [isOpen, setIsOpen] = useState(false)
+    const router = useRouter()
+    const createSubject = useMutation(api.subjects.createSubject)
+    const generateUploadUrl = useMutation(api.files.generateUploadUrl)
+    const [name, setName] = useState("")
+    const [file, setFile] = useState<File | null>(null)
+    const [isOpen, setIsOpen] = useState(false)
+    const createFile = useMutation(api.files.createFile)
+    
+    const onSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+        if (!name) {
+            toast.error("Please enter a subject name")
+            return
+        }
 
-    const promise = createSubject({ name })
+        try {
+            let fileId = null
+            if (file) {
+                // Step 1: Get a short-lived upload URL
+                const postUrl = await generateUploadUrl()
+                    
+                // Step 2: Upload the file
+                const result = await fetch(postUrl, {
+                    method: "POST",
+                    headers: { "Content-Type": file.type },
+                    body: file,
+                })
+                const { storageId } = await result.json()
+                fileId = storageId
+            }
 
-    toast.promise(promise, {
-      loading: "Creating subject...",
-      success: "Subject created successfully!",
-      error: "Failed to create subject",
-    })
+            // Step 3: Create the subject with the file's storageId (if any)
+            const subjectId = await createSubject({ name, fileId })
 
-    try {
-      await promise
-      setIsOpen(false)
-      setName("")
-      router.refresh()
-    } catch (error) {
-      toast.error("Failed to create subject")
+            if (fileId) {
+                await createFile({
+                    fileName: file!.name,
+                    fileId,
+                    subjectId
+                })
+            }
+
+            setIsOpen(false)
+            setName("")
+            setFile(null)
+            router.refresh()
+            toast.success("Subject created successfully!")
+
+        } catch (error) {
+            console.error(error)
+            toast.error("Failed to create subject")
+        }
     }
-  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -76,7 +105,11 @@ export function CreateSubjectDialog() {
             </div>
             <div className="grid gap-2">
                 <Label htmlFor="file">Attachment</Label>
-                <Input id="file" type="file" />
+                <Input 
+                    id="file" 
+                    type="file" 
+                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                />
             </div>
           </div>
           <DialogFooter>

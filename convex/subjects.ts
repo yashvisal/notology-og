@@ -23,6 +23,7 @@ export const getSubjects = query({
 export const createSubject = mutation({
   args: {
     name: v.string(),
+    fileId: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -37,6 +38,7 @@ export const createSubject = mutation({
       name: args.name,
       userId,
       isArchived: false,
+      fileId: args.fileId,
     });
 
     return subject;

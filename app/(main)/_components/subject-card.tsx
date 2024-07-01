@@ -52,8 +52,8 @@ function SubjectCard({ subject }: { subject: Doc<"subjects"> }) {
         <CardContent className="pt-0 flex-grow overflow-y-auto max-h-[200px]">
             {files?.map((file) => (
             <div key={file._id} className="flex items-center gap-2 group hover:bg-accent hover:text-accent-foreground rounded-md transition-colors">
-              <FileIcon className="w-4 h-4 ml-2" />
-              <span className="text-sm truncate flex grow mr-2">{file.fileName}</span>
+              <FileIcon className="w-4 h-4 ml-2 flex-shrink-0" />
+              <span className="text-sm truncate flex-grow mr-2">{file.fileName}</span>
               <Button variant="ghost" size="icon" className="rounded-full flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                 <TrashIcon className="w-4 h-4 hover:text-destructive" />
                 <span className="sr-only">Delete file</span>

@@ -5,6 +5,7 @@ export default defineSchema({
   subjects: defineTable({
     name: v.string(),
     userId: v.string(),
+    fileId: v.optional(v.string()),
     isArchived: v.boolean(),
   })
   .index("by_user", ["userId"])
@@ -28,7 +29,7 @@ export default defineSchema({
 
   fileUploads: defineTable({
     fileName: v.string(),
-    fileUrl: v.string(),
+    fileId: v.string(),
     subjectId: v.id("subjects"),
     userId: v.string(),
   })
