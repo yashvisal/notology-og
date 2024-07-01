@@ -12,7 +12,7 @@ import {
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
-import { FileIcon, PlusIcon, TrashIcon } from "lucide-react";
+import { FileIcon, Settings, TrashIcon } from "lucide-react";
 
 export function SubjectCards() {
     const subjects = useQuery(api.subjects.getSubjects);
@@ -36,14 +36,14 @@ function SubjectCard({ subject }: { subject: Doc<"subjects"> }) {
     const files = useQuery(api.files.getFilesBySubject, { subjectId: subject._id });
   
     return (
-      <Card className="w-full max-w-lg text-[#3F3F3F] dark:text-[#CFCFCF] flex flex-col">
+      <Card className="w-full max-w-lg mt-4 text-[#3F3F3F] dark:text-[#CFCFCF] flex flex-col">
         <CardHeader className="pb-1 flex-shrink-0">
             <div className="flex justify-between items-center">
                 <CardTitle className="truncate text-xl pr-1" title={subject.name}>
                     {subject.name}
                 </CardTitle>
                 <Button variant="ghost" size="sm" className="h-8 w-8 p-2">
-                    <PlusIcon className="w-4 h-4" />
+                    <Settings className="w-4 h-4" />
                     <span className="sr-only">Add file</span>
                 </Button>
             </div>
