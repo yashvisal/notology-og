@@ -24,8 +24,7 @@ export default defineSchema({
   })
   .index("by_user", ["userId"])
   .index("by_subject", ["subjectId"])
-  .index("by_user_and_subject", ["userId", "subjectId"])
-  .index("by_parent", ["parentDocument"]),
+  .index("by_user_parent_subject", ["userId", "parentDocument", "subjectId"]),
 
   fileUploads: defineTable({
     fileName: v.string(),

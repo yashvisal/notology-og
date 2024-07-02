@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 
-import { Book, ChevronsLeft, MenuIcon, PlusCircle, PlusIcon, Search, Settings } from "lucide-react";
+import { Book, ChevronsLeft, LibraryBig, MenuIcon, Search, Settings } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -12,6 +12,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
+import { SidebarList } from "./sidebar-list";
 
 export const Navigation = () => {
     const pathname = usePathname();
@@ -19,8 +20,6 @@ export const Navigation = () => {
     const isMobile = useMediaQuery("(max-width: 768px)");
     
     const subjects = useQuery(api.subjects.getSubjects);
-    const createSubject = useMutation(api.subjects.createSubject);
-    const documents = useQuery(api.documents.getDocuments);
     const createDocument = useMutation(api.documents.createDocument);
     
     const isResizingRef = useRef(false);
@@ -132,7 +131,7 @@ export const Navigation = () => {
                     />
                     <Item 
                         label="Subjects"
-                        icon={Book}
+                        icon={LibraryBig}
                         onClick={() => router.push("/subjects")}
                     />
                     <Item 
@@ -142,11 +141,12 @@ export const Navigation = () => {
                     />
                 </div>
                 <div className="mt-4">
-                    {subjects?.map((subject) => (
+                    {/* {subjects?.map((subject) => (
                         <p key={subject._id}>
                             {subject.name}
                         </p>
-                    ))}
+                    ))} */}
+                    <SidebarList />
                 </div>
                 <div
                     // div when hover on sidebar, resizing logic
