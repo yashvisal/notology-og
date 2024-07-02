@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 
 import { Book, ChevronsLeft, LibraryBig, MenuIcon, Search, Settings } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
@@ -18,6 +18,7 @@ export const Navigation = () => {
     const pathname = usePathname();
     const router = useRouter();
     const isMobile = useMediaQuery("(max-width: 768px)");
+    const params = useParams();
     
     const subjects = useQuery(api.subjects.getSubjects);
     const createDocument = useMutation(api.documents.createDocument);
@@ -141,11 +142,6 @@ export const Navigation = () => {
                     />
                 </div>
                 <div className="mt-4">
-                    {/* {subjects?.map((subject) => (
-                        <p key={subject._id}>
-                            {subject.name}
-                        </p>
-                    ))} */}
                     <SidebarList />
                 </div>
                 <div
@@ -171,5 +167,3 @@ export const Navigation = () => {
         </>
     );
 };
-
-// changed z values from z-[99999] to z-[49]
