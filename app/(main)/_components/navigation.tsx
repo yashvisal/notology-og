@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 
-import { Book, ChevronsLeft, LibraryBig, MenuIcon, Search, Settings } from "lucide-react";
+import { ArrowLeft, ChevronsLeft, LibraryBig, MenuIcon, Search, Settings } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -11,18 +11,16 @@ import { UserItem } from "./user-item";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
-import { toast } from "sonner";
 import { SidebarList } from "./sidebar-list";
+import { Id } from "@/convex/_generated/dataModel";
 
 export const Navigation = () => {
     const pathname = usePathname();
     const router = useRouter();
     const isMobile = useMediaQuery("(max-width: 768px)");
     const params = useParams();
-    
-    const subjects = useQuery(api.subjects.getSubjects);
-    const createDocument = useMutation(api.documents.createDocument);
-    
+        
+    const [activeSubject, setActiveSubject] = useState<Id<"subjects"> | null>(null);
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null);
@@ -102,6 +100,66 @@ export const Navigation = () => {
         }
     };
 
+    useEffect(() => {
+        if (params.subjectId) {
+            setActiveSubject(params.subjectId as Id<"subjects">);
+        } else {
+            setActiveSubject(null);
+        }
+    }, [params.subjectId]);
+
+    const handleSubjectClick = (subjectId: Id<"subjects">) => {
+        setActiveSubject(subjectId);
+        router.push(`/subjects/${subjectId}`);
+    };
+
+    const handleBackClick = () => {
+        setActiveSubject(null);
+        router.push('/subjects');
+    };
+
+    const renderMainSidebar = () => (
+        <>
+            <UserItem />
+            <Item 
+                label="Search"
+                icon={Search}
+                isSearch
+                onClick={() => {}}
+            />
+            <Item 
+                label="Subjects"
+                icon={LibraryBig}
+                onClick={() => router.push("/subjects")}
+            />
+            <Item 
+                label="Settings"
+                icon={Settings}
+                onClick={() => {}}
+            />
+            <div className="mt-4">
+                <SidebarList onSubjectClick={handleSubjectClick}/>
+            </div>
+        </>
+    );
+
+    const renderSubjectSidebar = () => (
+        <>
+            <Item 
+                label="Back to Subjects"
+                icon={ArrowLeft}
+                onClick={handleBackClick}
+            />
+            <div className="mt-4">
+                <SidebarList 
+                    parentDocumentId={undefined} 
+                    subjectId={activeSubject!}
+                    onSubjectClick={handleSubjectClick}
+                />
+            </div>
+        </>
+    );
+
     return (
         <>
             <aside
@@ -123,26 +181,7 @@ export const Navigation = () => {
                     <ChevronsLeft className="w-6 h-6" />
                 </div>
                 <div>
-                    <UserItem />
-                    <Item 
-                        label="Search"
-                        icon={Search}
-                        isSearch
-                        onClick={() => {}}
-                    />
-                    <Item 
-                        label="Subjects"
-                        icon={LibraryBig}
-                        onClick={() => router.push("/subjects")}
-                    />
-                    <Item 
-                        label="Settings"
-                        icon={Settings}
-                        onClick={() => {}}
-                    />
-                </div>
-                <div className="mt-4">
-                    <SidebarList />
+                    {activeSubject ? renderSubjectSidebar() : renderMainSidebar()}
                 </div>
                 <div
                     // div when hover on sidebar, resizing logic

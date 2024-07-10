@@ -9,17 +9,35 @@ import { Item } from "./item";
 import { cn } from "@/lib/utils";
 import { Book, FileIcon } from "lucide-react";
 import { toast } from "sonner";
-import { createDocument } from "@/convex/documents";
 
 interface SidebarListProps {
     parentDocumentId?: Id<"documents">;
     level?: number;
+    subjectId?: Id<"subjects">;
+    onSubjectClick: (subjectId: Id<"subjects">) => void;
 }
 
 export const SidebarList = ({
     parentDocumentId,
     level = 0,
+    subjectId,
+    onSubjectClick
 }: SidebarListProps) => {
+    const params = useParams();
+    const router = useRouter();
+
+    if (subjectId) {
+        // Render documents for a specific subject
+        return (
+            <DocumentList
+                subjectId={subjectId}
+                parentDocumentId={parentDocumentId}
+                level={level}
+            />
+        )
+    }
+
+    // Render the list of subjects
     const subjects = useQuery(api.subjects.getSubjects);
 
     if (subjects === undefined) {
@@ -40,6 +58,7 @@ export const SidebarList = ({
                     subjectId={subject._id}
                     subject={subject}
                     level={level}
+                    onSubjectClick={onSubjectClick}
                 />
             ))}
         </>
@@ -50,20 +69,18 @@ interface SubjectItemProps {
     subjectId: Id<"subjects">;
     subject: Doc<"subjects">;
     level: number;
+    onSubjectClick: (subjectId: Id<"subjects">) => void;
 }
 
-const SubjectItem = ({ subjectId, subject, level }: SubjectItemProps) => {
-    const [expanded, setExpanded] = useState(false);
+const SubjectItem = ({ subjectId, subject, level, onSubjectClick }: SubjectItemProps) => {
     const createDocument = useMutation(api.documents.createDocument);
     const router = useRouter();
-
-    const onExpand = () => setExpanded(!expanded);
 
     const onCreate = () => {
         const promise = createDocument({ title: "Untitled", subjectId: subjectId })
             .then((documentId) => {
                 if (!documentId) return;
-                router.push(`/subjects/${documentId}`);
+                router.push(`/subjects/${subjectId}/${documentId}`);
             });
 
         toast.promise(promise, {
@@ -76,41 +93,35 @@ const SubjectItem = ({ subjectId, subject, level }: SubjectItemProps) => {
     return (
         <div>
             <Item
-                subjectId={subjectId}
-                onClick={onExpand}
+                id={subjectId}
+                onClick={() => onSubjectClick(subjectId)}
                 label={subject.name}
                 icon={Book}
                 active={false}
                 level={level}
-                onExpand={onExpand}
-                expanded={expanded}
                 onCreate={onCreate}
+                isSubject={true}
             />
-            {expanded && (
-                <DocumentList
-                    subjectId={subjectId}
-                    level={level + 1}
-                />
-            )}
         </div>
     );
 }
 
 interface DocumentListProps {
     subjectId: Id<"subjects">;
+    parentDocumentId?: Id<"documents">;
     level: number;
 }
 
-const DocumentList = ({ subjectId, level }: DocumentListProps) => {
+const DocumentList = ({ subjectId, level, parentDocumentId }: DocumentListProps) => {
     const params = useParams();
     const router = useRouter();
     const documents = useQuery(api.documents.getSidebarDocuments, {
-        parentDocument: undefined,
+        parentDocument: parentDocumentId,
         subjectId: subjectId,
     });
 
     const onRedirect = (documentId: string) => {
-        router.push(`/subjects/${documentId}`);
+        router.push(`/subjects/${subjectId}/${documentId}`);
     }
 
     if (documents === undefined) {
@@ -151,7 +162,6 @@ interface DocumentItemProps {
 }
 
 const DocumentItem = ({ document, level, active, onRedirect }: DocumentItemProps) => {
-    const router = useRouter();
     const [expanded, setExpanded] = useState(false);
     const childDocuments = useQuery(api.documents.getSidebarDocuments, {
         parentDocument: document._id,
@@ -164,7 +174,7 @@ const DocumentItem = ({ document, level, active, onRedirect }: DocumentItemProps
         const promise = createDocument({ title: "Untitled", parentDocument: document._id, subjectId: document.subjectId })
             .then((documentId) => {
                 if (!documentId) return;
-                router.push(`/subjects/${documentId}`);
+                onRedirect(documentId);
             });
 
         toast.promise(promise, {
@@ -179,7 +189,7 @@ const DocumentItem = ({ document, level, active, onRedirect }: DocumentItemProps
     return (
         <div>
             <Item
-                docId={document._id}
+                id={document._id}
                 onClick={() => onRedirect(document._id)}
                 onCreate={onCreate}
                 label={document.title}
@@ -214,35 +224,4 @@ const DocumentItem = ({ document, level, active, onRedirect }: DocumentItemProps
             )}
         </div>
     );
-
-    // return (
-    //     <div>
-    //         <Item
-    //             id={document._id}
-    //             onClick={() => onRedirect(document._id)}
-    //             label={document.title}
-    //             icon={FileIcon}
-    //             documentIcon={document.icon}
-    //             active={active}
-    //             level={level}
-    //             onExpand={onExpand}
-    //             expanded={expanded}
-    //         />
-    //         {expanded && childDocuments !== undefined && (
-    //             childDocuments.length === 0 ? (
-    //                 <p
-    //                     style={{ paddingLeft: `${(level * 12) + 25}px` }}
-    //                     className="text-sm font-medium text-muted-foreground/80"
-    //                 >
-    //                     No pages inside
-    //                 </p>
-    //             ) : (
-    //                 <DocumentList
-    //                     subjectId={document.subjectId}
-    //                     level={level + 1}
-    //                 />
-    //             )
-    //         )}
-    //     </div>
-    // );
 }

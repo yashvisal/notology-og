@@ -6,8 +6,7 @@ import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronRight, LucideIcon, Plus } from "lucide-react";
 
 interface ItemProps {
-    docId?: Id<"documents">;
-    subjectId?: Id<"subjects">;
+    id?: Id<"documents"> | Id<"subjects">;
     documentIcon?: string;
     active?: boolean;
     expanded?: boolean;
@@ -18,11 +17,11 @@ interface ItemProps {
     onClick: () => void;
     onCreate?: () => void;
     icon: LucideIcon;
+    isSubject?: boolean;
 };
 
 export const Item = ({
-    docId,
-    subjectId,
+    id,
     label,
     onClick,
     icon: Icon,
@@ -33,8 +32,9 @@ export const Item = ({
     onExpand,
     expanded,
     onCreate,
+    isSubject,
 }: ItemProps) => {
-    
+
     const handleExpand = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>
     ) => {
@@ -63,7 +63,7 @@ export const Item = ({
                 active && "bg-primary/5 text-primary"
             )}
         >
-            {(!!docId || !!subjectId) && (
+            {!!id && (isSubject || onExpand) && (
                 <div
                     role="button"
                     className="h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 mr-1"
@@ -91,7 +91,7 @@ export const Item = ({
                     <span className="text-xs">⌘</span>K
                 </kbd>
             )}
-            {(!!docId || !!subjectId) && (
+            {!!id && onCreate && (
                 <div className="ml-auto flex items-center gap-x-2">
                     <div
                         role="button"

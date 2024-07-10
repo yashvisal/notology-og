@@ -52,7 +52,7 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
                     value={value}
                     onChange={(e) => onInput(e.target.value)}
                     onKeyDown={onKeyDown}
-                    className="text-5xl bg-transparent font-bold break-words outline-none text-[#3F3F3F] dark:text-[#CFCFCF] resize-none"
+                    className="pb-[11.5px] text-5xl bg-transparent font-bold break-words outline-none text-[#3F3F3F] dark:text-[#CFCFCF] resize-none"
                 />
             ) : (
                 <div
