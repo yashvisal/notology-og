@@ -23,9 +23,6 @@ export const SidebarList = ({
     subjectId,
     onSubjectClick
 }: SidebarListProps) => {
-    const params = useParams();
-    const router = useRouter();
-
     if (subjectId) {
         // Render documents for a specific subject
         return (
@@ -56,7 +53,7 @@ export const SidebarList = ({
 
     return (
         <>
-            <div className="text-xs font-medium text-muted-foreground/80 mb-2 ml-4">
+            <div className="text-xs font-medium text-muted-foreground/80 mb-1 ml-4">
                 <p>
                     WORKSPACES
                 </p>
@@ -214,7 +211,7 @@ const DocumentItem = ({ document, level, active, onRedirect }: DocumentItemProps
             {expanded && childDocuments !== undefined && (
                 childDocuments.length === 0 ? (
                     <p
-                        style={{ paddingLeft: `${(level * 12) + 25}px` }}
+                        style={{ paddingLeft: `${(level * 12) + 37}px` }}
                         className="text-sm font-medium text-muted-foreground/80"
                     >
                         No pages inside

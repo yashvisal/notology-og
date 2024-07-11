@@ -137,7 +137,7 @@ export const Navigation = () => {
                 icon={Settings}
                 onClick={() => {}}
             />
-            <div className="mt-4">
+            <div className="mt-3">
                 <SidebarList onSubjectClick={handleSubjectClick}/>
             </div>
         </>
@@ -145,12 +145,12 @@ export const Navigation = () => {
 
     const renderSubjectSidebar = () => (
         <>
-            <Item 
-                label="Back to Subjects"
-                icon={ArrowLeft}
-                onClick={handleBackClick}
-            />
-            <div className="mt-4">
+            <div className="mt-8">
+                <Item 
+                    label="Back to Subjects"
+                    icon={ArrowLeft}
+                    onClick={handleBackClick}
+                />
                 <SidebarList 
                     parentDocumentId={undefined} 
                     subjectId={activeSubject!}
@@ -165,7 +165,7 @@ export const Navigation = () => {
             <aside
                 ref={sidebarRef}
                 className={cn(
-                    "group/sidebar h-full overflow-y-auto relative flex w-60 flex-col z-[50] border-r",
+                    "group/sidebar bg-secondary/30 h-full overflow-y-auto relative flex w-60 flex-col z-[50] border-r",
                     isResetting && "transition-all ease-in-out duration-300",
                     isMobile && "w-0"
                 )}
@@ -174,11 +174,11 @@ export const Navigation = () => {
                     onClick={collapse}
                     role="button"
                     className={cn(
-                        "flex h-6 w-6 text-muted-foreground rounded-md justify-center items-center hover:bg-neutral-100 dark:hover:bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
+                        "h-6 w-6 text-muted-foreground rounded-md hover:bg-primary/5 dark:hover:bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
                         isMobile && "opacity-100"
                     )}
                 >
-                    <ChevronsLeft className="w-6 h-6" />
+                    <ChevronsLeft className="w-6 h-6 text-muted-foreground" />
                 </div>
                 <div>
                     {activeSubject ? renderSubjectSidebar() : renderMainSidebar()}
