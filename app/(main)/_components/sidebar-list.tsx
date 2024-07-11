@@ -50,8 +50,17 @@ export const SidebarList = ({
         )
     }
 
+    if (subjects.length === 0) {
+        return null;
+    }
+
     return (
         <>
+            <div className="text-xs font-medium text-muted-foreground/80 mb-2 ml-4">
+                <p>
+                    WORKSPACES
+                </p>
+            </div>
             {subjects.map((subject) => (
                 <SubjectItem
                     key={subject._id}
