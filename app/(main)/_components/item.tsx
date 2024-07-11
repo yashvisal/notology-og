@@ -61,12 +61,12 @@ export const Item = ({
                 onClick={onClick}
                 role="button"
                 style={{
-                    paddingLeft: level ? `${(level * 12) + 12}px` : "0px",
+                    paddingLeft: level ? `${(level * 12)}px` : "0px",
                 }}
                 className={cn(
                     // took out px-1.5, affected search kbd
                     "group h-[30px] text-sm w-full rounded-xl hover:bg-primary/5 transition-all duration-200 ease-in-out flex items-center text-muted-foreground font-medium",
-                    active ? "bg-primary/5 text-primary" : "hover:bg-primary/5"
+                    active && "bg-primary/5 text-primary"
                 )}
             >
                 <div className="flex items-center flex-1 min-w-0 px-1.5">
@@ -82,12 +82,15 @@ export const Item = ({
                         </div>
                     )}
                     {documentIcon ? (
-                            <div className="shrink-0 mr-2 text-[18px] flex items-center">
-                                {documentIcon}
-                            </div>
-                        ) : (
-                            <Icon 
-                            className="shrink-0 h-[18px] w-[18px] mr-2 text-muted-foreground" 
+                        <div className="shrink-0 mr-2 text-[18px] flex items-center">
+                            {documentIcon}
+                        </div>
+                    ) : (
+                        <Icon 
+                            className={cn(
+                                "shrink-0 h-[18px] w-[18px] mr-2 text-muted-foreground",
+                                active && "text-primary"
+                            )} 
                         />
                     )}
                     <span className="truncate">

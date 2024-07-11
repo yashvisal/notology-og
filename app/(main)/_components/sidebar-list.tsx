@@ -138,9 +138,10 @@ const DocumentList = ({ subjectId, level, parentDocumentId }: DocumentListProps)
     }
 
     if (documents.length === 0) {
+        // TODO: empty subject handling
         return (
             <p
-                style={{ paddingLeft: `${(level * 12) + 25}px` }}
+                style={{ paddingLeft: `${(level * 12) + 37}px` }}
                 className="text-sm font-medium text-muted-foreground/80"
             >
                 No pages inside
