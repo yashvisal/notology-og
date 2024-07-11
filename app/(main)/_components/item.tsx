@@ -56,7 +56,7 @@ export const Item = ({
     const ChevronIcon = expanded ? ChevronDown : ChevronRight;
 
     return (
-        <div className="px-2">
+        <div className="px-2 py-[1px]">
             <div
                 onClick={onClick}
                 role="button"
@@ -64,8 +64,8 @@ export const Item = ({
                     paddingLeft: level ? `${(level * 12) + 12}px` : "0px",
                 }}
                 className={cn(
-                    "group min-h-[27px] text-sm px-1.5 w-full hover:rounded-lg hover:bg-primary/5 transition-all duration-200 ease-in-out flex items-center text-muted-foreground font-medium",
-                    active && "bg-primary/5 text-primary"
+                    "group h-[30px] text-sm px-1.5 w-full rounded-xl hover:bg-primary/5 transition-all duration-200 ease-in-out flex items-center text-muted-foreground font-medium",
+                    active ? "bg-primary/5 text-primary" : "hover:bg-primary/5"
                 )}
             >
                 {!!id && showExpandButton && onExpand && (

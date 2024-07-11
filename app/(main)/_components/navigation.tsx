@@ -131,14 +131,17 @@ export const Navigation = () => {
                 label="Subjects"
                 icon={LibraryBig}
                 onClick={() => router.push("/subjects")}
+                active={pathname === "/subjects"}
             />
-            <Item 
+            <Item
                 label="Settings"
                 icon={Settings}
                 onClick={() => {}}
             />
             <div className="mt-3">
-                <SidebarList onSubjectClick={handleSubjectClick}/>
+                <SidebarList 
+                    onSubjectClick={handleSubjectClick}
+                />
             </div>
         </>
     );

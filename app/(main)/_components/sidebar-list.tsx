@@ -3,7 +3,7 @@
 import { api } from "@/convex/_generated/api";
 import { Doc, Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Item } from "./item";
 import { cn } from "@/lib/utils";
@@ -79,6 +79,10 @@ interface SubjectItemProps {
 }
 
 const SubjectItem = ({ subjectId, subject, level, onSubjectClick }: SubjectItemProps) => {
+    const params = useParams();
+    const pathname = usePathname();
+    const active = pathname.startsWith(`/subjects/${subjectId}`);
+
     const createDocument = useMutation(api.documents.createDocument);
     const router = useRouter();
 
@@ -103,7 +107,7 @@ const SubjectItem = ({ subjectId, subject, level, onSubjectClick }: SubjectItemP
                 onClick={() => onSubjectClick(subjectId)}
                 label={subject.name}
                 icon={Book}
-                active={false}
+                active={active}
                 level={level}
                 onCreate={onCreate}
                 isSubject={true}
@@ -119,7 +123,6 @@ interface DocumentListProps {
 }
 
 const DocumentList = ({ subjectId, level, parentDocumentId }: DocumentListProps) => {
-    const params = useParams();
     const router = useRouter();
     const documents = useQuery(api.documents.getSidebarDocuments, {
         parentDocument: parentDocumentId,
@@ -152,7 +155,6 @@ const DocumentList = ({ subjectId, level, parentDocumentId }: DocumentListProps)
                     key={document._id}
                     document={document}
                     level={level}
-                    active={params.documentId === document._id}
                     onRedirect={onRedirect}
                 />
             ))}
@@ -163,18 +165,19 @@ const DocumentList = ({ subjectId, level, parentDocumentId }: DocumentListProps)
 interface DocumentItemProps {
     document: Doc<"documents">;
     level: number;
-    active: boolean;
     onRedirect: (documentId: string) => void;
 }
 
-const DocumentItem = ({ document, level, active, onRedirect }: DocumentItemProps) => {
+const DocumentItem = ({ document, level, onRedirect }: DocumentItemProps) => {
+    const params = useParams();
     const [expanded, setExpanded] = useState(false);
     const childDocuments = useQuery(api.documents.getSidebarDocuments, {
         parentDocument: document._id,
         subjectId: document.subjectId,
     });
-
+    
     const createDocument = useMutation(api.documents.createDocument);
+    const isActive = params.documentId === document._id;
   
     const onCreate = () => {
         const promise = createDocument({ title: "Untitled", parentDocument: document._id, subjectId: document.subjectId })
@@ -201,7 +204,7 @@ const DocumentItem = ({ document, level, active, onRedirect }: DocumentItemProps
                 label={document.title}
                 icon={FileIcon}
                 documentIcon={document.icon}
-                active={active}
+                active={isActive}
                 level={level}
                 onExpand={onExpand}
                 expanded={expanded}
@@ -223,7 +226,6 @@ const DocumentItem = ({ document, level, active, onRedirect }: DocumentItemProps
                                 key={childDoc._id}
                                 document={childDoc}
                                 level={level + 1}
-                                active={false}
                                 onRedirect={onRedirect}
                             />
                         ))}
