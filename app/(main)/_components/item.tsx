@@ -64,49 +64,50 @@ export const Item = ({
                     paddingLeft: level ? `${(level * 12) + 12}px` : "0px",
                 }}
                 className={cn(
-                    "group h-[30px] text-sm px-1.5 w-full rounded-xl hover:bg-primary/5 transition-all duration-200 ease-in-out flex items-center text-muted-foreground font-medium",
+                    // took out px-1.5, affected search kbd
+                    "group h-[30px] text-sm w-full rounded-xl hover:bg-primary/5 transition-all duration-200 ease-in-out flex items-center text-muted-foreground font-medium",
                     active ? "bg-primary/5 text-primary" : "hover:bg-primary/5"
                 )}
             >
-                {!!id && showExpandButton && onExpand && (
-                    <div
-                        role="button"
-                        className="h-full pl-1.5"
-                        onClick={handleExpand}
-                    >
-                        <ChevronIcon
-                            className="h-4 w-4 shrink-0 rounded-md text-muted-foreground/70 hover:bg-primary/5 dark:hover:bg-neutral-600"
-                        />
-                    </div>
-                )}
-                {documentIcon ? (
-                        <div className="shrink-0 mr-2 text-[18px]">
-                            {documentIcon}
-                        </div>
-                    ) : (
-                        <Icon 
-                        className="shrink-0 h-[18px] ml-1 mr-2 text-muted-foreground" 
-                    />
-                )}
-                <span className="truncate">
-                    {label}
-                </span>
-                {isSearch && (
-                    <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded-md border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-                        <span className="text-xs">⌘</span>K
-                    </kbd>
-                )}
-                {!!id && showCreateButton && onCreate && (
-                    <div className="ml-auto flex items-center gap-x-2">
+                <div className="flex items-center flex-1 min-w-0 px-1.5">
+                    {!!id && showExpandButton && onExpand && (
                         <div
                             role="button"
-                            className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-md hover:bg-neutral-300 dark:hover:bg-neutral-600"
-                            onClick={handleCreate}                        
+                            className="h-full pr-1 flex items-center"
+                            onClick={handleExpand}
                         >
-                            <Plus className="h-4 w-4 text-muted-foreground" />
+                            <ChevronIcon
+                                className="h-4 w-4 shrink-0 text-muted-foreground/70 hover:text-muted-foreground transition-colors"
+                            />
                         </div>
-                    </div>
-                )}
+                    )}
+                    {documentIcon ? (
+                            <div className="shrink-0 mr-2 text-[18px] flex items-center">
+                                {documentIcon}
+                            </div>
+                        ) : (
+                            <Icon 
+                            className="shrink-0 h-[18px] w-[18px] mr-2 text-muted-foreground" 
+                        />
+                    )}
+                    <span className="truncate">
+                        {label}
+                    </span>
+                    {isSearch && (
+                        <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded-md border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                            <span className="text-xs">⌘</span>K
+                        </kbd>
+                    )}
+                    {!!id && showCreateButton && onCreate && (
+                        <div
+                        role="button"
+                        className="opacity-0 group-hover:opacity-100 h-full ml-auto flex items-center"
+                        onClick={handleCreate}                        
+                        >
+                            <Plus className="h-4 w-4 text-muted-foreground/70 hover:text-muted-foreground transition-colors" />
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )
