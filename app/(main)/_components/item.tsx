@@ -103,9 +103,9 @@ export const Item = ({
                     )}
                     {!!id && showCreateButton && onCreate && (
                         <div
-                        role="button"
-                        className="opacity-0 group-hover:opacity-100 h-full ml-auto flex items-center"
-                        onClick={handleCreate}                        
+                            role="button"
+                            className="opacity-0 group-hover:opacity-100 h-full ml-auto flex items-center"
+                            onClick={handleCreate}                        
                         >
                             <Plus className="h-4 w-4 text-muted-foreground/70 hover:text-muted-foreground transition-colors" />
                         </div>
