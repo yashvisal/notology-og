@@ -60,17 +60,17 @@ export const Item = ({
             onClick={onClick}
             role="button"
             style={{
-                paddingLeft: level ? `${(level * 12) + 12}px` : "12px"
+                paddingLeft: level ? `${(level * 12) + 12}px` : "12px",
             }}
             className={cn(
-                "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium",
+                "group min-h-[27px] text-sm py-1 pr-3 w-full hover:rounded-md hover:bg-primary/5 transition-all duration-200 ease-in-out flex items-center text-muted-foreground font-medium",
                 active && "bg-primary/5 text-primary"
             )}
         >
             {!!id && showExpandButton && onExpand && (
                 <div
                     role="button"
-                    className="h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 mr-1"
+                    className="h-full rounded-md hover:bg-neutral-300 dark:hover:bg-neutral-600 mr-1"
                     onClick={handleExpand}
                 >
                     <ChevronIcon
@@ -79,11 +79,11 @@ export const Item = ({
                 </div>
             )}
             {documentIcon ? (
-                <div className="shrink-0 mr-2 text-[18px]">
-                    {documentIcon}
-                </div>
-            ) : (
-                <Icon 
+                    <div className="shrink-0 mr-2 text-[18px]">
+                        {documentIcon}
+                    </div>
+                ) : (
+                    <Icon 
                     className="shrink-0 h-[18px] mr-2 text-muted-foreground" 
                 />
             )}
@@ -100,8 +100,7 @@ export const Item = ({
                     <div
                         role="button"
                         className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
-                        onClick={handleCreate}
-                    >
+                        onClick={handleCreate}                        >
                         <Plus className="h-4 w-4 text-muted-foreground" />
                     </div>
                 </div>
