@@ -75,7 +75,7 @@ export const Item = ({
                         onClick={handleExpand}
                     >
                         <ChevronIcon
-                            className="h-4 w-4 shrink-0 rounded-md hover:bg-primary/5 dark:hover:bg-neutral-600 text-muted-foreground/70"
+                            className="h-4 w-4 shrink-0 rounded-md text-muted-foreground/70 hover:bg-primary/5 dark:hover:bg-neutral-600"
                         />
                     </div>
                 )}
@@ -100,7 +100,7 @@ export const Item = ({
                     <div className="ml-auto flex items-center gap-x-2">
                         <div
                             role="button"
-                            className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
+                            className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-md hover:bg-neutral-300 dark:hover:bg-neutral-600"
                             onClick={handleCreate}                        
                         >
                             <Plus className="h-4 w-4 text-muted-foreground" />
