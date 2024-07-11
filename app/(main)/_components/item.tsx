@@ -18,6 +18,8 @@ interface ItemProps {
     onCreate?: () => void;
     icon: LucideIcon;
     isSubject?: boolean;
+    showExpandButton?: boolean;
+    showCreateButton?: boolean;
 };
 
 export const Item = ({
@@ -33,6 +35,8 @@ export const Item = ({
     expanded,
     onCreate,
     isSubject,
+    showExpandButton = false,
+    showCreateButton = false,
 }: ItemProps) => {
 
     const handleExpand = (
@@ -63,7 +67,7 @@ export const Item = ({
                 active && "bg-primary/5 text-primary"
             )}
         >
-            {!!id && (isSubject || onExpand) && (
+            {!!id && showExpandButton && onExpand && (
                 <div
                     role="button"
                     className="h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 mr-1"
@@ -91,7 +95,7 @@ export const Item = ({
                     <span className="text-xs">⌘</span>K
                 </kbd>
             )}
-            {!!id && onCreate && (
+            {!!id && showCreateButton && onCreate && (
                 <div className="ml-auto flex items-center gap-x-2">
                     <div
                         role="button"

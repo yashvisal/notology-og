@@ -199,6 +199,8 @@ const DocumentItem = ({ document, level, active, onRedirect }: DocumentItemProps
                 level={level}
                 onExpand={onExpand}
                 expanded={expanded}
+                showExpandButton={true}
+                showCreateButton={true}
             />
             {expanded && childDocuments !== undefined && (
                 childDocuments.length === 0 ? (
