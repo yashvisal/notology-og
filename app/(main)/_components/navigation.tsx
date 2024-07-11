@@ -13,8 +13,10 @@ import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { SidebarList } from "./sidebar-list";
 import { Id } from "@/convex/_generated/dataModel";
+import { useSearch } from "@/hooks/use-search";
 
 export const Navigation = () => {
+    const search = useSearch();
     const pathname = usePathname();
     const router = useRouter();
     const isMobile = useMediaQuery("(max-width: 768px)");
@@ -125,7 +127,7 @@ export const Navigation = () => {
                 label="Search"
                 icon={Search}
                 isSearch
-                onClick={() => {}}
+                onClick={search.onOpen}
             />
             <Item 
                 label="Subjects"

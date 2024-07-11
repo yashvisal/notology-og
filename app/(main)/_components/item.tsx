@@ -69,7 +69,7 @@ export const Item = ({
                     active && "bg-primary/5 text-primary"
                 )}
             >
-                <div className="flex items-center flex-1 min-w-0 px-1.5">
+                <div className="flex items-center flex-1 min-w-0 px-2">
                     {!!id && showExpandButton && onExpand && (
                         <div
                             role="button"
