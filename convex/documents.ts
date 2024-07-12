@@ -113,7 +113,7 @@ export const createDocument = mutation({
 
 export const getById = query({
   args:{documentId:v.id('documents')},
-  handler:async (ctx,args) => {
+  handler:async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
 
     const document = await ctx.db.get(args.documentId)
@@ -149,7 +149,7 @@ export const update = mutation({
     icon:v.optional(v.string()),
     isPublished:v.optional(v.boolean())
   },
-  handler:async (ctx, args) => {
+  handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
 
     if (!identity) {
