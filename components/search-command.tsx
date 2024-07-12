@@ -75,16 +75,16 @@ export const SearchCommand = () => {
                         >
                             <CommandItem
                                 value={document.title}
-                                className="flex items-center gap-1 w-full data-[selected=true]:bg-transparent"
+                                className="flex items-center gap-2 w-full data-[selected=true]:bg-transparent"
                             >
                                 {document.icon ? (
-                                    <p className="mx-1.5 text-[18px]">
+                                    <p className="text-[18px]">
                                         {document.icon}
                                     </p>
                                 ) : (
-                                    <File className="mx-1.5 h-4 w-4" />
+                                    <File className="h-4 w-4" />
                                 )}
-                                <span>
+                                <span className="truncate">
                                     {document.title}
                                 </span>
                             </CommandItem>
