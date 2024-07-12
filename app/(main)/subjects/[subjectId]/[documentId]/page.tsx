@@ -1,9 +1,11 @@
 "use client";
 
+import { Navbar } from "@/app/(main)/_components/navbar";
 import { Toolbar } from "@/components/toolbar";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
+import { useState } from "react";
 
 interface DocumentIdPageProps {
     params: {
@@ -12,6 +14,7 @@ interface DocumentIdPageProps {
 }
 
 const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
+    const [isCollapsed, setIsCollapsed] = useState(false);
 
     const document = useQuery(api.documents.getById, {
         documentId: params.documentId
@@ -26,12 +29,18 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     }
 
     return ( 
-        <div className="pb-40">
-            <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
-                <Toolbar initialData={document}/>
-                <p className="text-sm text-muted-foreground mt-2 pl-[104px]">
-                    Start typing...
-                </p>
+        <div className="flex flex-col h-full">
+            <Navbar 
+                isCollapsed={isCollapsed}
+                onResetWidth={() => setIsCollapsed(false)}
+            />
+            <div className="flex-1 overflow-y-auto">
+                <div className="md:max-w-3xl lg:max-w-4xl mx-auto pt-16">
+                    <Toolbar initialData={document}/>
+                    <p className="text-sm text-muted-foreground mt-2 pl-[104px]">
+                        Start typing...
+                    </p>
+                </div>
             </div>
         </div>
     );
