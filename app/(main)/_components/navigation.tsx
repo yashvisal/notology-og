@@ -14,6 +14,7 @@ import { Item } from "./item";
 import { SidebarList } from "./sidebar-list";
 import { Id } from "@/convex/_generated/dataModel";
 import { useSearch } from "@/hooks/use-search";
+import { Navbar } from "./navbar";
 
 export const Navigation = () => {
     const search = useSearch();
@@ -150,18 +151,17 @@ export const Navigation = () => {
 
     const renderSubjectSidebar = () => (
         <>
-            <div className="mt-8">
-                <Item 
-                    label="Back to Subjects"
-                    icon={ArrowLeft}
-                    onClick={handleBackClick}
-                />
-                <SidebarList 
-                    parentDocumentId={undefined} 
-                    subjectId={activeSubject!}
-                    onSubjectClick={handleSubjectClick}
-                />
-            </div>
+            <UserItem />
+            <Item 
+                label="Back to Subjects"
+                icon={ArrowLeft}
+                onClick={handleBackClick}
+            />
+            <SidebarList 
+                parentDocumentId={undefined} 
+                subjectId={activeSubject!}
+                onSubjectClick={handleSubjectClick}
+            />
         </>
     );
 
@@ -204,9 +204,17 @@ export const Navigation = () => {
                 )}
                 // above is the logic to make it in sync with navbar, potentially need for ai chatbot on right side?
             >
-                <nav className="bg-transparent px-3 py-2 w-full">
-                    {isCollapsed && <MenuIcon onClick={resetWidth} role="button" className="w-6 h-6 text-muted-foreground" />}
-                </nav>
+                {/* if documentId is present, render the navbar. if change to subject is needed then its here */}
+                {!!params.documentId ? (
+                    <Navbar 
+                        isCollapsed={isCollapsed}
+                        onResetWidth={resetWidth}
+                    />
+                ) : (
+                    <nav className="bg-transparent px-3 py-2 w-full">
+                        {isCollapsed && <MenuIcon onClick={resetWidth} role="button" className="w-6 h-6 text-muted-foreground" />}
+                    </nav>
+                )}
             </div>
         </>
     );
