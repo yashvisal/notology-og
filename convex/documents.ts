@@ -198,3 +198,37 @@ export const getSearch = query({
     return documents
   }
 })
+
+export const getDocumentPath = query({
+  args: { documentId: v.id("documents") },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    const path: Doc<"documents">[] = [];
+    let currentId: Id<"documents"> | null = args.documentId;
+
+    while (currentId) {
+      const document = await ctx.db.get(currentId) as Doc<"documents"> | null;
+
+      if (!document || document.userId !== userId || document.isArchived) {
+        break;
+      }
+
+      path.unshift(document);
+
+      if (!document.parentDocument) {
+        break;
+      }
+
+      currentId = document.parentDocument;
+    }
+
+    return path;
+  }
+});
