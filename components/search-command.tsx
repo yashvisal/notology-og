@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/command";
 import { useSearch } from "@/hooks/use-search";
 import { api } from "@/convex/_generated/api";
+import { cn } from "@/lib/utils";
 
 export const SearchCommand = () => {
     const { user } = useUser();
@@ -62,22 +63,32 @@ export const SearchCommand = () => {
                 <CommandEmpty>No results found.</CommandEmpty>
                 <CommandGroup heading="Documents">
                     {documents?.map((document) => (
-                        <CommandItem
+                        <div
                             key={document._id}
-                            title={document.title}
-                            onSelect={() => onSelect(`${document._id}-${document.subjectId}`)}
-                        >
-                            {document.icon ? (
-                                <p className="mr-2 text-[18px]">
-                                    {document.icon}
-                                </p>
-                            ) : (
-                                <File className="mr-2 h-4 w-4" />
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => onSelect(`${document._id}-${document.subjectId}`)}
+                            className={cn(
+                                "cursor-pointer transition-all duration-200",
+                                "hover:bg-primary/5 focus:bg-primary/5",
+                                "rounded-xl"
                             )}
-                            <span>
-                                {document.title}
-                            </span>
-                        </CommandItem>
+                        >
+                            <CommandItem
+                                value={document.title}
+                                className="flex items-center gap-1 w-full data-[selected=true]:bg-transparent"
+                            >
+                                {document.icon ? (
+                                    <p className="mx-1.5 text-[18px]">
+                                        {document.icon}
+                                    </p>
+                                ) : (
+                                    <File className="mx-1.5 h-4 w-4" />
+                                )}
+                                <span>
+                                    {document.title}
+                                </span>
+                            </CommandItem>
+                        </div>
                     ))}
                 </CommandGroup>
             </CommandList>
