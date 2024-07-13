@@ -1,55 +1,41 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { useUser } from "@clerk/clerk-react";
-import { useMutation } from "convex/react";
-import { PlusCircle } from "lucide-react";
-import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import SubjectCard from "./_components/subject-card";
+import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { toast } from "sonner";
-import { CreateSubjectDialog } from "../_components/new-subject-button";
 
+export default function Component() {
+const subjects = useQuery(api.subjects.getSubjects);
 
-const HomePage = () => {
-    const { user } = useUser();
-    const createSubject = useMutation(api.subjects.createSubject);
-
-    const onCreate = () => {
-        const promise = createSubject({ name: "New Subject" });
-
-        toast.promise(promise, {
-            loading: "Creating...",
-            success: "Subject created!",
-            error: "Failed to create subject",
-        });
-    }
-
-    return ( 
-        <div className="h-full flex flex-col items-center justify-center space-y-4">
-            {/* TODO: get a light mode and dark mode image, upload to public folder, replace names and uncomment */}
-            {/* <Image
-                src="image-file-name.png"
-                height={300}
-                width={300}
-                alt="Empty"
-                className="dark:hidden"
-            />
-            <Image
-                src="image-file-name-dark.png"
-                height={300}
-                width={300}
-                alt="Empty"
-                className="hidden dark:block"
-            /> */}
-            <h2 className="text-lg font-medium">
-                Welcome to {user?.firstName}&apos;s Schol
-            </h2>
-            <Button onClick={onCreate}>
-                <PlusCircle className="w-4 h-4 mr-2" />
-                Add a new subject!
+  return (
+    <div className="p-10 pt-16">
+      <main className="space-y-8">
+        <h1 className="text-3xl font-semibold text-center">Good afternoon, Yash Visal</h1>
+        <section>
+          <h2 className="text-lg font-medium mb-4">Subjects</h2>
+          <div className="flex space-x-4 overflow-x-auto">
+            {subjects?.map((subject) => (
+                <SubjectCard key={subject._id} subject={subject} />
+            ))}
+          </div>
+        </section>
+        <section>
+          <h2 className="text-lg font-medium mb-4">Study Streak</h2>
+          <div className="flex items-center justify-between bg-muted rounded-md p-4">
+            <div className="flex items-center space-x-4">
+              <div>
+                <p className="text-sm font-medium">Current Streak</p>
+                <p className="text-lg font-bold">12 Days</p>
+              </div>
+            </div>
+            <Button variant="outline" size="sm">
+              Study Now
             </Button>
-        </div>
-    );
+          </div>
+        </section>
+      </main>
+    </div>
+  )
 }
- 
-export default HomePage;
