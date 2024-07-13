@@ -64,7 +64,6 @@ export const Item = ({
                     paddingLeft: level ? `${(level * 12)}px` : "0px",
                 }}
                 className={cn(
-                    // took out px-1.5, affected search kbd
                     "group h-[30px] text-sm w-full rounded-xl hover:bg-primary/5 transition-all duration-200 ease-in-out flex items-center text-muted-foreground font-medium",
                     active && "bg-primary/5 text-primary"
                 )}
