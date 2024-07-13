@@ -10,7 +10,7 @@ const SubjectSummary = () => {
     return (
         <div className="space-y-4">
             <h2 className="text-lg font-medium mb-4">Subjects</h2>
-            <div className="flex space-x-4 overflow-x-auto">
+            <div className="flex flex-row gap-4 overflow-x-auto">
                 <SubjectCard isAddNew={true} />
                 {subjects?.map((subject) => (
                     <SubjectCard
