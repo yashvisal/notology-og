@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Book, Plus } from "lucide-react";
-import { CreateSubjectDialog } from "./new-subject-dialogue";
+import { CreateSubjectDialog } from "./new-subject-dialog";
 
 interface SubjectCardProps {
     subject?: {
