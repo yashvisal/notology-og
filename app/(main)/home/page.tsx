@@ -1,41 +1,37 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import SubjectCard from "./_components/subject-card";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useUser } from "@clerk/clerk-react";
+import SubjectSummary from "./_components/subject-summary";
+import StudyStreak from "./_components/study-streak";
 
 export default function Component() {
-const subjects = useQuery(api.subjects.getSubjects);
+    const { user } = useUser();
+    const subjects = useQuery(api.subjects.getSubjects);
 
-  return (
-    <div className="p-10 pt-16">
-      <main className="space-y-8">
-        <h1 className="text-3xl font-semibold text-center">Good afternoon, Yash Visal</h1>
-        <section>
-          <h2 className="text-lg font-medium mb-4">Subjects</h2>
-          <div className="flex space-x-4 overflow-x-auto">
-            {subjects?.map((subject) => (
-                <SubjectCard key={subject._id} subject={subject} />
-            ))}
-          </div>
-        </section>
-        <section>
-          <h2 className="text-lg font-medium mb-4">Study Streak</h2>
-          <div className="flex items-center justify-between bg-muted rounded-md p-4">
-            <div className="flex items-center space-x-4">
-              <div>
-                <p className="text-sm font-medium">Current Streak</p>
-                <p className="text-lg font-bold">12 Days</p>
-              </div>
+    const getGreeting = () => {
+        const hour = new Date().getHours();
+        if (hour < 12) return "Good morning";
+        if (hour < 17) return "Good afternoon";
+        return "Good evening";
+    };
+
+    return (
+        <div className="flex flex-col h-full transition-all ease-in-out w-full">
+            <div className="w-full h-full relative overflow-hidden">
+                <div className="overflow-y-auto transition-all ease-in-out duration-200 h-[calc(100dvh-54px)] scrollbar-hide w-full">
+                    <div className="mx-auto max-w-3xl mt-12 px-4">
+                        <h1 className="text-3xl font-semibold text-center mb-8">
+                            {getGreeting()}, {user?.firstName || 'Student'}!
+                        </h1>
+                        <div className="flex flex-col gap-8">
+                            <SubjectSummary />
+                            <StudyStreak />
+                        </div>
+                    </div>
+                </div>
             </div>
-            <Button variant="outline" size="sm">
-              Study Now
-            </Button>
-          </div>
-        </section>
-      </main>
-    </div>
-  )
+        </div>
+    )
 }
