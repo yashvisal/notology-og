@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 
-import { ArrowLeft, ChevronsLeft, LibraryBig, MenuIcon, Search, Settings } from "lucide-react";
+import { ArrowLeft, ChevronsLeft, Home, LibraryBig, MenuIcon, Search, Settings } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -125,10 +125,17 @@ export const Navigation = () => {
         <>
             <UserItem />
             <Item 
+                label="Home"
+                icon={Home}
+                onClick={() => router.push("/home")}
+                active={pathname === "/home"}
+            />
+            <Item 
                 label="Search"
                 icon={Search}
                 isSearch
                 onClick={search.onOpen}
+                active={pathname === "/search"}
             />
             <Item 
                 label="Subjects"
@@ -140,6 +147,7 @@ export const Navigation = () => {
                 label="Settings"
                 icon={Settings}
                 onClick={() => {}}
+                active={pathname === "/settings"}
             />
             <div className="mt-3">
                 <SidebarList 
