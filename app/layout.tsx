@@ -10,7 +10,6 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Notology",
   description: "Study smarter, not harder",
-  // TODO: Fix this
 };
 
 export default function RootLayout({
