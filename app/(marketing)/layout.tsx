@@ -1,18 +1,17 @@
 import Navbar from "./_components/navbar";
+import { SiteHeader } from "./_components/site-header";
 
-const MarketingLayout = ({
+export default function MarketingLayout({
     children
 }: {
     children: React.ReactNode;
-}) => {
+}) {
     return (
-        <div className="h-full">
-            <Navbar />
-            <main className="h-full pt-40">
+        <>
+            <SiteHeader />
+            <main className="mx-auto flex-1 overflow-hidden">
                 {children}
             </main>
-        </div>
+        </>
     );
 }
- 
-export default MarketingLayout;
