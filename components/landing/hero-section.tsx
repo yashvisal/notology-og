@@ -59,8 +59,7 @@ export default function HeroSection() {
             colorFrom="var(--color-one)"
             colorTo="var(--color-two)"
           />
-
-          <img
+          {/* <img
             src="/hero-dark.png"
             alt="Hero Image"
             className="hidden relative w-full h-full rounded-[inherit] border object-contain dark:block"
@@ -69,7 +68,7 @@ export default function HeroSection() {
             src="/hero-light.png"
             alt="Hero Image"
             className="block relative w-full h-full  rounded-[inherit] border object-contain dark:hidden"
-          />
+          /> */}
         </div>
       </div>
     </section>

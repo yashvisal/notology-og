@@ -206,10 +206,14 @@ export const Navigation = () => {
             <div
                 ref={navbarRef}
                 className={cn(
-                    "absolute top-0 z-[50] left-60 w-[calc(100%-240px)]",
-                    isResetting && "transition-all ease-in-out duration-3000",
+                    "absolute top-0 z-[50]",
+                    isResetting && "transition-all ease-in-out duration-300",
                     isMobile && "left-0 w-full"
                 )}
+                style={{
+                    left: sidebarRef.current?.style.width || '240px',
+                    maxWidth: `calc(100% - ${sidebarRef.current?.style.width})`,
+                }}
                 // above is the logic to make it in sync with navbar, potentially need for ai chatbot on right side?
             >
                 {/* if documentId is present, render the navbar. if change to subject is needed then its here */}
