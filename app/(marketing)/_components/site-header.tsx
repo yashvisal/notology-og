@@ -9,7 +9,7 @@ export function SiteHeader() {
     <>
       <header className="fixed left-0 top-0 z-50 w-full border-b backdrop-blur-[12px]">
         <div className="container flex h-[3.5rem] items-center justify-between">
-          <Link className="text-semibold flex items-center" href="/">
+          <Link className="text-medium flex items-center" href="/">
             Notology
           </Link>
           <div className="ml-auto flex h-full items-center">
