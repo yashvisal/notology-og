@@ -19,7 +19,7 @@ const SubjectCard = ({ subject, isAddNew }: SubjectCardProps) => {
             <Card
                 className="w-[150px] rounded-xl transition cursor-pointer flex-shrink-0 border border-gray-200 hover:border-gray-300 hover:shadow-sm duration-150 ease-in-out"
             >
-                <CardContent className="p-4 flex flex-col items-start justify-between h-full font-medium text-primary/70">
+                <CardContent className="p-4 flex flex-col gap-12 items-start justify-between h-full font-medium text-primary/70">
                     <Plus className="h-4 w-4" />
                     <div className="text-sm">New Subject</div>
                 </CardContent>
