@@ -7,7 +7,7 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
-import { UserItem } from "./user-item";
+import { LogoItem } from "./logo-item";
 
 import { Item } from "./item";
 import { SidebarList } from "./sidebar-list";
@@ -125,7 +125,7 @@ export const Navigation = () => {
 
     const renderMainSidebar = () => (
         <>
-            <UserItem
+            <LogoItem
                 onCollapse={collapse}
                 isMobile={isMobile}
             />
@@ -164,7 +164,7 @@ export const Navigation = () => {
 
     const renderSubjectSidebar = () => (
         <>
-            <UserItem
+            <LogoItem
                 onCollapse={collapse}
                 isMobile={isMobile}
             />

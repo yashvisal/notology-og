@@ -15,7 +15,7 @@ interface UserItemProps {
     isMobile: boolean;
 }
 
-export const UserItem = ({ onCollapse, isMobile }: UserItemProps) => {
+export const LogoItem = ({ onCollapse, isMobile }: UserItemProps) => {
     const { user } = useUser();
     const router = useRouter();
 
