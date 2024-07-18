@@ -9,7 +9,9 @@ export default async function Page() {
           maxOpacity={0.05}
           width={65}
           height={65}
-          numSquares={150}
+          numSquares={100}
+          duration={10}
+          repeatDelay={10}
         />
       </div>
       <HeroSection />

@@ -69,7 +69,7 @@ export const SearchCommand = () => {
                             onClick={() => onSelect(`${document._id}-${document.subjectId}`)}
                             className={cn(
                                 "cursor-pointer transition-all duration-200",
-                                "hover:bg-primary/5 focus:bg-primary/5",
+                                "hover:bg-primary/5 focus:bg-primary/5 ",
                                 "rounded-xl"
                             )}
                         >
