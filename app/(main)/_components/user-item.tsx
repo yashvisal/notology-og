@@ -1,68 +1,58 @@
 "use client";
 
-import { ChevronsLeftRight } from "lucide-react";
-import { SignOutButton, useUser } from "@clerk/clerk-react";
+import { ChevronsLeft } from "lucide-react";
+import { useUser } from "@clerk/clerk-react";
+import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 import {
     Avatar,
     AvatarImage
 } from "@/components/ui/avatar";
 
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
+interface UserItemProps {
+    onCollapse: () => void;
+    isMobile: boolean;
+}
 
-export const UserItem = () => {
+export const UserItem = ({ onCollapse, isMobile }: UserItemProps) => {
     const { user } = useUser();
+    const router = useRouter();
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <div role="button" className="flex items-center text-sm p-4 w-full hover:bg-primary/5">
-                    <div className="gap-x-2 flex items-center max-w-[150px]">
-                        <Avatar className="h-5 w-5">
-                            <AvatarImage src={user?.imageUrl} />
-                        </Avatar>
-                        <span className="text-sm font-medium line-clamp-1">
-                            {user?.firstName}&apos;s Notology
-                        </span>
-                    </div>
+        <div className="flex items-center w-full px-0.5">
+            <div className="flex items-center gap-x-2 p-3 w-full">
+                <div
+                    role="button"
+                    onClick={() => router.push("/home")}
+                    className="flex items-center gap-x-2 cursor-pointer"
+                >
+                    <Avatar className="h-5 w-5">
+                        <AvatarImage src={user?.imageUrl} />
+                    </Avatar>
+                    <span className="text-sm font-semibold line-clamp-1">
+                        notology.
+                    </span>
                 </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-                className="w-80"
-                align="start"
-                alignOffset={11}
-                forceMount
+                {/* <span className="text-sm font-medium line-clamp-1">
+                    {user?.firstName}&apos;s Notology
+                </span> */}
+            </div>
+            <div
+                onClick={onCollapse}
+                role="button"
+                className={cn(
+                    "h-full ml-auto flex items-center justify-center mr-2",
+                    isMobile && "opacity-100"
+                )}
             >
-                <div className="flex flex-col space-y-4 p-2">
-                    <p className="text-xs font-medium leading-none text-muted-foreground">
-                        {user?.emailAddresses[0].emailAddress}
-                    </p>
-                    <div className="flex items-center gap-x-2">
-                        <div className="rounded-md bg-secondary p-1">
-                            <Avatar className="h-8 w-8">
-                                <AvatarImage src={user?.imageUrl} />
-                            </Avatar>
-                        </div>
-                        <div className="space-y-1">
-                            <p className="text-sm line-clamp-1">
-                                {user?.fullName}&apos;s Schol
-                            </p>
-                        </div>
-                    </div>
+                <div className={cn(
+                    "h-6 w-6 text-muted-foreground rounded-lg hover:bg-primary/5 dark:hover:bg-neutral-600 transition flex items-center justify-center",
+                    isMobile ? "opacity-100" : "opacity-0 group-hover/sidebar:opacity-100"
+                )}>
+                    <ChevronsLeft className="h-6 w-6" />
                 </div>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild className="w-full cursor-pointer text-muted-foreground">
-                    <SignOutButton>
-                        Log out
-                    </SignOutButton>
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
+            </div>
+        </div>
     );
 }

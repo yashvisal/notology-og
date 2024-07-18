@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 
-import { ArrowLeft, ChevronsLeft, Home, LibraryBig, MenuIcon, Search, Settings } from "lucide-react";
+import { ArrowLeft, Home, LibraryBig, MenuIcon, Search, Settings } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -125,7 +125,10 @@ export const Navigation = () => {
 
     const renderMainSidebar = () => (
         <>
-            <UserItem />
+            <UserItem
+                onCollapse={collapse}
+                isMobile={isMobile}
+            />
             <Item 
                 label="Home"
                 icon={Home}
@@ -161,7 +164,10 @@ export const Navigation = () => {
 
     const renderSubjectSidebar = () => (
         <>
-            <UserItem />
+            <UserItem
+                onCollapse={collapse}
+                isMobile={isMobile}
+            />
             <Item
                 label="Dashboard"
                 icon={LibraryBig}
@@ -190,16 +196,6 @@ export const Navigation = () => {
                     isMobile && "w-0"
                 )}
             >
-                <div
-                    onClick={collapse}
-                    role="button"
-                    className={cn(
-                        "h-6 w-6 text-muted-foreground rounded-md hover:bg-primary/5 dark:hover:bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
-                        isMobile && "opacity-100"
-                    )}
-                >
-                    <ChevronsLeft className="w-6 h-6 text-muted-foreground" />
-                </div>
                 <div>
                     {activeSubject ? renderSubjectSidebar() : renderMainSidebar()}
                 </div>
@@ -231,7 +227,15 @@ export const Navigation = () => {
                     />
                 ) : (
                     <nav className="bg-transparent px-3 py-2 w-full">
-                        {isCollapsed && <MenuIcon onClick={resetWidth} role="button" className="w-6 h-6 text-muted-foreground" />}
+                        {isCollapsed && (
+                            <div 
+                                onClick={resetWidth} 
+                                role="button" 
+                                className="h-7 w-7 text-muted-foreground rounded-lg hover:bg-primary/5 dark:hover:bg-neutral-600 transition flex items-center justify-center"
+                            >
+                                <MenuIcon className="w-6 h-6"/>
+                            </div>
+                        )}
                     </nav>
                 )}
             </div>
