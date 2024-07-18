@@ -8,15 +8,17 @@ import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
 import { UserItem } from "./user-item";
-import { useMutation, useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+
 import { Item } from "./item";
 import { SidebarList } from "./sidebar-list";
 import { Id } from "@/convex/_generated/dataModel";
-import { useSearch } from "@/hooks/use-search";
 import { Navbar } from "./navbar";
 
+import { useSearch } from "@/hooks/use-search";
+import { useSettings } from "@/hooks/use-settings";
+
 export const Navigation = () => {
+    const settings = useSettings();
     const search = useSearch();
     const pathname = usePathname();
     const router = useRouter();
@@ -146,7 +148,7 @@ export const Navigation = () => {
             <Item
                 label="Settings"
                 icon={Settings}
-                onClick={() => {}}
+                onClick={settings.onOpen}
                 active={pathname === "/settings"}
             />
             <div className="mt-3">
