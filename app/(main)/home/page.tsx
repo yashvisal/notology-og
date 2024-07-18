@@ -18,7 +18,7 @@ export default function Component() {
         <div className="flex flex-col h-full transition-all ease-in-out w-full">
             <div className="w-full h-full relative overflow-hidden">
                 <div className="overflow-y-auto transition-all ease-in-out duration-200 scrollbar-hide w-full">
-                    <div className="mx-auto max-w-3xl mt-10 px-4">
+                    <div className="mx-auto max-w-3xl mt-10 px-4 py-2">
                         <h1 className="text-3xl font-semibold text-center mb-6">
                             {getGreeting()}, {user?.firstName || 'Student'}!
                         </h1>
