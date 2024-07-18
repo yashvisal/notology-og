@@ -24,7 +24,7 @@ export default function HeroSection() {
           <ArrowRightIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
         </TextShimmer>
       </div> */}
-      <h1 className="bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance sm:text-5xl md:text-6xl lg:text-7xl translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
+      <h1 className="bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent text-balance sm:text-5xl md:text-6xl lg:text-7xl translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
         Study smarter,
         <br className="hidden md:block" />not harder
       </h1>
@@ -53,7 +53,7 @@ export default function HeroSection() {
           }`}
         >
           <BorderBeam
-            size={200}
+            size={500}
             duration={12}
             delay={11}
             colorFrom="var(--color-one)"

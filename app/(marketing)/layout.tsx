@@ -9,6 +9,7 @@ export default function MarketingLayout({
     return (
         <>
             <SiteHeader />
+            {/* <Navbar /> */}
             <main className="mx-auto flex-1 overflow-hidden">
                 {children}
             </main>
