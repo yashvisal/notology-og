@@ -12,7 +12,7 @@ import { UserItem } from "./user-item";
 import { Item } from "./item";
 import { SidebarList } from "./sidebar-list";
 import { Id } from "@/convex/_generated/dataModel";
-import { Navbar } from "./navbar";
+import { Navbar } from "./doc-navbar";
 
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
