@@ -20,7 +20,7 @@ export const LogoItem = ({ onCollapse, isMobile }: UserItemProps) => {
     const router = useRouter();
 
     return (
-        <div className="flex items-center w-full px-0.5">
+        <div className="flex items-center w-full px-0.5 py-1">
             <div className="flex items-center gap-x-2 p-3 w-full">
                 <div
                     role="button"

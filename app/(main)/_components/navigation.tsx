@@ -226,14 +226,14 @@ export const Navigation = () => {
                         onResetWidth={resetWidth}
                     />
                 ) : (
-                    <nav className="bg-transparent px-3 py-2 w-full">
+                    <nav className="bg-background px-3 py-3 w-full">
                         {isCollapsed && (
                             <div 
                                 onClick={resetWidth} 
                                 role="button" 
-                                className="h-7 w-7 text-muted-foreground rounded-lg hover:bg-primary/5 dark:hover:bg-neutral-600 transition flex items-center justify-center"
+                                className="h-6 w-6 text-muted-foreground rounded-lg hover:bg-primary/5 dark:hover:bg-neutral-600 transition flex items-center justify-center"
                             >
-                                <MenuIcon className="w-6 h-6"/>
+                                <MenuIcon className="w-5 h-5"/>
                             </div>
                         )}
                     </nav>
