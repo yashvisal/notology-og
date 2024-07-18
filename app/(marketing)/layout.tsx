@@ -1,4 +1,5 @@
 import Navbar from "./_components/navbar";
+import { SiteFooter } from "./_components/site-footer";
 import { SiteHeader } from "./_components/site-header";
 
 export default function MarketingLayout({
@@ -9,10 +10,11 @@ export default function MarketingLayout({
     return (
         <>
             <SiteHeader />
-            <Navbar />
+            {/* <Navbar /> */}
             <main className="mx-auto flex-1 overflow-hidden">
                 {children}
             </main>
+            <SiteFooter />
         </>
     );
 }
