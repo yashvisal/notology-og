@@ -118,7 +118,7 @@ export const Navigation = () => {
 
     const handleBackClick = () => {
         setActiveSubject(null);
-        router.push('/subjects');
+        router.push('/home');
     };
 
     const renderMainSidebar = () => (
@@ -160,8 +160,13 @@ export const Navigation = () => {
     const renderSubjectSidebar = () => (
         <>
             <UserItem />
+            <Item
+                label="Dashboard"
+                icon={LibraryBig}
+                onClick={() => {}}
+            />
             <Item 
-                label="Back to Subjects"
+                label="Return Home"
                 icon={ArrowLeft}
                 onClick={handleBackClick}
             />
