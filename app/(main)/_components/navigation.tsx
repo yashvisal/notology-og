@@ -137,7 +137,7 @@ export const Navigation = () => {
                 onClick={() => router.push("/home")}
                 active={pathname === "/home"}
             />
-            <Item 
+            <Item
                 label="Search"
                 icon={Search}
                 isSearch
@@ -175,7 +175,8 @@ export const Navigation = () => {
             <Item
                 label="Dashboard"
                 icon={LibraryBig}
-                onClick={() => router.push(`/${activeSubject}/dashboard`)}
+                onClick={() => router.push(`/${params.subjectId}/dashboard`)}
+                active={pathname === `/${params.subjectId}/dashboard`}
             />
             <Item 
                 label="Search"
