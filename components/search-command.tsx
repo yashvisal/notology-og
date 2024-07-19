@@ -46,7 +46,7 @@ export const SearchCommand = () => {
 
     const onSelect = (id: string) => {
         const [ documentId, subjectId ] = id.split("-");
-        router.push(`/subjects/${subjectId}/${documentId}`);
+        router.push(`/${subjectId}/${documentId}`);
         onClose();
     }
 

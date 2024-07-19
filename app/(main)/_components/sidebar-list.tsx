@@ -6,7 +6,6 @@ import { useMutation, useQuery } from "convex/react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Item } from "./item";
-import { cn } from "@/lib/utils";
 import { Book, FileIcon } from "lucide-react";
 import { toast } from "sonner";
 
@@ -81,7 +80,7 @@ interface SubjectItemProps {
 const SubjectItem = ({ subjectId, subject, level, onSubjectClick }: SubjectItemProps) => {
     const params = useParams();
     const pathname = usePathname();
-    const active = pathname.startsWith(`/subjects/${subjectId}`);
+    const active = pathname.startsWith(`/${subjectId}`);
 
     const createDocument = useMutation(api.documents.createDocument);
     const router = useRouter();
@@ -90,7 +89,7 @@ const SubjectItem = ({ subjectId, subject, level, onSubjectClick }: SubjectItemP
         const promise = createDocument({ title: "Untitled", subjectId: subjectId })
             .then((documentId) => {
                 if (!documentId) return;
-                router.push(`/subjects/${subjectId}/${documentId}`);
+                router.push(`/${subjectId}/${documentId}`);
             });
 
         toast.promise(promise, {
@@ -130,7 +129,7 @@ const DocumentList = ({ subjectId, level, parentDocumentId }: DocumentListProps)
     });
 
     const onRedirect = (documentId: string) => {
-        router.push(`/subjects/${subjectId}/${documentId}`);
+        router.push(`/${subjectId}/${documentId}`);
     }
 
     if (documents === undefined) {

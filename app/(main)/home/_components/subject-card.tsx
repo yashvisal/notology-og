@@ -30,7 +30,7 @@ const SubjectCard = ({ subject, isAddNew }: SubjectCardProps) => {
     const renderSubjectCard = () => (
         <Card
             className="w-[150px] rounded-xl transition cursor-pointer flex-shrink-0 border border-gray-200 hover:border-gray-300 hover:shadow-sm duration-150 ease-in-out"
-            onClick={() => router.push(`/subjects/${subject!._id}`)}
+            onClick={() => router.push(`/${subject!._id}/dashboard`)}
         >
             <CardContent className="p-4 flex flex-col gap-12 items-start justify-between h-full font-medium text-primary/70">
                 <Book className="h-4 w-4" />
