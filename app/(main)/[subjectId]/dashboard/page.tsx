@@ -30,6 +30,7 @@ const SubjectDashboard = () => {
                     </div>
                     <h2
                         className="text-lg"
+                        style={{ fontWeight: 400 }}
                     >
                         Welcome back, {user?.firstName}! Let's dive right in.
                     </h2>
