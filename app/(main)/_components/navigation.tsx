@@ -6,6 +6,8 @@ import { ArrowLeft, Home, LibraryBig, MenuIcon, Search, Settings } from "lucide-
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import { Separator } from "@/components/ui/separator"
+
 
 import { LogoItem } from "./logo-item";
 
@@ -115,7 +117,7 @@ export const Navigation = () => {
 
     const handleSubjectClick = (subjectId: Id<"subjects">) => {
         setActiveSubject(subjectId);
-        router.push(`/subjects/${subjectId}`);
+        router.push(`/${subjectId}/dashboard`);
     };
 
     const handleBackClick = () => {
@@ -142,18 +144,15 @@ export const Navigation = () => {
                 onClick={search.onOpen}
                 active={pathname === "/search"}
             />
-            <Item 
-                label="Subjects"
-                icon={LibraryBig}
-                onClick={() => router.push("/subjects")}
-                active={pathname === "/subjects"}
-            />
             <Item
                 label="Settings"
                 icon={Settings}
                 onClick={settings.onOpen}
                 active={pathname === "/settings"}
             />
+            <div className="px-3">
+                <Separator className="my-2"/>
+            </div>
             <div className="mt-3">
                 <SidebarList 
                     onSubjectClick={handleSubjectClick}
@@ -168,21 +167,39 @@ export const Navigation = () => {
                 onCollapse={collapse}
                 isMobile={isMobile}
             />
-            <Item
-                label="Dashboard"
-                icon={LibraryBig}
-                onClick={() => {}}
-            />
             <Item 
                 label="Return Home"
                 icon={ArrowLeft}
                 onClick={handleBackClick}
             />
-            <SidebarList 
-                parentDocumentId={undefined} 
-                subjectId={activeSubject!}
-                onSubjectClick={handleSubjectClick}
+            <Item
+                label="Dashboard"
+                icon={LibraryBig}
+                onClick={() => router.push(`/${activeSubject}/dashboard`)}
             />
+            <Item 
+                label="Search"
+                icon={Search}
+                isSearch
+                onClick={search.onOpen}
+                active={pathname === "/search"}
+            />
+            <Item
+                label="Settings"
+                icon={Settings}
+                onClick={settings.onOpen}
+                active={pathname === "/settings"}
+            />
+            <div className="px-3">
+                <Separator className="my-2"/>
+            </div>
+            <div className="mt-2">
+                <SidebarList
+                    parentDocumentId={undefined} 
+                    subjectId={activeSubject!}
+                    onSubjectClick={handleSubjectClick}
+                />
+            </div>
         </>
     );
 
@@ -226,7 +243,7 @@ export const Navigation = () => {
                         onResetWidth={resetWidth}
                     />
                 ) : (
-                    <nav className="bg-background px-3 py-3 w-full">
+                    <nav className="bg-background px-3 py-3">
                         {isCollapsed && (
                             <div 
                                 onClick={resetWidth} 
