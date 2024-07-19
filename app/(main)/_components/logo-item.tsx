@@ -20,8 +20,8 @@ export const LogoItem = ({ onCollapse, isMobile }: UserItemProps) => {
     const router = useRouter();
 
     return (
-        <div className="flex items-center w-full px-0.5 py-1">
-            <div className="flex items-center gap-x-2 p-3 w-full">
+        <div className="flex items-center w-full px-2 pt-[3px] py-[2px]">
+            <div className="flex items-center px-2 py-3 w-full">
                 <div
                     role="button"
                     onClick={() => router.push("/home")}
@@ -30,7 +30,7 @@ export const LogoItem = ({ onCollapse, isMobile }: UserItemProps) => {
                     <Avatar className="h-5 w-5">
                         <AvatarImage src={user?.imageUrl} />
                     </Avatar>
-                    <span className="text-sm font-semibold line-clamp-1">
+                    <span className="text-[15px] font-semibold line-clamp-1">
                         notology.
                     </span>
                 </div>
