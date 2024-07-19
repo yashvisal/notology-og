@@ -1,6 +1,17 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
+export const getSubject = query({
+  args: { subjectId: v.id("subjects") },
+  handler: async (ctx, args) => {
+    const subject = await ctx.db.get(args.subjectId);
+    if (!subject) {
+      throw new Error("Subject not found");
+    }
+    return subject;
+  }
+});
+
 export const getSubjects = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
