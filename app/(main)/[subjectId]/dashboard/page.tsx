@@ -4,10 +4,10 @@ import { useParams } from "next/navigation";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { Spinner } from "@/components/spinner";
-
+import { useUser } from "@clerk/clerk-react";
 
 const SubjectDashboard = () => {
+    const { user } = useUser();
     const params = useParams();
     const subjectId = params.subjectId as Id<"subjects">;
     
@@ -23,8 +23,18 @@ const SubjectDashboard = () => {
     return ( 
         <div className="flex-1 overflow-y-auto relative pl-[104px]">
                 <div className="md:max-w-3xl lg:max-w-4xl mx-auto pt-16">
-                    <div className="pb-[11.5px] text-4xl bg-transparent font-semibold break-words outline-none text-[#000000] dark:text-[#CFCFCF] resize-none">
-                        {subject.name} Dashboard
+                    <div
+                        className="text-4xl mb-1.5 font-semibold"
+                    >
+                        {subject.name}
+                    </div>
+                    <h2
+                        className="text-lg"
+                    >
+                        Welcome back, {user?.firstName}! Let's dive right in.
+                    </h2>
+                    <div className="flex flex-col gap-4">
+                        {/* dashboard components */}
                     </div>
                 </div>
             </div>
