@@ -42,7 +42,7 @@ export const LogoItem = ({ onCollapse, isMobile }: UserItemProps) => {
                 onClick={onCollapse}
                 role="button"
                 className={cn(
-                    "h-full ml-auto flex items-center justify-center mr-2",
+                    "h-full ml-auto flex items-center justify-center mr-1",
                     isMobile && "opacity-100"
                 )}
             >
