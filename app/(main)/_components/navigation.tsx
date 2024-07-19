@@ -8,7 +8,6 @@ import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { Separator } from "@/components/ui/separator"
 
-
 import { LogoItem } from "./logo-item";
 
 import { Item } from "./item";
@@ -244,14 +243,17 @@ export const Navigation = () => {
                         onResetWidth={resetWidth}
                     />
                 ) : (
-                    <nav className="bg-background px-3 py-3">
+                    <nav className="bg-background px-3.5 py-3.5">
                         {isCollapsed && (
                             <div 
                                 onClick={resetWidth} 
                                 role="button" 
                                 className="h-6 w-6 text-muted-foreground rounded-lg hover:bg-primary/5 dark:hover:bg-neutral-600 transition flex items-center justify-center"
                             >
-                                <MenuIcon className="w-5 h-5"/>
+                                <MenuIcon
+                                    className="w-5 h-5"
+                                    strokeWidth={1.9}
+                                />
                             </div>
                         )}
                     </nav>

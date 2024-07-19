@@ -50,7 +50,10 @@ export const LogoItem = ({ onCollapse, isMobile }: UserItemProps) => {
                     "h-6 w-6 text-muted-foreground rounded-lg hover:bg-primary/5 dark:hover:bg-neutral-600 transition flex items-center justify-center",
                     isMobile ? "opacity-100" : "opacity-0 group-hover/sidebar:opacity-100"
                 )}>
-                    <ChevronsLeft className="h-6 w-6" />
+                    <ChevronsLeft
+                        className="h-6 w-6"
+                        strokeWidth={1.75}
+                    />
                 </div>
             </div>
         </div>

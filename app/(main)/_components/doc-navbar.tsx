@@ -39,7 +39,10 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
                     role="button" 
                     className="h-6 w-6 text-muted-foreground rounded-lg hover:bg-primary/5 dark:hover:bg-neutral-6000 transition flex items-center justify-center"
                 >
-                    <MenuIcon className="w-5 h-5"/>
+                    <MenuIcon
+                        className="w-5 h-5"
+                        strokeWidth={1.9}
+                    />
                 </div>
             )}
             <div className="flex items-center justify-between w-full">
