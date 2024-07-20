@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 
-import { ArrowLeft, Home, LibraryBig, MenuIcon, Search, Settings } from "lucide-react";
+import { Home, LibraryBig, MenuIcon, Search, Settings } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -17,6 +17,7 @@ import { Navbar } from "./doc-navbar";
 
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
+import { SubjectCombobox } from "./subject-combobox";
 
 export const Navigation = () => {
     const settings = useSettings();
@@ -162,14 +163,12 @@ export const Navigation = () => {
 
     const renderSubjectSidebar = () => (
         <>
-            <LogoItem
+            <SubjectCombobox
+                // currentSubject={activeSubject}
+                // onSubjectChange={handleSubjectClick}
+                // onBackClick={handleBackClick}
                 onCollapse={collapse}
                 isMobile={isMobile}
-            />
-            <Item 
-                label="Return Home"
-                icon={ArrowLeft}
-                onClick={handleBackClick}
             />
             <Item
                 label="Dashboard"
@@ -195,9 +194,9 @@ export const Navigation = () => {
             </div>
             <div className="mt-2">
                 <SidebarList
-                    parentDocumentId={undefined} 
-                    subjectId={activeSubject!}
-                    onSubjectClick={handleSubjectClick}
+                parentDocumentId={undefined} 
+                subjectId={activeSubject!}
+                onSubjectClick={handleSubjectClick}
                 />
             </div>
         </>
