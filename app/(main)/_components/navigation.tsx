@@ -13,7 +13,7 @@ import { LogoItem } from "./logo-item";
 import { Item } from "./item";
 import { SidebarList } from "./sidebar-list";
 import { Id } from "@/convex/_generated/dataModel";
-import { Navbar } from "./doc-navbar";
+import { Navbar } from "./navbar";
 
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
@@ -120,11 +120,6 @@ export const Navigation = () => {
         router.push(`/${subjectId}/dashboard`);
     };
 
-    const handleBackClick = () => {
-        setActiveSubject(null);
-        router.push('/home');
-    };
-
     const renderMainSidebar = () => (
         <>
             <LogoItem
@@ -165,8 +160,6 @@ export const Navigation = () => {
         <>
             <SubjectCombobox
                 // currentSubject={activeSubject}
-                // onSubjectChange={handleSubjectClick}
-                // onBackClick={handleBackClick}
                 onCollapse={collapse}
                 isMobile={isMobile}
             />

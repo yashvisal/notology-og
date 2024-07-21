@@ -1,6 +1,6 @@
 "use client";
 
-import { Navbar } from "@/app/(main)/_components/doc-navbar";
+import { Navbar } from "@/app/(main)/_components/navbar";
 import { Toolbar } from "@/components/toolbar";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
