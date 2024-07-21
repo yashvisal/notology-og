@@ -3,6 +3,57 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { Doc, Id } from "./_generated/dataModel";
 
+export const archive = mutation({
+  args: {
+    documentId: v.id("documents"),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+        throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    const existingDocument = await ctx.db.get(args.documentId)
+
+    if (!existingDocument) {
+      throw new Error("Not found")
+    }
+
+    if (existingDocument.userId !== userId) {
+      throw new Error("Unauthorized")
+    }
+
+    const recursiveArchive = async (documentId: Id<"documents">) => {
+      const children = await ctx.db
+        .query("documents")
+        .withIndex("by_user_parent_subject", (q) => q
+          .eq("userId", userId)
+          .eq("parentDocument", documentId)
+        )
+        .collect()
+
+      for (const child of children) {
+        await ctx.db.patch(child._id, {
+          isArchived: true
+        })
+
+        await recursiveArchive(child._id)
+      }
+    }
+
+    const document = await ctx.db.patch(args.documentId, {
+      isArchived: true
+    })
+
+    recursiveArchive(args.documentId)
+
+    return document
+  }
+})
+
 export const getSidebarDocuments = query({
   args: {
     parentDocument: v.optional(v.id("documents")),
@@ -62,10 +113,10 @@ export const createDocument = mutation({
 
 export const getById = query({
   args:{documentId:v.id('documents')},
-  handler:async (context,args) => {
-    const identity = await context.auth.getUserIdentity()
+  handler:async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
 
-    const document = await context.db.get(args.documentId)
+    const document = await ctx.db.get(args.documentId)
 
     if (!document) {
       throw new Error("Not found")
@@ -98,18 +149,18 @@ export const update = mutation({
     icon:v.optional(v.string()),
     isPublished:v.optional(v.boolean())
   },
-  handler:async (context,args) => {
-    const identity = await context.auth.getUserIdentity()
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity()
 
     if (!identity) {
-      throw new Error("Unauthenticated")
+      throw new Error("Not authenticated")
     }
 
     const userId = identity.subject
 
     const {id,...rest} = args
 
-    const existingDocument = await context.db.get(args.id)
+    const existingDocument = await ctx.db.get(args.id)
 
     if (!existingDocument) {
       throw new Error("Not found")
@@ -119,10 +170,65 @@ export const update = mutation({
       throw new Error('Unauthorized')
     }
 
-    const document = await context.db.patch(args.id,{
+    const document = await ctx.db.patch(args.id,{
       ...rest
     })
 
     return document
   }
 })
+
+export const getSearch = query({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity()
+
+    if (!identity) {
+      throw new Error("Not authenticated")
+    }
+
+    const userId = identity.subject
+
+    const documents = await ctx.db
+      .query("documents")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("isArchived"), false))
+      .order("desc")
+      .collect()
+
+    return documents
+  }
+})
+
+export const getDocumentPath = query({
+  args: { documentId: v.id("documents") },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    const path: Doc<"documents">[] = [];
+    let currentId: Id<"documents"> | null = args.documentId;
+
+    while (currentId) {
+      const document = await ctx.db.get(currentId) as Doc<"documents"> | null;
+
+      if (!document || document.userId !== userId || document.isArchived) {
+        break;
+      }
+
+      path.unshift(document);
+
+      if (!document.parentDocument) {
+        break;
+      }
+
+      currentId = document.parentDocument;
+    }
+
+    return path;
+  }
+});

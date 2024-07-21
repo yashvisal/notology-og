@@ -6,8 +6,7 @@ import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronRight, LucideIcon, Plus } from "lucide-react";
 
 interface ItemProps {
-    docId?: Id<"documents">;
-    subjectId?: Id<"subjects">;
+    id?: Id<"documents"> | Id<"subjects">;
     documentIcon?: string;
     active?: boolean;
     expanded?: boolean;
@@ -18,11 +17,13 @@ interface ItemProps {
     onClick: () => void;
     onCreate?: () => void;
     icon: LucideIcon;
+    isSubject?: boolean;
+    showExpandButton?: boolean;
+    showCreateButton?: boolean;
 };
 
 export const Item = ({
-    docId,
-    subjectId,
+    id,
     label,
     onClick,
     icon: Icon,
@@ -33,8 +34,11 @@ export const Item = ({
     onExpand,
     expanded,
     onCreate,
+    isSubject,
+    showExpandButton = false,
+    showCreateButton = false,
 }: ItemProps) => {
-    
+
     const handleExpand = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>
     ) => {
@@ -52,56 +56,61 @@ export const Item = ({
     const ChevronIcon = expanded ? ChevronDown : ChevronRight;
 
     return (
-        <div
-            onClick={onClick}
-            role="button"
-            style={{
-                paddingLeft: level ? `${(level * 12) + 12}px` : "12px"
-            }}
-            className={cn(
-                "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium",
-                active && "bg-primary/5 text-primary"
-            )}
-        >
-            {(!!docId || !!subjectId) && (
-                <div
-                    role="button"
-                    className="h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 mr-1"
-                    onClick={handleExpand}
-                >
-                    <ChevronIcon
-                        className="h-4 w-4 shrink-0 text-muted-foreground/50"
-                    />
+        <div className="px-2 py-[1px]">
+            <div
+                onClick={onClick}
+                role="button"
+                style={{
+                    paddingLeft: level ? `${(level * 12)}px` : "0px",
+                }}
+                className={cn(
+                    "group h-[30px] text-sm w-full rounded-xl hover:bg-primary/5 transition-all duration-200 ease-in-out flex items-center text-muted-foreground font-medium",
+                    active && "bg-primary/5 text-primary"
+                )}
+            >
+                <div className="flex items-center flex-1 min-w-0 px-2">
+                    {!!id && showExpandButton && onExpand && (
+                        <div
+                            role="button"
+                            className="h-full pr-1 flex items-center"
+                            onClick={handleExpand}
+                        >
+                            <ChevronIcon
+                                className="h-4 w-4 shrink-0 text-muted-foreground/70 hover:text-muted-foreground transition-colors"
+                            />
+                        </div>
+                    )}
+                    {documentIcon ? (
+                        <div className="shrink-0 mr-2 text-[18px] flex items-center">
+                            {documentIcon}
+                        </div>
+                    ) : (
+                        <Icon 
+                            className={cn(
+                                "shrink-0 h-[18px] w-[18px] mr-2 text-muted-foreground",
+                                active && "text-primary"
+                            )} 
+                        />
+                    )}
+                    <span className="truncate">
+                        {label}
+                    </span>
+                    {isSearch && (
+                        <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded-md border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+                            <span className="text-xs">⌘</span>K
+                        </kbd>
+                    )}
+                    {!!id && showCreateButton && onCreate && (
+                        <div
+                            role="button"
+                            className="opacity-0 group-hover:opacity-100 h-full ml-auto flex items-center"
+                            onClick={handleCreate}                        
+                        >
+                            <Plus className="h-4 w-4 text-muted-foreground/70 hover:text-muted-foreground transition-colors" />
+                        </div>
+                    )}
                 </div>
-            )}
-            {documentIcon ? (
-                <div className="shrink-0 mr-2 text-[18px]">
-                    {documentIcon}
-                </div>
-            ) : (
-                <Icon 
-                    className="shrink-0 h-[18px] mr-2 text-muted-foreground" 
-                />
-            )}
-            <span className="truncate">
-                {label}
-            </span>
-            {isSearch && (
-                <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
-                    <span className="text-xs">⌘</span>K
-                </kbd>
-            )}
-            {(!!docId || !!subjectId) && (
-                <div className="ml-auto flex items-center gap-x-2">
-                    <div
-                        role="button"
-                        className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
-                        onClick={handleCreate}
-                    >
-                        <Plus className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                </div>
-            )}
+            </div>
         </div>
     )
 }

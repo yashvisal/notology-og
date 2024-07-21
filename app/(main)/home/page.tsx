@@ -1,55 +1,36 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/clerk-react";
-import { useMutation } from "convex/react";
-import { PlusCircle } from "lucide-react";
-import Image from "next/image";
-import { api } from "@/convex/_generated/api";
-import { toast } from "sonner";
-import { CreateSubjectDialog } from "../_components/new-subject-button";
+import SubjectSummary from "./_components/subject-summary";
+import StudyStreak from "./_components/study-streak";
 
-
-const HomePage = () => {
+export default function Component() {
     const { user } = useUser();
-    const createSubject = useMutation(api.subjects.createSubject);
 
-    const onCreate = () => {
-        const promise = createSubject({ name: "New Subject" });
+    const getGreeting = () => {
+        const hour = new Date().getHours();
+        if (hour < 12) return "Good morning";
+        if (hour < 17) return "Good afternoon";
+        return "Good evening";
+    };
 
-        toast.promise(promise, {
-            loading: "Creating...",
-            success: "Subject created!",
-            error: "Failed to create subject",
-        });
-    }
-
-    return ( 
-        <div className="h-full flex flex-col items-center justify-center space-y-4">
-            {/* TODO: get a light mode and dark mode image, upload to public folder, replace names and uncomment */}
-            {/* <Image
-                src="image-file-name.png"
-                height={300}
-                width={300}
-                alt="Empty"
-                className="dark:hidden"
-            />
-            <Image
-                src="image-file-name-dark.png"
-                height={300}
-                width={300}
-                alt="Empty"
-                className="hidden dark:block"
-            /> */}
-            <h2 className="text-lg font-medium">
-                Welcome to {user?.firstName}&apos;s Schol
-            </h2>
-            <Button onClick={onCreate}>
-                <PlusCircle className="w-4 h-4 mr-2" />
-                Add a new subject!
-            </Button>
+    return (
+        <div className="flex flex-col h-full transition-all ease-in-out w-full">
+            <div className="w-full h-full relative overflow-hidden">
+                <div className="overflow-y-auto scrollbar-hide w-full">
+                    <div className="mx-auto max-w-3xl mt-10 px-4 py-2">
+                        {/* add animate-fade-in opacity-0 [--animation-delay:50ms] for animation */}
+                        <h1 className="text-3xl font-semibold text-center mb-6">
+                            {getGreeting()}, {user?.firstName || 'Student'}!
+                        </h1>
+                        {/* add animate-fade-in opacity-0 [--animation-delay:75ms] for animation */}
+                        <div className="flex flex-col gap-4">
+                            <SubjectSummary />
+                            <StudyStreak />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    );
+    )
 }
- 
-export default HomePage;
