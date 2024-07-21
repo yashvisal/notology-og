@@ -20,21 +20,21 @@ export const LogoItem = ({ onCollapse, isMobile }: UserItemProps) => {
     const router = useRouter();
 
     return (
-        <div className="flex items-center w-full px-2 pt-[3px] py-[2px]">
-            <div className="flex items-center px-2 py-3 w-full">
+        <div className="flex items-center w-full px-2 pt-1 py-[2px]">
+            <div className="flex items-center px-2 py-3 w-full gap-x-2">
                 <div
                     role="button"
                     onClick={() => router.push("/home")}
-                    className="flex items-center gap-x-2 cursor-pointer"
+                    className="flex items-center cursor-pointer"
                 >
                     <Avatar className="h-5 w-5">
                         <AvatarImage src={user?.imageUrl} />
                     </Avatar>
-                    <span className="text-[15px] font-semibold line-clamp-1">
-                        notology.
-                    </span>
                 </div>
-                {/* <span className="text-sm font-medium line-clamp-1">
+                <span className="flex items-center h-[30px] text-[15px] font-semibold line-clamp-1">
+                    notology.
+                </span>
+                {/* <span className="flex items-center h-[30px] text-sm font-medium line-clamp-1">
                     {user?.firstName}&apos;s Notology
                 </span> */}
             </div>
