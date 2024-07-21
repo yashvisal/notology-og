@@ -4,14 +4,14 @@ import { GridPattern } from "@/components/magicui/animated-grid-pattern";
 export default async function Page() {
   return (
     <>
-      <div className="fixed inset-0 -z-10 blur-[5px]">
+      <div className="fixed inset-0 -z-10 blur-[7px]">
         <GridPattern
-          maxOpacity={0.05}
-          width={65}
-          height={65}
+          maxOpacity={0.04}
+          width={75}
+          height={75}
           numSquares={100}
-          duration={10}
-          repeatDelay={10}
+          duration={1}
+          repeatDelay={1}
         />
       </div>
       <HeroSection />
