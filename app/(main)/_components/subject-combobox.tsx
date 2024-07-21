@@ -12,6 +12,7 @@ import {
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { Spinner } from "@/components/spinner";
 
 interface UserItemProps {
     onCollapse: () => void;
@@ -29,6 +30,8 @@ export const SubjectCombobox = ({ onCollapse, isMobile }: UserItemProps) => {
         api.subjects.getSubject,
         subjectId ? { subjectId } : "skip"
     );
+
+    const isLoading = subjectId && !currentSubject;
 
     return (
         <div className="flex items-center w-full px-2 pt-1 py-[2px] group/sidebar">
@@ -52,9 +55,13 @@ export const SubjectCombobox = ({ onCollapse, isMobile }: UserItemProps) => {
                     onClick={() => {/* Add your onClick handler here */}}
                     className="flex-grow flex items-center px-2 h-[30px] cursor-pointer hover:bg-primary/5 dark:hover:bg-neutral-600 transition rounded-xl overflow-hidden"
                 >
-                    <span className="text-[15px] truncate font-semibold w-full">
-                        {currentSubject?.name}
-                    </span>
+                    {isLoading ? (
+                        <Spinner />
+                    ) : (
+                        <span className="text-[15px] truncate font-semibold w-full">
+                            {currentSubject?.name}
+                        </span>
+                    )}
                 </div>
                 <div
                     onClick={onCollapse}
