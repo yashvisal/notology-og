@@ -205,7 +205,12 @@ export const Navigation = () => {
                     isMobile && "w-0"
                 )}
             >
-                <div>
+                <div
+                    className={cn(
+                        activeSubject ? "animate-slide-in-right" : "animate-slide-in-left",
+                        "transition-all ease-in-out duration-200"
+                    )}
+                >
                     {activeSubject ? renderSubjectSidebar() : renderMainSidebar()}
                 </div>
                 <div
