@@ -18,7 +18,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative mx-auto mt-28 max-w-[80rem] px-6 pb-6 text-center md:px-8"
+      className="relative mx-auto mt-24 max-w-[80rem] px-6 pb-6 text-center md:px-8"
     >
       <h1 className="bg-gradient-to-br dark:from-white from-black from-30% dark:to-white/40 to-black bg-clip-text py-6 text-5xl font-semibold leading-none tracking-tighter text-transparent text-balance sm:text-5xl md:text-6xl lg:text-7xl translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
         Study smarter,
@@ -34,7 +34,7 @@ export default function HeroSection() {
         ) : (
           <>
             {isAuthenticated ? (
-              <Button asChild className="rounded-xl">
+              <Button asChild className="rounded-2xl">
                 <Link href="/home">
                   Enter Notology
                   <ArrowRight className="h-4 w-4 ml-2" />
