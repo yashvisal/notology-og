@@ -7,6 +7,7 @@ import { ConvexClientProvider } from "@/components/providers/convex-provider";
 import { ModalProvider } from "@/components/providers/modal-provider";
 
 import "./globals.css";
+import "./prosemirror.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
