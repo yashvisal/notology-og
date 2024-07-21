@@ -29,7 +29,7 @@ export default function RootLayout({
             defaultTheme="system" 
             enableSystem
             disableTransitionOnChange
-            storageKey="schol-theme"
+            storageKey="notology-theme"
           >
             <Toaster position="bottom-center"/>
             <ModalProvider />

@@ -12,7 +12,7 @@ const Navbar = () => {
 
     return (
         <div className="z-50 bg-background fixed top-0 flex items-center w-full p-6">
-            Schol
+            Notology
             <div className="justify-end w-full flex items-center gap-x-2">
                 {isLoading && (
                     <Spinner />
@@ -26,7 +26,7 @@ const Navbar = () => {
                         </SignInButton>
                         <SignInButton mode="modal">
                             <Button size="sm">
-                                Get Schol
+                                Get Notology
                             </Button>
                         </SignInButton>
                     </>
@@ -35,7 +35,7 @@ const Navbar = () => {
                     <>
                         <Button variant="ghost" size="sm" asChild>
                             <Link href="/home">
-                                Enter Schol
+                                Enter Notology
                             </Link>
                         </Button>
                         <UserButton 
