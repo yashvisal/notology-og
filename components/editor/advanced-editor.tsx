@@ -19,7 +19,6 @@ import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { TextButtons } from "./selectors/text-buttons";
 import { NodeSelector } from "./selectors/node-selector";
 import { LinkSelector } from "./selectors/link-selector";
-import { ColorSelector } from "./selectors/color-selector";
 
 import { defaultExtensions } from "./extensions";
 import { slashCommand, suggestionItems } from "./slash-command";
@@ -33,7 +32,6 @@ interface EditorProp {
 }
 const Editor = ({ initialValue, onChange }: EditorProp) => {
   const [openNode, setOpenNode] = useState(false);
-  const [openColor, setOpenColor] = useState(false);
   const [openLink, setOpenLink] = useState(false);
 
   return (
@@ -88,17 +86,21 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
           tippyOptions={{
             placement: "top",
           }}
-          className="flex w-fit max-w-[90vw] overflow-hidden rounded-xl border border-muted bg-background shadow-xl"
+          className="flex w-fit max-w-[90vw] overflow-hidden rounded-xl border border-muted bg-background shadow-md"
         >
           <Separator orientation="vertical" />
           <NodeSelector open={openNode} onOpenChange={setOpenNode} />
-          <Separator orientation="vertical" />
-
+          <Separator
+            orientation="vertical"
+            className="mx-[2px] h-4 self-center bg-gray-300 dark:bg-gray-700"
+          />
+          <TextButtons />
+          <Separator
+            orientation="vertical"
+            className="mx-[2px] h-4 self-center bg-gray-300 dark:bg-gray-700"
+          />
           <LinkSelector open={openLink} onOpenChange={setOpenLink} />
           <Separator orientation="vertical" />
-          <TextButtons />
-          <Separator orientation="vertical" />
-          <ColorSelector open={openColor} onOpenChange={setOpenColor} />
         </EditorBubble>
       </EditorContent>
     </EditorRoot>

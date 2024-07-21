@@ -48,7 +48,7 @@ export const TextButtons = () => {
   ];
 
   return (
-    <div className="flex">
+    <div className="flex font-medium">
       {items.map((item, index) => (
         <EditorBubbleItem
           key={index}
@@ -57,8 +57,8 @@ export const TextButtons = () => {
           }}
         >
           <Button
-            size="sm"
-            className="rounded-xl"
+            size="xs"
+            className="rounded-xl px-2 gap-1"
             variant="ghost"
           >
             <item.icon

@@ -4,11 +4,11 @@ import {
     Heading1,
     Heading2,
     Heading3,
-    TextQuote,
+    List,
     ListOrdered,
+    ListChecks,
     TextIcon,
     Code,
-    CheckSquare,
     type LucideIcon,
   } from "lucide-react";
   import { EditorBubbleItem, EditorInstance, useEditor } from "novel";
@@ -26,7 +26,7 @@ import {
   
   const items: SelectorItem[] = [
     {
-      name: "Text",
+      name: "Body",
       icon: TextIcon,
       command: (editor) => editor.chain().focus().clearNodes().run(),
       // I feel like there has to be a more efficient way to do this – feel free to PR if you know how!
@@ -57,32 +57,25 @@ import {
       isActive: (editor) => editor.isActive("heading", { level: 3 }),
     },
     {
-      name: "To-do List",
-      icon: CheckSquare,
+      name: "To-do",
+      icon: ListChecks,
       command: (editor) =>
         editor.chain().focus().clearNodes().toggleTaskList().run(),
       isActive: (editor) => editor.isActive("taskItem"),
     },
     {
-      name: "Bullet List",
-      icon: ListOrdered,
+      name: "Bullet",
+      icon: List,
       command: (editor) =>
         editor.chain().focus().clearNodes().toggleBulletList().run(),
       isActive: (editor) => editor.isActive("bulletList"),
     },
     {
-      name: "Numbered List",
+      name: "Numbered",
       icon: ListOrdered,
       command: (editor) =>
         editor.chain().focus().clearNodes().toggleOrderedList().run(),
       isActive: (editor) => editor.isActive("orderedList"),
-    },
-    {
-      name: "Quote",
-      icon: TextQuote,
-      command: (editor) =>
-        editor.chain().focus().clearNodes().toggleBlockquote().run(),
-      isActive: (editor) => editor.isActive("blockquote"),
     },
     {
       name: "Code",
@@ -109,18 +102,22 @@ import {
       <Popover modal={true} open={open} onOpenChange={onOpenChange}>
         <PopoverTrigger
           asChild
-          className="gap-2 rounded-none border-none hover:bg-accent focus:ring-0"
+          className="border-none hover:bg-accent focus:ring-0"
         >
           <Button
-            size="sm"
+            size="xs"
             variant="ghost"
-            className="gap-2 rounded-xl"
+            className="rounded-xl px-2 gap-1"
           >
             <span className="whitespace-nowrap text-sm">{activeItem.name}</span>
             <ChevronDown className="h-4 w-4" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent sideOffset={5} align="start" className="w-48 p-1">
+        <PopoverContent
+          sideOffset={5}
+          align="start"
+          className="w-40 p-[2px] rounded-xl"
+        >
           {items.map((item, index) => (
             <EditorBubbleItem
               key={index}
@@ -128,10 +125,10 @@ import {
                 item.command(editor);
                 onOpenChange(false);
               }}
-              className="flex cursor-pointer items-center justify-between rounded-sm px-2 py-1 text-sm hover:bg-accent"
+              className="flex cursor-pointer items-center justify-between rounded-xl px-2 py-1 text-sm hover:bg-accent"
             >
-              <div className="flex items-center space-x-2">
-                <div className="rounded-sm border p-1">
+              <div className="flex items-center space-x-2 font-medium">
+                <div className="rounded-lg border p-1">
                   <item.icon className="h-3 w-3" />
                 </div>
                 <span>{item.name}</span>
