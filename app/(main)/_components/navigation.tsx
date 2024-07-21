@@ -207,7 +207,7 @@ export const Navigation = () => {
             >
                 <div
                     className={cn(
-                        activeSubject ? "animate-slide-in-right" : "animate-slide-in-left",
+                        activeSubject ? "animate-slide-in-left" : "animate-slide-in-right",
                         "transition-all ease-in-out duration-200"
                     )}
                 >
