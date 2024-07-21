@@ -7,6 +7,7 @@ import {
   type SetStateAction,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,11 +42,27 @@ interface LinkSelectorProps {
 export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { editor } = useEditor();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Autofocus on input by default
   useEffect(() => {
     inputRef.current && inputRef.current?.focus();
   });
+
+  const handleLinkSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const target = e.currentTarget as HTMLFormElement;
+    const input = target[0] as HTMLInputElement;
+    const url = getUrlFromString(input.value);
+    if (url) {
+      editor?.chain().focus().setLink({ href: url }).run();
+    }
+    setTimeout(() => {
+      onOpenChange(false);
+      setIsSubmitting(false);
+    }, 50);
+  };
+
   if (!editor) return null;
 
   return (
@@ -63,42 +80,35 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-60 p-0" sideOffset={10}>
-        <form
-          onSubmit={(e) => {
-            const target = e.currentTarget as HTMLFormElement;
-            e.preventDefault();
-            const input = target[0] as HTMLInputElement;
-            const url = getUrlFromString(input.value);
-            if (url) {
-              editor.chain().focus().setLink({ href: url }).run();
-              onOpenChange(false);
-            }
-          }}
-          className="flex gap-2 rounded-xl p-1"
-        >
+      <PopoverContent align="start" className="w-60 p-0 rounded-xl" sideOffset={10}>
+        <form onSubmit={handleLinkSubmit} className="flex items-center mx-1">
           <input
             ref={inputRef}
             type="text"
-            placeholder="Paste a link"
-            className="flex-1 bg-background p-1 text-sm outline-none"
+            placeholder="Enter link"
+            className="flex-1 bg-background p-1 rounded-xl text-sm outline-none"
             defaultValue={editor.getAttributes("link").href || ""}
           />
           {editor.getAttributes("link").href ? (
-            <Button
-              size="icon"
-              variant="outline"
-              type="button"
-              className="flex h-8 items-center rounded-sm p-1 text-red-600 transition-all hover:bg-red-100 dark:hover:bg-red-800"
-              onClick={() => {
+            <div
+              className="cursor-pointer rounded-xl p-1 text-primary transition-all hover:text-red-600 hover:bg-background dark:hover:bg-red-800"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 editor.chain().focus().unsetLink().run();
                 onOpenChange(false);
               }}
             >
               <Trash className="h-4 w-4" />
-            </Button>
+            </div>
           ) : (
-            <Button size="icon" className="h-8">
+            <Button
+              size="xs"
+              variant="ghost"
+              type="submit"
+              disabled={isSubmitting}
+              className="rounded-lg px-1 text-primary transition-all hover:bg-background hover:text-blue-500"
+            >
               <Check className="h-4 w-4" />
             </Button>
           )}
