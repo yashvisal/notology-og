@@ -7,7 +7,6 @@ import {
   EditorRoot,
   EditorCommand,
   EditorCommandItem,
-  EditorCommandEmpty,
   EditorContent,
   type JSONContent,
   EditorCommandList,
@@ -54,7 +53,6 @@ const Editor = ({ initialContent, onChange }: EditorProp) => {
           onChange(editor.getJSON());
         }}
         slotAfter={<ImageResizer />}
-        className="w-full"
       >
         <EditorCommand className="z-50 h-auto max-h-[330px] overflow-y-auto rounded-xl border border-muted bg-background p-0.5 shadow-md transition-all">
           <EditorCommandList>
