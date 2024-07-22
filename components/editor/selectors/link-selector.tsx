@@ -91,7 +91,7 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
           />
           {editor.getAttributes("link").href ? (
             <div
-              className="cursor-pointer rounded-lg p-1 text-primary transition-all hover:text-red-600 hover:bg-background dark:hover:bg-red-800"
+              className="cursor-pointer rounded-lg p-1 transition-all hover:text-red-600 hover:bg-background dark:hover:bg-red-800"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();

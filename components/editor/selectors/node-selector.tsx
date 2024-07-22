@@ -99,44 +99,46 @@ import {
     };
   
     return (
-      <Popover modal={true} open={open} onOpenChange={onOpenChange}>
-        <PopoverTrigger
-          asChild
-          className="border-none hover:bg-accent focus:ring-0"
-        >
-          <Button
-            size="xs"
-            variant="ghost"
-            className="rounded-xl px-2 gap-1"
+      <div className="group">
+        <Popover modal={true} open={open} onOpenChange={onOpenChange}>
+          <PopoverTrigger
+            asChild
+            className="border-none"
           >
-            <span className="whitespace-nowrap text-sm">{activeItem.name}</span>
-            <ChevronDown className="h-4 w-4" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          sideOffset={5}
-          align="start"
-          className="w-40 p-[2px] rounded-xl"
-        >
-          {items.map((item, index) => (
-            <EditorBubbleItem
-              key={index}
-              onSelect={(editor) => {
-                item.command(editor);
-                onOpenChange(false);
-              }}
-              className="flex cursor-pointer items-center justify-between rounded-xl px-2 py-1 text-sm hover:bg-accent"
+            <Button
+              size="xs"
+              variant="ghost"
+              className="rounded-lg px-2 gap-0.5 group-hover:bg-accent focus:ring-0"
             >
-              <div className="flex items-center space-x-2 font-medium">
-                <div className="rounded-lg border p-1">
-                  <item.icon className="h-3 w-3" />
+              <span className="whitespace-nowrap text-sm">{activeItem.name}</span>
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            sideOffset={5}
+            align="start"
+            className="w-[136px] p-[2px] rounded-xl"
+          >
+            {items.map((item, index) => (
+              <EditorBubbleItem
+                key={index}
+                onSelect={(editor) => {
+                  item.command(editor);
+                  onOpenChange(false);
+                }}
+                className="flex cursor-pointer items-center justify-between rounded-lg px-1 py-0.5 text-sm text-[#272727] hover:bg-accent"
+              >
+                <div className="flex items-center space-x-2 font-medium">
+                  <div className="rounded-lg">
+                    <item.icon className="h-4 w-4" />
+                  </div>
+                  <span>{item.name}</span>
                 </div>
-                <span>{item.name}</span>
-              </div>
-              {activeItem.name === item.name && <Check className="h-4 w-4" />}
-            </EditorBubbleItem>
-          ))}
-        </PopoverContent>
-      </Popover>
+                {activeItem.name === item.name && <Check className="h-4 w-4" />}
+              </EditorBubbleItem>
+            ))}
+          </PopoverContent>
+        </Popover>
+      </div>
     );
   };
