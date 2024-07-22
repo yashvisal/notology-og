@@ -45,25 +45,23 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
 
     return (
         <div className="relative">
-            <div className="pl-[104px]">
-                {isEditing ? (
-                    <TextareaAutosize
+            {isEditing ? (
+                <TextareaAutosize
                     ref={inputRef}
                     onBlur={disableInput}
                     value={value}
                     onChange={(e) => onInput(e.target.value)}
                     onKeyDown={onKeyDown}
                     className="pb-[11.5px] text-4xl bg-transparent font-semibold break-words outline-none text-[#000000] dark:text-[#CFCFCF] resize-none"
-                    />
-                ) : (
-                    <div
+                />
+            ) : (
+                <div
                     onClick={enableInput}
                     className="pb-[11.5px] text-4xl font-semibold break-words outline-none text-[#000000] dark:text-[#CFCFCF]"
-                    >
-                        {initialData.title}
-                    </div>
-                )}
-            </div>
+                >
+                    {initialData.title}
+                </div>
+            )}
         </div>
     )
 }
