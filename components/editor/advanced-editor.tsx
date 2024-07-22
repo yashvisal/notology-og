@@ -56,23 +56,23 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
         slotAfter={<ImageResizer />}
         className="w-full"
       >
-        <EditorCommand className="z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-background px-1 py-2 shadow-md transition-all">
+        <EditorCommand className="z-50 h-auto max-h-[330px] overflow-y-auto rounded-xl border border-muted bg-background p-0.5 shadow-md transition-all">
           <EditorCommandList>
             {suggestionItems.map((item) => (
               <EditorCommandItem
                 value={item.title}
                 onCommand={(val) => item.command?.(val)}
-                className={`flex w-full items-center space-x-2 rounded-md px-2 py-1 text-left text-sm hover:bg-accent aria-selected:bg-accent `}
+                className={`flex w-full items-center gap-x-1 rounded-lg text-left text-[#272727] text-sm hover:bg-accent aria-selected:bg-accent `}
                 key={item.title}
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-md border border-muted bg-background">
+                <div className="flex h-8 w-8 items-center justify-center rounded-md">
                   {item.icon}
                 </div>
                 <div>
-                  <p className="font-medium">{item.title}</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="flex items-center justify-center font-medium mr-2">{item.title}</p>
+                  {/* <p className="text-xs text-muted-foreground">
                     {item.description}
-                  </p>
+                  </p> */}
                 </div>
               </EditorCommandItem>
             ))}

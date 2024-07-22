@@ -1,15 +1,13 @@
 import {
-    CheckSquare,
     Code,
     Heading1,
     Heading2,
     Heading3,
     ImageIcon,
     List,
+    ListChecks,
     ListOrdered,
-    MessageSquarePlus,
-    Text,
-    TextQuote,
+    TextIcon,
   } from "lucide-react";
   import { createSuggestionItems } from "novel/extensions";
   import { Command, renderItems } from "novel/extensions";
@@ -17,19 +15,10 @@ import {
   
   export const suggestionItems = createSuggestionItems([
     {
-      title: "Send Feedback",
-      description: "Let us know how we can improve.",
-      icon: <MessageSquarePlus size={18} />,
-      command: ({ editor, range }) => {
-        editor.chain().focus().deleteRange(range).run();
-        window.open("/feedback", "_blank");
-      },
-    },
-    {
-      title: "Text",
-      description: "Just start typing with plain text.",
+      title: "Body",
+      description: "Start typing with plain text.",
       searchTerms: ["p", "paragraph"],
-      icon: <Text size={18} />,
+      icon: <TextIcon size={18} />,
       command: ({ editor, range }) => {
         editor
           .chain()
@@ -40,24 +29,15 @@ import {
       },
     },
     {
-      title: "To-do List",
-      description: "Track tasks with a to-do list.",
-      searchTerms: ["todo", "task", "list", "check", "checkbox"],
-      icon: <CheckSquare size={18} />,
-      command: ({ editor, range }) => {
-        editor.chain().focus().deleteRange(range).toggleTaskList().run();
-      },
-    },
-    {
       title: "Heading 1",
       description: "Big section heading.",
       searchTerms: ["title", "big", "large"],
       icon: <Heading1 size={18} />,
       command: ({ editor, range }) => {
         editor
-          .chain()
-          .focus()
-          .deleteRange(range)
+        .chain()
+        .focus()
+        .deleteRange(range)
           .setNode("heading", { level: 1 })
           .run();
       },
@@ -69,11 +49,11 @@ import {
       icon: <Heading2 size={18} />,
       command: ({ editor, range }) => {
         editor
-          .chain()
-          .focus()
-          .deleteRange(range)
-          .setNode("heading", { level: 2 })
-          .run();
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .setNode("heading", { level: 2 })
+        .run();
       },
     },
     {
@@ -83,11 +63,20 @@ import {
       icon: <Heading3 size={18} />,
       command: ({ editor, range }) => {
         editor
-          .chain()
-          .focus()
-          .deleteRange(range)
-          .setNode("heading", { level: 3 })
-          .run();
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .setNode("heading", { level: 3 })
+        .run();
+      },
+    },
+    {
+      title: "To-do List",
+      description: "Track tasks with a to-do list.",
+      searchTerms: ["todo", "task", "list", "check", "checkbox"],
+      icon: <ListChecks size={18} />,
+      command: ({ editor, range }) => {
+        editor.chain().focus().deleteRange(range).toggleTaskList().run();
       },
     },
     {
@@ -109,21 +98,7 @@ import {
       },
     },
     {
-      title: "Quote",
-      description: "Capture a quote.",
-      searchTerms: ["blockquote"],
-      icon: <TextQuote size={18} />,
-      command: ({ editor, range }) =>
-        editor
-          .chain()
-          .focus()
-          .deleteRange(range)
-          .toggleNode("paragraph", "paragraph")
-          .toggleBlockquote()
-          .run(),
-    },
-    {
-      title: "Code",
+      title: "Code Block",
       description: "Capture a code snippet.",
       searchTerms: ["codeblock"],
       icon: <Code size={18} />,
