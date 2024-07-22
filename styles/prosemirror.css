@@ -136,6 +136,10 @@
     }
   }
 
+  ::selection {
+    @apply bg-blue-100 text-blue-500 dark:bg-white/20;
+  }
+
   
   @import './partials/typography.css';
   @import './partials/lists.css';
