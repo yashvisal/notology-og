@@ -43,7 +43,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
                 <div className="md:max-w-3xl lg:max-w-4xl mx-auto pt-16 pl-[104px]">
                     <Toolbar initialData={document}/>
                     <Editor
-                        initialValue={value}
+                        initialContent={value}
                         onChange={setValue}
                     />
                 </div>
