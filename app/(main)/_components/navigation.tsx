@@ -205,14 +205,14 @@ export const Navigation = () => {
                     isMobile && "w-0"
                 )}
             >
-                <div
+                {/* <div
                     className={cn(
                         activeSubject ? "animate-slide-in-left" : "animate-slide-in-right",
                         "transition-all ease-in-out duration-200"
                     )}
-                >
-                    {activeSubject ? renderSubjectSidebar() : renderMainSidebar()}
-                </div>
+                > */}
+                {activeSubject ? renderSubjectSidebar() : renderMainSidebar()}
+                {/* </div> */}
                 <div
                     // div when hover on sidebar, resizing logic
                     onMouseDown={handleMouseDown}

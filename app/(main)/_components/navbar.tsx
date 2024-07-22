@@ -32,12 +32,12 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
     }
 
     return (
-        <nav className="bg-background px-3 py-4 w-full flex items-center gap-x-4 border-b">
+        <nav className="bg-background px-3.5 py-4 w-full flex items-center gap-x-4 border-b">
             {isCollapsed && (
                 <div 
                     onClick={onResetWidth} 
                     role="button" 
-                    className="h-[30px] w-[30px] text-muted-foreground rounded-xl hover:bg-primary/5 dark:hover:bg-neutral-6000 transition flex items-center justify-center"
+                    className="h-6 w-6 text-muted-foreground rounded-lg hover:bg-primary/5 dark:hover:bg-neutral-6000 transition flex items-center justify-center"
                 >
                     <MenuIcon
                         className="w-5 h-5"
