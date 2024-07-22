@@ -80,7 +80,7 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-60 p-0 rounded-xl text-[#272727]" sideOffset={10}>
+      <PopoverContent align="start" className="w-60 p-0 rounded-xl text-[#272727]" sideOffset={7.5}>
         <form onSubmit={handleLinkSubmit} className="flex items-center mx-1">
           <input
             ref={inputRef}

@@ -115,7 +115,7 @@ import {
             </Button>
           </PopoverTrigger>
           <PopoverContent
-            sideOffset={5}
+            sideOffset={7.5}
             align="start"
             className="w-[136px] p-[2px] rounded-xl"
           >
