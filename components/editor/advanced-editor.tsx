@@ -46,7 +46,7 @@ const Editor = ({ initialContent, onChange }: EditorProp) => {
           handleDrop: (view, event, _slice, moved) =>
             handleImageDrop(view, event, moved, uploadFn),
           attributes: {
-            class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full`,
+            class: `prose prose-base prose-zinc dark:prose-invert prose-headings:font-title focus:outline-none max-w-full`,
           },
         }}
         onUpdate={({ editor }) => {

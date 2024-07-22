@@ -9,7 +9,6 @@ import { useState } from "react";
 
 import { JSONContent } from "novel";
 import Editor from "@/components/editor/advanced-editor";
-import { defaultValue } from "@/app/editor-defaults";
 
 interface DocumentIdPageProps {
     params: {
@@ -19,7 +18,7 @@ interface DocumentIdPageProps {
 
 const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
-    const [value, setValue] = useState<JSONContent>(defaultValue);
+    const [value, setValue] = useState<JSONContent>();
     
     const document = useQuery(api.documents.getById, {
         documentId: params.documentId
@@ -40,7 +39,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
                 onResetWidth={() => setIsCollapsed(false)}
             />
             <div className="flex-1 overflow-y-auto">
-                <div className="md:max-w-3xl lg:max-w-4xl mx-auto pt-16 pl-[104px]">
+                <div className="md:max-w-2xl lg:max-w-3xl mx-auto pt-16">
                     <Toolbar initialData={document}/>
                     <Editor
                         initialContent={value}
