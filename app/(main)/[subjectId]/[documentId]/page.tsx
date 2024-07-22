@@ -39,7 +39,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
                 onResetWidth={() => setIsCollapsed(false)}
             />
             <div className="flex-1 overflow-y-auto">
-                <div className="md:max-w-2xl lg:max-w-3xl mx-auto pt-16">
+                <div className="md:max-w-2xl lg:max-w-3xl mx-auto pt-8 px-8">
                     <Toolbar initialData={document}/>
                     <Editor
                         initialContent={value}
