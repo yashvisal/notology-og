@@ -71,7 +71,7 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
         <Button
           size="xs"
           variant="ghost"
-          className="rounded-xl px-[9px]"
+          className="rounded-lg px-[9px]"
         >
           <Link
             className={cn("h-[14px] w-[14px]", {
@@ -80,7 +80,7 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-60 p-0 rounded-xl" sideOffset={10}>
+      <PopoverContent align="start" className="w-60 p-0 rounded-xl text-[#272727]" sideOffset={10}>
         <form onSubmit={handleLinkSubmit} className="flex items-center mx-1">
           <input
             ref={inputRef}
@@ -91,7 +91,7 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
           />
           {editor.getAttributes("link").href ? (
             <div
-              className="cursor-pointer rounded-xl p-1 text-primary transition-all hover:text-red-600 hover:bg-background dark:hover:bg-red-800"
+              className="cursor-pointer rounded-lg p-1 text-primary transition-all hover:text-red-600 hover:bg-background dark:hover:bg-red-800"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -107,7 +107,7 @@ export const LinkSelector = ({ open, onOpenChange }: LinkSelectorProps) => {
               variant="ghost"
               type="submit"
               disabled={isSubmitting}
-              className="rounded-lg px-1 text-primary transition-all hover:bg-background hover:text-blue-500"
+              className="rounded-lg px-1 transition-all hover:bg-background hover:text-blue-500"
             >
               <Check className="h-4 w-4" />
             </Button>
