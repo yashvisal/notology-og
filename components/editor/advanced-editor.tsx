@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { Separator } from "../ui/separator";
 
+import "@/styles/prosemirror.css";
+
 import {
   EditorRoot,
   EditorCommand,
@@ -45,9 +47,6 @@ const Editor = ({ initialContent, onChange }: EditorProp) => {
           handlePaste: (view, event) => handleImagePaste(view, event, uploadFn),
           handleDrop: (view, event, _slice, moved) =>
             handleImageDrop(view, event, moved, uploadFn),
-          attributes: {
-            class: `prose prose-base prose-zinc dark:prose-invert prose-headings:font-title focus:outline-none max-w-full`,
-          },
         }}
         onUpdate={({ editor }) => {
           onChange(editor.getJSON());
