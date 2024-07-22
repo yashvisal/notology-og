@@ -3,7 +3,7 @@
 import { api } from "@/convex/_generated/api";
 import { Doc } from "@/convex/_generated/dataModel";
 import { useMutation } from "convex/react";
-import { ElementRef, useRef, useState } from "react";
+import { ElementRef, useRef, useState, useCallback } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 interface ToolbarProps {
@@ -15,26 +15,37 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
     const inputRef = useRef<ElementRef<"textarea">>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [value, setValue] = useState(initialData.title);
+    const [isDefault, setIsDefault] = useState(initialData.title === "Untitled");
 
     const update = useMutation(api.documents.update);
 
-    const enableInput = () => {
-        setIsEditing(true);
-        setTimeout(() => {
-            setValue(initialData.title);
-            inputRef.current?.focus();
-        }, 0);
+    const enableInput = useCallback(() => {
+        if (!isEditing) {
+            setIsEditing(true);
+            setIsDefault(false);
+            setValue(initialData.title === "Untitled" ? "" : initialData.title);
+            setTimeout(() => {
+                inputRef.current?.focus();
+            }, 0);
+        }
+    }, [isEditing, initialData.title]);
+
+    const disableInput = () => {
+        setIsEditing(false);
+        if (value.trim() === "") {
+            setValue("Untitled");
+            setIsDefault(true);
+        }
     }
 
-    const disableInput = () => setIsEditing(false);
-
-    const onInput = (value: string) => {
+    const onInput = useCallback((value: string) => {
         setValue(value);
+        setIsDefault(value.trim() === "");
         update({
             id: initialData._id,
-            title: value || "Untitled"
+            title: value.trim() === "" ? "Untitled" : value
         })
-    }
+    }, [update, initialData._id]);
 
     const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter") {
@@ -44,24 +55,22 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
     }
 
     return (
-        <div className="relative">
-            {isEditing ? (
-                <TextareaAutosize
-                    ref={inputRef}
-                    onBlur={disableInput}
-                    value={value}
-                    onChange={(e) => onInput(e.target.value)}
-                    onKeyDown={onKeyDown}
-                    className="pb-[11.5px] text-4xl bg-transparent font-semibold break-words outline-none text-[#000000] dark:text-[#CFCFCF] resize-none"
-                />
-            ) : (
-                <div
-                    onClick={enableInput}
-                    className="pb-[11.5px] text-4xl font-semibold break-words outline-none text-[#000000] dark:text-[#CFCFCF]"
-                >
-                    {initialData.title}
-                </div>
-            )}
+        <div className="relative h-[50px]">
+            <TextareaAutosize
+                ref={inputRef}
+                onFocus={enableInput}
+                onBlur={disableInput}
+                value={isEditing ? value : initialData.title}
+                onChange={(e) => onInput(e.target.value)}
+                onKeyDown={onKeyDown}
+                className={`absolute top-0 left-0 w-full h-[50px] pb-[11.5px] text-4xl bg-transparent font-semibold break-words outline-none resize-none ${
+                    isDefault || (!isEditing && initialData.title === "Untitled")
+                        ? "text-gray-400"
+                        : "text-[#000000] dark:text-[#CFCFCF]"
+                }`}
+                placeholder="Untitled"
+                readOnly={!isEditing}
+            />
         </div>
     )
 }
