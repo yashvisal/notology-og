@@ -23,10 +23,10 @@
       filter: brightness(90%);
     }
   
-    &.ProseMirror-selectednode {
+    /* &.ProseMirror-selectednode {
       outline: 3px solid #5abbf7;
       filter: brightness(90%);
-    }
+    } */
   }
   
   .img-placeholder {
@@ -128,10 +128,10 @@
     }
   
     .ProseMirror-gapcursor {
-      @apply relative w-full max-w-2xl mx-auto;
+      @apply relative w-full max-w-3xl mx-auto;
   
       &:after {
-        @apply border-t-black/40 dark:border-t-white/40 w-full -top-[1.5em] max-w-2xl mx-auto left-0 right-0;
+        @apply border-t-black/40 dark:border-t-white/40 w-full -top-[1.5em] max-w-3xl mx-auto left-0 right-0;
       }
     }
   }
