@@ -11,6 +11,8 @@ import {
 } from "novel/extensions";
 import { UploadImagesPlugin } from "novel/plugins";
 
+import { DragHandle } from "@tiptap-pro/extension-drag-handle";
+
 import GlobalDragHandle from 'tiptap-extension-global-drag-handle'
 import AutoJoiner from 'tiptap-extension-auto-joiner'
 
@@ -67,6 +69,11 @@ const horizontalRule = HorizontalRule.configure({
 const globalDragHandle = GlobalDragHandle.configure({
   dragHandleWidth: 25,
 });
+const dragHandle = DragHandle.configure({
+  tippyOptions: {
+    offset: [1, 25]
+  }
+});
 
 const starterKit = StarterKit.configure({
   bulletList: {
@@ -115,6 +122,6 @@ export const defaultExtensions = [
   taskItem,
   horizontalRule,
   aiHighlight,
-  globalDragHandle,
+  dragHandle,
   AutoJoiner,
 ];
