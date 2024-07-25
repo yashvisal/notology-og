@@ -7,7 +7,7 @@ import {
   Popover,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { BlockPicker, ColorResult } from 'react-color';
+import { BlockPicker } from 'react-color';
 
 interface ColorPickerProps {
   open: boolean;

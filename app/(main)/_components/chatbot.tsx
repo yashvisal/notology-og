@@ -58,7 +58,7 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
         if (!isResizingRef.current) return;
         let newWidth = window.innerWidth - e.clientX;
 
-        if (newWidth < 360) newWidth = 360;
+        if (newWidth < 300) newWidth = 300;
         if (newWidth > 540) newWidth = 540;
 
         if (chatbotRef.current) {
@@ -131,12 +131,12 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                         />
-                        <div className="flex flex-row items-center justify-end w-full px-2">
+                        <div className="flex flex-row items-center justify-end w-full px-2.5">
                             <div
                                 role="button"
                                 className="flex items-center justify-center h-7 w-7 text-muted-foreground bg-background rounded-lg border hover:bg-primary/5 dark:hover:bg-neutral-600 transition"
                             >
-                                <ArrowUp className="w-[20px] h-6" strokeWidth={2.5} />
+                                <ArrowUp className="w-[20px] h-6" />
                             </div>
                         </div>
                     </div>

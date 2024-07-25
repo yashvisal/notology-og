@@ -96,8 +96,13 @@ const Editor = ({ initialContent, onChange }: EditorProp) => {
             className="mx-[2px] h-4 self-center bg-gray-300 dark:bg-gray-700"
           />
           <TextButtons />
+          <Separator
+            orientation="vertical"
+            className="mx-[2px] h-4 self-center bg-gray-300 dark:bg-gray-700"
+          />
           <TextColorPicker open={openColor} onOpenChange={setOpenColor} />
           <HighlighterItem open={openHighlight} onOpenChange={setOpenHighlight} />
+          
           <Separator
             orientation="vertical"
             className="mx-[2px] h-4 self-center bg-gray-300 dark:bg-gray-700"
