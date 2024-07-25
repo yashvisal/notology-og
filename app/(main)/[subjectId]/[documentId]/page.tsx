@@ -91,7 +91,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
                         isChatbotOpen={isChatbotOpen}
                     />
                     <div className="flex-1 overflow-y-auto" style={{ scrollbarGutter: 'stable' }}>
-                        <div className="md:max-w-2xl lg:max-w-3xl mx-auto pt-4 px-8 pb-32">
+                        <div className="md:max-w-2xl lg:max-w-3xl mx-auto pt-2 px-8 pb-32">
                             <Toolbar initialData={document}/>
                             <div className="mt-2">
                                 <Editor
