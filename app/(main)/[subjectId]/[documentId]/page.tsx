@@ -72,34 +72,43 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     }
 
     return ( 
-        <>
-            <div 
-                ref={contentRef}
-                className="flex flex-col min-h-screen"
-            >
-                <Navbar 
-                    isCollapsed={isCollapsed}
-                    onResetWidth={() => setIsCollapsed(false)}
-                />
-                <DocBanner onToggleChatbot={() => setIsChatbotOpen(!isChatbotOpen)} />
-                <div className="flex-1 overflow-y-auto" style={{ scrollbarGutter: 'stable' }}>
-                    <div className="md:max-w-2xl lg:max-w-3xl mx-auto pt-6 px-8 pb-32">
-                        <Toolbar initialData={document}/>
-                        <div className="mt-2">
-                            <Editor
-                                onChange={onChange}
-                                initialContent={document.content ? JSON.parse(document.content) : undefined}
-                            />
+        <div className="flex flex-col h-screen">
+            <Navbar 
+                isCollapsed={isCollapsed}
+                onResetWidth={() => setIsCollapsed(false)}
+            />
+            <div className="flex-1 relative">
+                <div 
+                    ref={contentRef}
+                    className={cn(
+                        "absolute inset-0 flex flex-col",
+                        isResetting && "transition-all ease-in-out duration-300"
+                    )}
+                    style={{ marginRight: isChatbotOpen ? `${chatbotWidth}px` : "0" }}
+                >
+                    <DocBanner 
+                        onToggleChatbot={() => setIsChatbotOpen(!isChatbotOpen)} 
+                        isChatbotOpen={isChatbotOpen}
+                    />
+                    <div className="flex-1 overflow-y-auto" style={{ scrollbarGutter: 'stable' }}>
+                        <div className="md:max-w-2xl lg:max-w-3xl mx-auto pt-4 px-8 pb-32">
+                            <Toolbar initialData={document}/>
+                            <div className="mt-2">
+                                <Editor
+                                    onChange={onChange}
+                                    initialContent={document.content ? JSON.parse(document.content) : undefined}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
+                <Chatbot 
+                    isOpen={isChatbotOpen} 
+                    onClose={() => setIsChatbotOpen(false)}
+                    onResize={handleChatbotResize}
+                />
             </div>
-            <Chatbot 
-                isOpen={isChatbotOpen} 
-                onClose={() => setIsChatbotOpen(false)}
-                onResize={handleChatbotResize}
-            />
-        </>
+        </div>
     );
 }
 

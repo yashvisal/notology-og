@@ -13,6 +13,7 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
     const chatbotRef = useRef<ElementRef<"aside">>(null);
     const isResizingRef = useRef(false);
     const [isResetting, setIsResetting] = useState(false);
+    const [chatbotWidth, setChatbotWidth] = useState(240);
 
     useEffect(() => {
         if (isOpen) {
@@ -42,6 +43,7 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
             chatbotRef.current.style.width = `${newWidth}px`;
         }
         onResize(newWidth);
+        setChatbotWidth(newWidth);
     };
 
     const handleMouseUp = () => {
@@ -53,7 +55,7 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
     const resetWidth = () => {
         if (chatbotRef.current) {
             setIsResetting(true);
-            chatbotRef.current.style.width = "240px";
+            setChatbotWidth(240);
             onResize(240);
             setIsResetting(false);
         }
@@ -62,7 +64,7 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
     const collapse = () => {
         if (chatbotRef.current) {
             setIsResetting(true);
-            chatbotRef.current.style.width = "0";
+            setChatbotWidth(0);
             onResize(0);
             setTimeout(() => {
                 setIsResetting(false);
@@ -75,9 +77,11 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
         <aside
             ref={chatbotRef}
             className={cn(
-                "group/chatbot bg-secondary/30 h-full overflow-y-auto fixed top-0 right-0 z-[60] border-l",
+                "group/chatbot bg-secondary/30 overflow-y-auto absolute top-0 right-0 z-[60] border-l h-full",
                 isResetting && "transition-all ease-in-out duration-300",
+                !isOpen && "w-0"
             )}
+            style={{ width: isOpen ? `${chatbotWidth}px` : '0' }}
         >
             <div
                 onMouseDown={handleMouseDown}
