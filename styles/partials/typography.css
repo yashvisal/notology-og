@@ -8,15 +8,15 @@
     }
   
     h1 {
-      @apply text-2xl text-[#3F3F3F];
+      @apply text-2xl;
     }
   
     h2 {
-      @apply text-xl text-[#3F3F3F];
+      @apply text-xl;
     }
   
     h3 {
-      @apply text-lg text-[#3F3F3F];
+      @apply text-lg;
     }
   
     h4 {
