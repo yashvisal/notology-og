@@ -1,0 +1,33 @@
+"use client";
+
+import { Ellipsis, MessageCircle } from "lucide-react";
+
+interface DocBannerProps {
+    onToggleChatbot: () => void;
+}
+
+export const DocBanner = ({ onToggleChatbot }: DocBannerProps) => {
+    return (
+        <div className="bg-background top-0 flex flex-row items-center justify-end w-full py-3 gap-x-3 pr-4">
+            <div 
+                onClick={onToggleChatbot} 
+                role="button" 
+                className="h-6 w-6 text-primary rounded-lg hover:bg-primary/5 dark:hover:bg-neutral-600 transition flex items-center justify-center"
+            >
+                <MessageCircle
+                    className="w-[16px] h-[16px]"
+                    strokeWidth={2.5}
+                />
+            </div>
+            <div 
+                onClick={() => {}} 
+                role="button" 
+                className="h-6 w-6 text-primary rounded-lg hover:bg-primary/5 dark:hover:bg-neutral-600 transition flex items-center justify-center"
+            >
+                <Ellipsis
+                    className="w-5 h-5"
+                />
+            </div>
+        </div>
+    );
+}

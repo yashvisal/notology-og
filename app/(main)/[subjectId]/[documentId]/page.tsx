@@ -1,16 +1,20 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+
 import { Navbar } from "@/app/(main)/_components/navbar";
 import { Toolbar } from "@/components/toolbar";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
-import { useState } from "react";
+import { ElementRef, useEffect, useRef, useState } from "react";
 
 import Editor from "@/components/editor/advanced-editor";
 import { Skeleton } from "@/components/ui/skeleton";
 
 import { JSONContent } from "novel";
+import { DocBanner } from "../../_components/doc-banner";
+import { Chatbot } from "../../_components/chatbot";
 
 interface DocumentIdPageProps {
     params: {
@@ -20,7 +24,11 @@ interface DocumentIdPageProps {
 
 const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
-    
+    const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+    const [chatbotWidth, setChatbotWidth] = useState(240);
+    const contentRef = useRef<ElementRef<"div">>(null);
+    const [isResetting, setIsResetting] = useState(false);
+
     const document = useQuery(api.documents.getById, {
         documentId: params.documentId
     })
@@ -33,7 +41,19 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
             content: JSON.stringify(content)
         })
     }
-    
+
+    useEffect(() => {
+        if (contentRef.current) {
+            setIsResetting(true);
+            contentRef.current.style.marginRight = isChatbotOpen ? `${chatbotWidth}px` : "0";
+            setIsResetting(false);
+        }
+    }, [isChatbotOpen, chatbotWidth]);
+
+    const handleChatbotResize = (newWidth: number) => {
+        setChatbotWidth(newWidth);
+    };
+
     if (document === undefined) {
         return (
             <div className="md:max-w-2xl lg:max-w-3xl mx-auto mt-10">
@@ -46,30 +66,41 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
             </div>
         )
     }
-    
+
     if (document === null) {
         return <div>Document not found</div>
     }
-    
+
     return ( 
-        <div className="flex flex-col min-h-screen">
-            <Navbar 
-                isCollapsed={isCollapsed}
-                onResetWidth={() => setIsCollapsed(false)}
-            />
-            <div className="flex-1 overflow-y-auto" style={{ scrollbarGutter: 'stable' }}>
-                <div className="md:max-w-2xl lg:max-w-3xl mx-auto pt-16 px-8 pb-32">
-                    <Toolbar initialData={document}/>
-                    <div className="mt-2">
-                        <Editor
-                            onChange={onChange}
-                            initialContent={document.content ? JSON.parse(document.content) : undefined}
-                        />
+        <>
+            <div 
+                ref={contentRef}
+                className="flex flex-col min-h-screen"
+            >
+                <Navbar 
+                    isCollapsed={isCollapsed}
+                    onResetWidth={() => setIsCollapsed(false)}
+                />
+                <DocBanner onToggleChatbot={() => setIsChatbotOpen(!isChatbotOpen)} />
+                <div className="flex-1 overflow-y-auto" style={{ scrollbarGutter: 'stable' }}>
+                    <div className="md:max-w-2xl lg:max-w-3xl mx-auto pt-6 px-8 pb-32">
+                        <Toolbar initialData={document}/>
+                        <div className="mt-2">
+                            <Editor
+                                onChange={onChange}
+                                initialContent={document.content ? JSON.parse(document.content) : undefined}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <Chatbot 
+                isOpen={isChatbotOpen} 
+                onClose={() => setIsChatbotOpen(false)}
+                onResize={handleChatbotResize}
+            />
+        </>
     );
 }
- 
+
 export default DocumentIdPage;
