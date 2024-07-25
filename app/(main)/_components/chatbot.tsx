@@ -13,7 +13,7 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
     const chatbotRef = useRef<ElementRef<"aside">>(null);
     const isResizingRef = useRef(false);
     const [isResetting, setIsResetting] = useState(false);
-    const [chatbotWidth, setChatbotWidth] = useState(240);
+    const [chatbotWidth, setChatbotWidth] = useState(300);
 
     useEffect(() => {
         if (isOpen) {
@@ -36,8 +36,8 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
         if (!isResizingRef.current) return;
         let newWidth = window.innerWidth - e.clientX;
 
-        if (newWidth < 240) newWidth = 240;
-        if (newWidth > 480) newWidth = 480;
+        if (newWidth < 300) newWidth = 300;
+        if (newWidth > 540) newWidth = 540;
 
         if (chatbotRef.current) {
             chatbotRef.current.style.width = `${newWidth}px`;
@@ -55,8 +55,8 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
     const resetWidth = () => {
         if (chatbotRef.current) {
             setIsResetting(true);
-            setChatbotWidth(240);
-            onResize(240);
+            setChatbotWidth(300);
+            onResize(300);
             setIsResetting(false);
         }
     };
