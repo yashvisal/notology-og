@@ -24,6 +24,8 @@ import { LinkSelector } from "./selectors/link-selector";
 import { defaultExtensions } from "./extensions";
 import { slashCommand, suggestionItems } from "./slash-command";
 import { uploadFn } from "./image-upload";
+import { HighlighterItem } from "./selectors/highlighter";
+import { TextColorPicker } from "./selectors/text-color";
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -34,6 +36,8 @@ interface EditorProp {
 const Editor = ({ initialContent, onChange }: EditorProp) => {
   const [openNode, setOpenNode] = useState(false);
   const [openLink, setOpenLink] = useState(false);
+  const [openColor, setOpenColor] = useState(false);
+  const [openHighlight, setOpenHighlight] = useState(false);
 
   return (
     <EditorRoot>
@@ -92,6 +96,8 @@ const Editor = ({ initialContent, onChange }: EditorProp) => {
             className="mx-[2px] h-4 self-center bg-gray-300 dark:bg-gray-700"
           />
           <TextButtons />
+          <TextColorPicker open={openColor} onOpenChange={setOpenColor} />
+          <HighlighterItem open={openHighlight} onOpenChange={setOpenHighlight} />
           <Separator
             orientation="vertical"
             className="mx-[2px] h-4 self-center bg-gray-300 dark:bg-gray-700"
