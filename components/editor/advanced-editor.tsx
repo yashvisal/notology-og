@@ -28,7 +28,7 @@ import { uploadFn } from "./image-upload";
 const extensions = [...defaultExtensions, slashCommand];
 
 interface EditorProp {
-  initialContent?: JSONContent;
+  initialContent?: string | JSONContent;
   onChange: (value: JSONContent) => void;
 }
 const Editor = ({ initialContent, onChange }: EditorProp) => {
@@ -38,7 +38,11 @@ const Editor = ({ initialContent, onChange }: EditorProp) => {
   return (
     <EditorRoot>
       <EditorContent
-        {...(initialContent && { initialContent: initialContent })}
+        initialContent={
+          typeof initialContent === 'string' 
+            ? JSON.parse(initialContent) 
+            : initialContent
+        }
         extensions={extensions}
         editorProps={{
           handleDOMEvents: {
