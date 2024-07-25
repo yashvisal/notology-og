@@ -21,7 +21,7 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
 
     if (document === undefined) {
         return (
-            <nav className="bg-background px-3 py-2 w-full flex items-center gap-x-4">
+            <nav className="bg-background px-3 py-3 w-full flex items-center gap-x-4">
                 <Title.Skeleton />
             </nav>
         );
