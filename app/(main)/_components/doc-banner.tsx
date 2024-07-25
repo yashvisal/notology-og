@@ -9,7 +9,7 @@ interface DocBannerProps {
 
 export const DocBanner = ({ onToggleChatbot, isChatbotOpen }: DocBannerProps) => {
     return (
-        <div className="bg-background top-0 flex flex-row items-center justify-end w-full py-2 gap-x-2 pr-4">
+        <div className="bg-background top-0 flex flex-row items-center justify-end w-full py-2 gap-x-2 pr-3">
             <div 
                 onClick={onToggleChatbot} 
                 role="button" 
