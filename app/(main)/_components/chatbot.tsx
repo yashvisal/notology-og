@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import Image from 'next/image';
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowUp, MoveUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 
 interface ChatbotProps {
     isOpen: boolean;
@@ -15,19 +15,35 @@ interface ChatbotProps {
 export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
     const chatbotRef = useRef<ElementRef<"aside">>(null);
     const isResizingRef = useRef(false);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+
     const [isResetting, setIsResetting] = useState(false);
     const [chatbotWidth, setChatbotWidth] = useState(300);
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [input, setInput] = useState("");
-    const [textareaHeight, setTextareaHeight] = useState('4rem');
 
     useEffect(() => {
         if (isOpen) {
             resetWidth();
+            setInput("");
+            if (textareaRef.current) {
+                textareaRef.current.style.height = '4rem';
+            }
         } else {
             collapse();
         }
     }, [isOpen]);
+
+    const adjustTextareaHeight = () => {
+        const textarea = textareaRef.current;
+        if (textarea) {
+            textarea.style.height = '4rem';
+            textarea.style.height = `${Math.min(textarea.scrollHeight, 320)}px`; // Max 20rem (320px)
+        }
+    };
+
+    useEffect(() => {
+        adjustTextareaHeight();
+    }, [input]);
 
     const handleMouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         e.preventDefault();
@@ -79,20 +95,6 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
         }
     };
 
-    const adjustTextareaHeight = () => {
-        const textarea = textareaRef.current;
-        if (textarea) {
-            textarea.style.height = '4rem'; // Reset to minimum height
-            const newHeight = Math.min(textarea.scrollHeight, 320); // Max height of 20rem (320px)
-            textarea.style.height = `${newHeight}px`;
-            setTextareaHeight(`${newHeight}px`);
-        }
-    };
-
-    useEffect(() => {
-        adjustTextareaHeight();
-    }, [input]);
-
     return (
         <aside
             ref={chatbotRef}
@@ -121,17 +123,11 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
                     </div>
                 </div>
                 <div className="sticky p-4 bottom-0 flex flex-col text-sm z-10 bg-none w-full">
-                    <div className="flex flex-col justify-between gap-2 bg-white shadow-feint rounded-xl border border-border3 pt-1 pb-2">
+                    <div className="flex flex-col justify-between gap-2 bg-white shadow-feint rounded-xl border border-border3 pt-1 pb-2 min-h-[4rem] max-h-[20rem]">
                         <Textarea
                             ref={textareaRef}
-                            placeholder="Ask the document a question..."
-                            className="w-full resize-none focus:outline-none focus:ring-0 border-none placeholder:text-textGray2 !outline-none !ring-0 !ring-offset-0 scrollbar-hide"
-                            style={{ 
-                                height: textareaHeight,
-                                minHeight: '4rem', 
-                                maxHeight: '20rem', 
-                                overflowY: 'auto'
-                            }}
+                            placeholder="Ask Noto anything!"
+                            className="w-full resize-none focus:outline-none focus:ring-0 border-none placeholder:placeholder-light-gray !outline-none !ring-0 !ring-offset-0 scrollbar-hide min-h-[4rem] overflow-y-auto"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                         />
