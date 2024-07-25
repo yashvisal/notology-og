@@ -21,7 +21,7 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
 
     if (document === undefined) {
         return (
-            <nav className="bg-background px-3 py-3 w-full flex items-center gap-x-4">
+            <nav className="bg-background px-3 py-3 w-full flex items-center gap-x-2">
                 <Title.Skeleton />
             </nav>
         );
@@ -32,7 +32,7 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
     }
 
     return (
-        <nav className="bg-background px-3.5 py-4 w-full flex items-center gap-x-4 border-b">
+        <nav className="bg-background px-3.5 py-4 w-full flex items-center gap-x-2 border-b">
             {isCollapsed && (
                 <div 
                     onClick={onResetWidth} 
