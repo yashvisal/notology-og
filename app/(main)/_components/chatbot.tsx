@@ -85,6 +85,7 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
         >
             <div
                 onMouseDown={handleMouseDown}
+                onClick={resetWidth}
                 className="opacity-0 transition cursor-ew-resize absolute h-full w-1 bg-primary/20 left-0 top-0"
             />
             {/* Chatbot content goes here */}
