@@ -6,6 +6,7 @@ import {
   UnderlineIcon,
   StrikethroughIcon,
   CodeIcon,
+  Highlighter
 } from "lucide-react";
 import type { SelectorItem } from "./node-selector";
 import { Button } from "@/components/ui/button";
