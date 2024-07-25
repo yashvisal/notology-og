@@ -122,6 +122,5 @@ export const defaultExtensions = [
   taskItem,
   horizontalRule,
   aiHighlight,
-  dragHandle,
   AutoJoiner,
 ];

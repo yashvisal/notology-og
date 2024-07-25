@@ -65,9 +65,9 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
                 onKeyDown={onKeyDown}
                 className={`absolute top-0 left-0 w-full h-[50px] pb-[11.5px] text-4xl bg-transparent font-semibold break-words outline-none resize-none ${
                     isDefault || (!isEditing && initialData.title === "Untitled")
-                        ? "text-gray-400"
-                        : "text-[#000000] dark:text-[#CFCFCF]"
-                }`}
+                        ? "text-light-gray"
+                        : "text-[#000000]"
+                } placeholder-light-gray`}
                 placeholder="Untitled"
                 readOnly={!isEditing}
             />

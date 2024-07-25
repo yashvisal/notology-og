@@ -9,7 +9,7 @@
   
     ul,
     ol {
-      @apply py-0 my-6 first:mt-0 last:mb-0 pl-6;
+      @apply py-0 my-3 first:mt-0 last:mb-0 pl-6;
   
       ul,
       ol,
@@ -24,7 +24,7 @@
   
     & > ul,
     & > ol {
-      @apply my-8 first:mt-0 last:mb-0;
+      @apply my-4 first:mt-0 last:mb-0;
     }
   
     ul[data-type='taskList'] {

@@ -1,14 +1,14 @@
 .ProseMirror .is-editor-empty:first-child::before {
     content: attr(data-placeholder);
     float: left;
-    color: hsl(var(--muted-foreground));
+    color: hsl(var(--light-gray));
     pointer-events: none;
     height: 0;
   }
   .ProseMirror .is-empty::before {
-    content: attr(data-placeholder);
+    /* content: attr(data-placeholder); */
     float: left;
-    color: hsl(var(--muted-foreground));
+    color: hsl(var(--light-gray));
     pointer-events: none;
     height: 0;
   }
@@ -109,11 +109,7 @@
 
   .ProseMirror {
     @apply caret-black dark:caret-white outline-0;
-  
-    .selection {
-      @apply inline;
-    }
-  
+
     .selection,
     *::selection {
       @apply bg-blue-100 text-blue-500 dark:bg-white/20;

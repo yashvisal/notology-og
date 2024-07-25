@@ -33,18 +33,20 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
     }
     
     return ( 
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col min-h-screen">
             <Navbar 
                 isCollapsed={isCollapsed}
                 onResetWidth={() => setIsCollapsed(false)}
             />
-            <div className="flex-1 overflow-y-auto">
-                <div className="md:max-w-2xl lg:max-w-3xl mx-auto pt-8 px-8">
+            <div className="flex-1 overflow-y-auto" style={{ scrollbarGutter: 'stable' }}>
+                <div className="md:max-w-2xl lg:max-w-3xl mx-auto pt-16 px-8 pb-32">
                     <Toolbar initialData={document}/>
-                    <Editor
-                        initialContent={value}
-                        onChange={setValue}
-                    />
+                    <div className="mt-2">
+                        <Editor
+                            initialContent={value}
+                            onChange={setValue}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

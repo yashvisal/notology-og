@@ -32,6 +32,9 @@
       --input: 240 5.9% 90%;
       --ring: 240 5.9% 10%;
       --radius: 0.5rem;
+
+      --light-gray: 0 0% 75%; /* Very light gray */
+      --dark-gray: 0 0% 40%; /* Medium-light gray */
     }
   
     .dark {
@@ -55,7 +58,15 @@
       --input: 240 3.7% 15.9%;
       --ring: 240 4.9% 83.9%;
     }
-  }  
+  }
+
+  .text-light-gray {
+    color: hsl(var(--light-gray));
+  }
+
+  .placeholder-light-gray::placeholder {
+    color: hsl(var(--light-gray));
+  }
 
   @layer base {
     * {
