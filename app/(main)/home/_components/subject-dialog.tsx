@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import SubjectForm, { formSchema } from "./subject-form";
 import { z } from "zod";
 import { uploadToS3 } from "@/lib/s3";
+import { v4 as uuidv4 } from 'uuid'; // Make sure to install this package
 
 export function CreateSubjectDialog({
   children,
@@ -33,6 +34,8 @@ export function CreateSubjectDialog({
       return;
     }
 
+    const filesToProcess = [];
+
     try {
       const subjectId = await createSubject({ name: values.name });
 
@@ -40,18 +43,18 @@ export function CreateSubjectDialog({
         try {
           const result = await uploadToS3(file);
           if (!result || !result.file_key || !result.file_name) {
-            throw new Error("Failed to upload file to S3");
+            throw new Error("Failed to upload file");
           }
 
-          await createFile({
+          const fileId = await createFile({
             fileName: result.file_name,
             fileId: result.file_key,
             subjectId,
           });
+          
+          filesToProcess.push(fileId);
         } catch (error) {
-          console.error("Error uploading file:", error);
           toast.error(`Failed to upload file: ${file.name}`);
-          // Optionally, you might want to break the loop or continue to the next file
         }
       }
 
@@ -59,8 +62,18 @@ export function CreateSubjectDialog({
       router.refresh();
       toast.success("Subject created successfully!");
     } catch (error) {
-      console.error(error);
       toast.error("Failed to create subject");
+    }
+
+    if (filesToProcess.length > 0) {
+      const processingId = uuidv4();
+      fetch('/api/load-documents', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ fileIds: filesToProcess, processingId }),
+      });
     }
   };
 

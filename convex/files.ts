@@ -25,6 +25,28 @@ export const createFile = mutation({
   },
 });
 
+export const processDocument = mutation({
+  args: { fileId: v.string() },
+  handler: async (ctx, args) => {
+    return args.fileId;
+  }
+});
+
+export const updateFileContent = mutation({
+  args: { fileId: v.id("fileUploads"), content: v.string() },
+  handler: async (ctx, args) => {
+    const file = await ctx.db.get(args.fileId);
+    
+    if (!file) {
+      throw new Error(`File not found for fileId: ${args.fileId}`);
+    }
+
+    await ctx.db.patch(args.fileId, { processedContent: args.content });
+    
+    return { success: true, fileId: args.fileId };
+  },
+});
+
 export const getFilesBySubject = query({
   args: { subjectId: v.id("subjects"), userId: v.string() },
   handler: async (ctx, args) => {
@@ -44,4 +66,12 @@ export const getFilesBySubject = query({
       .collect();
     return files;
   }
+});
+// New query to get file details
+export const getFile = query({
+  args: { fileId: v.id("fileUploads") },
+  handler: async (ctx, args) => {
+    const file = await ctx.db.get(args.fileId);
+    return file;
+  },
 });
