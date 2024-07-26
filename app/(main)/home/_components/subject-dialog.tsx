@@ -15,6 +15,7 @@ import {
 import { toast } from "sonner";
 import SubjectForm, { formSchema } from "./subject-form";
 import { z } from "zod";
+import { uploadToS3 } from "@/lib/s3";
 
 export function CreateSubjectDialog({
   children,
@@ -23,7 +24,6 @@ export function CreateSubjectDialog({
 }) {
   const router = useRouter();
   const createSubject = useMutation(api.subjects.createSubject);
-  const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const [isOpen, setIsOpen] = useState(false);
   const createFile = useMutation(api.files.createFile);
 
@@ -37,19 +37,22 @@ export function CreateSubjectDialog({
       const subjectId = await createSubject({ name: values.name });
 
       for (const file of values.files || []) {
-        const postUrl = await generateUploadUrl();
-        const result = await fetch(postUrl, {
-          method: "POST",
-          headers: { "Content-Type": file.type },
-          body: file,
-        });
-        const { storageId } = await result.json();
+        try {
+          const result = await uploadToS3(file);
+          if (!result || !result.file_key || !result.file_name) {
+            throw new Error("Failed to upload file to S3");
+          }
 
-        await createFile({
-          fileName: file.name,
-          fileId: storageId,
-          subjectId,
-        });
+          await createFile({
+            fileName: result.file_name,
+            fileId: result.file_key,
+            subjectId,
+          });
+        } catch (error) {
+          console.error("Error uploading file:", error);
+          toast.error(`Failed to upload file: ${file.name}`);
+          // Optionally, you might want to break the loop or continue to the next file
+        }
       }
 
       setIsOpen(false);

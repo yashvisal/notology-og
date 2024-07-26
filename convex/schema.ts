@@ -33,5 +33,5 @@ export default defineSchema({
     userId: v.string(),
   })
   .index("by_user", ["userId"])
-  .index("by_user_and_subject", ["userId", "subjectId"]),
-});
+  .index("by_user_and_subject", ["userId", "subjectId"])
+})

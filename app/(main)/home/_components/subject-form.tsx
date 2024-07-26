@@ -20,7 +20,13 @@ import { Spinner } from "@/components/spinner";
 
 export const formSchema = z.object({
   name: z.string().min(1, "Subject name is required").max(50, "Subject name is too long"),
-  files: z.array(z.instanceof(File)).optional(),
+  files: z
+    .array(z.instanceof(File))
+    .refine(
+      (files) => files.reduce((acc, file) => acc + file.size, 0) <= 10 * 1024 * 1024,
+      "Total file size must be less than 10MB. Please upload a smaller file."
+    )
+    .optional(),
 });
 
 interface SubjectFormProps {

@@ -5,7 +5,7 @@ export const createFile = mutation({
   args: { 
     fileName: v.string(), 
     fileId: v.string(), 
-    subjectId: v.id("subjects") 
+    subjectId: v.id("subjects"),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -18,15 +18,15 @@ export const createFile = mutation({
       fileName: args.fileName,
       fileId: args.fileId,
       subjectId: args.subjectId,
-      userId
+      userId,
     });
-
+    
     return fileId;
   },
 });
 
 export const getFilesBySubject = query({
-  args: { subjectId: v.id("subjects") },
+  args: { subjectId: v.id("subjects"), userId: v.string() },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
 
@@ -42,14 +42,6 @@ export const getFilesBySubject = query({
         q.eq("userId", userId).eq("subjectId", args.subjectId)
       )
       .collect();
-    
     return files;
   }
 });
-
-export const generateUploadUrl = mutation({
-  args: {},
-  handler: async (ctx) => {
-    return await ctx.storage.generateUploadUrl()
-  },
-})
