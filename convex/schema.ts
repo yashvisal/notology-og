@@ -36,4 +36,4 @@ export default defineSchema({
   .index("by_user", ["userId"])
   .index("by_user_and_subject", ["userId", "subjectId"])
   .index("by_file_id", ["fileId"])
-})
+});

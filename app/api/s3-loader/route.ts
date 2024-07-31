@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { S3Loader } from "@langchain/community/document_loaders/web/s3";
 
 export async function POST(request: Request) {
-  console.log("S3 loader route called");
   try {
     const body = await request.json();
     const { s3Key } = body;
@@ -27,7 +26,7 @@ export async function POST(request: Request) {
         },
       },
       unstructuredAPIURL: process.env.NEXT_PUBLIC_UNSTRUCTURED_API_URL!,
-      unstructuredAPIKey: process.env.NEXT_PUBLIC_UNSTRUCTURED_API_KEY!
+      unstructuredAPIKey: process.env.NEXT_PUBLIC_UNSTRUCTURED_API_KEY!,
     });
 
     const docs = await loader.load();
