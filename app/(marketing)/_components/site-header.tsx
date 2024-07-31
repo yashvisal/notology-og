@@ -43,7 +43,7 @@ export function SiteHeader() {
             )}
             {isAuthenticated && !isLoading && (
               <>
-                <Button
+                {/* <Button
                   className="rounded-xl"
                   size="xs"
                   variant="outline"
@@ -52,7 +52,7 @@ export function SiteHeader() {
                   <Link href="/home">
                     Launch app
                   </Link>
-                </Button>
+                </Button> */}
                 <UserButton 
                   afterSignOutUrl="/"
                 />
