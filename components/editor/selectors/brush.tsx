@@ -66,7 +66,7 @@ export const BrushItem = ({ open, onOpenChange }: BrushProps) => {
       </PopoverTrigger>
       <PopoverContent
         align="start"
-        className="w-[200px] p-1 rounded-xl"
+        className="w-[180px] p-1 rounded-xl"
         sideOffset={7.5}
       >
         <div className="flex flex-col gap-y-1 pb-2">
@@ -89,7 +89,7 @@ export const BrushItem = ({ open, onOpenChange }: BrushProps) => {
                 key={color.name}
                 size="xs"
                 variant="ghost"
-                className="w-[22px] h-[22px] p-0 rounded-md"
+                className="w-5 h-5 p-0 rounded-md"
                 style={{
                   backgroundColor: color.text,
                 }}
@@ -101,7 +101,7 @@ export const BrushItem = ({ open, onOpenChange }: BrushProps) => {
             <Button
               size="xs"
               variant="ghost"
-              className="w-[22px] h-[22px] p-0 rounded-md flex items-center justify-center hover:bg-background group"
+              className="w-5 h-5 p-0 rounded-md flex items-center justify-center hover:bg-background group"
               onClick={resetBrushEffect}
             >
               <Trash2 className="h-4 w-4 group-hover:text-red-500" />
