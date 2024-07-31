@@ -26,6 +26,7 @@ import { slashCommand, suggestionItems } from "./slash-command";
 import { uploadFn } from "./image-upload";
 import { HighlighterItem } from "./selectors/highlighter";
 import { TextColorPicker } from "./selectors/text-color";
+import { BrushItem } from "./selectors/brush";
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -38,6 +39,7 @@ const Editor = ({ initialContent, onChange }: EditorProp) => {
   const [openLink, setOpenLink] = useState(false);
   const [openColor, setOpenColor] = useState(false);
   const [openHighlight, setOpenHighlight] = useState(false);
+  const [openBrush, setOpenBrush] = useState(false);
 
   return (
     <EditorRoot>
@@ -102,6 +104,7 @@ const Editor = ({ initialContent, onChange }: EditorProp) => {
           />
           <TextColorPicker open={openColor} onOpenChange={setOpenColor} />
           <HighlighterItem open={openHighlight} onOpenChange={setOpenHighlight} />
+          <BrushItem open={openBrush} onOpenChange={setOpenBrush} />
           
           <Separator
             orientation="vertical"

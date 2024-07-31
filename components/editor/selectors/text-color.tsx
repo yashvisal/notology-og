@@ -1,5 +1,5 @@
 import { useEditor } from "novel";
-import { Highlighter, Trash2, Type } from "lucide-react";
+import { Trash2, Type } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
