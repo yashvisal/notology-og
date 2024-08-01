@@ -67,6 +67,7 @@ export const getFilesBySubject = query({
     return files;
   }
 });
+
 // New query to get file details
 export const getFile = query({
   args: { fileId: v.id("fileUploads") },
