@@ -6,10 +6,11 @@ description = ""
 authors = ["yashvisal <yashvisal@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "~3.12"
 langchain = "^0.2.11"
 langchain-openai = "^0.1.20"
 python-dotenv = "^1.0.1"
+unstructured = {extras = ["pinecone", "s3"], version = "^0.15.0"}
 
 
 [build-system]
