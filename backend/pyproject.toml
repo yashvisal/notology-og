@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "notology"
+version = "0.1.0"
+description = ""
+authors = ["yashvisal <yashvisal@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+langchain-openai = "^0.1.20"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

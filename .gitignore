@@ -37,3 +37,6 @@ next-env.d.ts
 
 .npmrc
 .env.local
+
+# Python
+/backend/.venv/
