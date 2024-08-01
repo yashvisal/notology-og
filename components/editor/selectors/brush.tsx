@@ -70,7 +70,7 @@ export const BrushItem = ({ open, onOpenChange }: BrushProps) => {
         sideOffset={7.5}
       >
         <div className="flex flex-col gap-y-1 pb-2">
-          <div className="text-xs text-center bg-background rounded-xl pt-1">
+          <div className="text-xs text-center bg-background rounded-xl pt-2">
             <span
               style={{
                 color: hoverColor ? hoverColor.text : "currentColor",
@@ -82,7 +82,7 @@ export const BrushItem = ({ open, onOpenChange }: BrushProps) => {
               Hover on a color to test out this custom brush effect!
             </span>
           </div>
-          <Separator className="my-1.5 w-[150px] mx-auto" />
+          <Separator className="my-2 w-[150px] mx-auto" />
           <div className="grid grid-cols-4 gap-y-2 place-items-center">
             {colorOptions.map((color) => (
               <Button
