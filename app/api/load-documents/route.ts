@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 import { api } from "@/convex/_generated/api";
-import { fetchQuery, fetchMutation } from "convex/nextjs";
+import { fetchQuery } from "convex/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
+import { useParams } from 'next/navigation';
+
+const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8000';
 
 export async function POST(request: Request) {
-  try {
+  try {   
     const body = await request.json();
     const { fileIds, processingId } = body;
 
@@ -21,20 +24,19 @@ export async function POST(request: Request) {
           throw new Error(`File not found for fileId: ${fileId}`);
         }
 
-        const s3Key = file.fileId;
+        const s3_key = file.fileId;
+        // const namespace = `${file.userId}_${file.subjectId}`;
 
-        if (!s3Key) {
+        if (!s3_key) {
           throw new Error(`S3 key missing for fileId: ${fileId}`);
         }
 
-        const s3LoaderUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/s3-loader`;
-        const s3Response = await axios.post(s3LoaderUrl, { s3Key });
-        const docs = s3Response.data;
-
-        await fetchMutation(api.files.updateFileContent, { fileId, content: JSON.stringify(docs) });
+        await axios.post(`${FASTAPI_URL}/ingest`, { s3_key });
         
+        console.log(`Ingestion successful for fileId: ${fileId}`);
         return { fileId, success: true };
       } catch (error) {
+        console.error(`Ingestion failed for fileId: ${fileId}:`, error);
         return { fileId, success: false, error: String(error) };
       }
     };
@@ -43,7 +45,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ 
       success: true, 
-      message: "File processing completed", 
+      message: "File processing initiated", 
       results,
       processingId 
     });
