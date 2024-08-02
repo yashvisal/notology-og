@@ -25,38 +25,45 @@ def get_writer():
         write_config=PineconeWriteConfig(batch_size=80),
     )
 
-if __name__ == "__main__":
-    writer = get_writer()
+def run_ingestion(s3_key: str):
+    url = f"{os.getenv("NEXT_PUBLIC_S3_URL")}{s3_key}"
+    # writer = get_writer()
     runner = S3Runner(
         processor_config=ProcessorConfig(
             verbose=True,
-            output_dir="s3-output-to-pinecone", # check
+            output_dir="s3-output-to-pinecone",
             num_processes=4,
         ),
         read_config=ReadConfig(),
         partition_config=PartitionConfig(
-            # partitioning configs
             strategy="hi_res",
-
-            # process configs
             api_key=os.getenv("UNSTRUCTURED_API_KEY"),
             partition_by_api=True,
             partition_endpoint=os.getenv("UNSTRUCTURED_API_URL"),
         ),
-        chunking_config=ChunkingConfig(chunk_elements=True),
+        chunking_config=ChunkingConfig(
+            chunking_strategy="by_title",
+            max_characters=500,
+            overlap=50
+        ),
         embedding_config=EmbeddingConfig(
-            provider="langchain-huggingface",
-            api_key=None
+            provider="langchain-openai",
+            api_key=os.getenv("OPENAI_API_KEY")
         ),
         connector_config=SimpleS3Config(
             access_config=S3AccessConfig(
                 key=os.getenv("NEXT_PUBLIC_S3_ACCESS_KEY_ID"),
                 secret=os.getenv("NEXT_PUBLIC_S3_SECRET_ACCESS_KEY")
             ),
-            remote_url=os.getenv("NEXT_PUBLIC_S3_URL"),
-            # NEXT_PUBLIC_S3_URL=s3://notology/uploads/
+            remote_url=url,
         ),
-        writer=writer,
-        writer_kwargs={},
+        # writer=writer,
+        # writer_kwargs={},
     )
-    runner.run()
+    return runner.run()
+
+# if __name__ == "__main__":
+#     # This block is for testing purposes only
+#     test_s3_key = "test_file.pdf"
+#     result = run_ingestion(test_s3_key)
+#     print(result)
