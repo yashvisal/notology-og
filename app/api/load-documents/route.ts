@@ -25,13 +25,13 @@ export async function POST(request: Request) {
         }
 
         const s3_key = file.fileId;
-        // const namespace = `${file.userId}_${file.subjectId}`;
+        const namespace = `${file.userId}_${file.subjectId}`;
 
         if (!s3_key) {
           throw new Error(`S3 key missing for fileId: ${fileId}`);
         }
 
-        await axios.post(`${FASTAPI_URL}/ingest`, { s3_key });
+        await axios.post(`${FASTAPI_URL}/ingest`, { s3_key, namespace });
         
         console.log(`Ingestion successful for fileId: ${fileId}`);
         return { fileId, success: true };
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
 
     const results = await Promise.all(fileIds.map(fileId => processFile(fileId as Id<"fileUploads">)));
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true, 
       message: "File processing initiated", 
       results,

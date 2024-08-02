@@ -5,8 +5,8 @@ export default defineSchema({
   subjects: defineTable({
     name: v.string(),
     userId: v.string(),
-    fileId: v.optional(v.string()),
     isArchived: v.boolean(),
+    namespace: v.string(),
   })
   .index("by_user", ["userId"])
   .index("by_user_and_archived", ["userId", "isArchived"]),
@@ -31,7 +31,6 @@ export default defineSchema({
     fileId: v.string(),
     subjectId: v.id("subjects"),
     userId: v.string(),
-    processedContent: v.optional(v.string()),
   })
   .index("by_user", ["userId"])
   .index("by_user_and_subject", ["userId", "subjectId"])
