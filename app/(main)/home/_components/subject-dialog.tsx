@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import SubjectForm, { formSchema } from "./subject-form";
 import { z } from "zod";
 import { uploadToS3 } from "@/lib/s3";
-import { v4 as uuidv4 } from 'uuid'; // Make sure to install this package
+import { v4 as uuidv4 } from 'uuid';
 
 export function CreateSubjectDialog({
   children,
