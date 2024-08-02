@@ -42,3 +42,4 @@ next-env.d.ts
 /backend/.venv/
 .env.local
 /backend/__pycache__/
+/backend/s3-ingest-output/

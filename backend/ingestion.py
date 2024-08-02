@@ -1,10 +1,5 @@
 import os
 from unstructured.ingest.connector.fsspec.s3 import SimpleS3Config, S3AccessConfig
-from unstructured.ingest.connector.pinecone import (
-    PineconeAccessConfig,
-    PineconeWriteConfig,
-    SimplePineconeConfig,
-)
 from unstructured.ingest.interfaces import (
     ChunkingConfig,
     EmbeddingConfig,
@@ -13,25 +8,13 @@ from unstructured.ingest.interfaces import (
     ReadConfig,
 )
 from unstructured.ingest.runner import S3Runner
-from unstructured.ingest.runner.writers.pinecone import PineconeWriter
 
-def get_writer():
-    return PineconeWriter(
-        connector_config=SimplePineconeConfig(
-            access_config=PineconeAccessConfig(api_key=os.getenv("PINECONE_API_KEY")),
-            index_name=os.getenv("PINECONE_INDEX_NAME"),
-            environment=os.getenv("PINECONE_ENVIRONMENT"),
-        ),
-        write_config=PineconeWriteConfig(batch_size=80),
-    )
-
-def run_ingestion(s3_key: str):
+def s3_index(s3_key: str):
     url = f"{os.getenv("NEXT_PUBLIC_S3_URL")}{s3_key}"
-    # writer = get_writer()
     runner = S3Runner(
         processor_config=ProcessorConfig(
             verbose=True,
-            output_dir="s3-output-to-pinecone",
+            output_dir="s3-ingest-output",
             num_processes=4,
         ),
         read_config=ReadConfig(),
@@ -57,13 +40,12 @@ def run_ingestion(s3_key: str):
             ),
             remote_url=url,
         ),
-        # writer=writer,
-        # writer_kwargs={},
     )
-    return runner.run()
+    runner.run()
 
-# if __name__ == "__main__":
-#     # This block is for testing purposes only
-#     test_s3_key = "test_file.pdf"
-#     result = run_ingestion(test_s3_key)
-#     print(result)
+def pinecone_upsert(namespace: str):
+    pass
+
+def run_ingestion(s3_key: str, namespace: str):
+    s3_index(s3_key)
+    pinecone_upsert(namespace)
