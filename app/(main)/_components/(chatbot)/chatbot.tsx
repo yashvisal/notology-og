@@ -3,8 +3,6 @@
 import { cn } from "@/lib/utils";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import Image from 'next/image';
-import { Textarea } from "@/components/ui/textarea";
-import { ArrowUp } from "lucide-react";
 import { TextInput } from "./text-input";
 
 interface ChatbotProps {

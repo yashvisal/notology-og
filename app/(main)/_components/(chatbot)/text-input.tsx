@@ -1,6 +1,6 @@
 "use client";
 
-import { ElementRef, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowUp } from "lucide-react";
 
@@ -15,8 +15,7 @@ export const TextInput = ({ onSend }: TextInputProps) => {
   const adjustTextareaHeight = () => {
     const textarea = textareaRef.current;
     if (textarea) {
-      textarea.style.height = '4rem';
-      textarea.style.height = `${Math.min(textarea.scrollHeight, 320)}px`; // Max 20rem (320px)
+      textarea.style.height = input ? `${Math.min(textarea.scrollHeight, 320)}px` : "4rem"; // Max 20rem (320px)
     }
   };
 
@@ -29,7 +28,7 @@ export const TextInput = ({ onSend }: TextInputProps) => {
       onSend(input.trim());
       setInput("");
       if (textareaRef.current) {
-        textareaRef.current.style.height = '4rem';
+        textareaRef.current.style.height = "4rem";
       }
     }
   };
@@ -44,7 +43,7 @@ export const TextInput = ({ onSend }: TextInputProps) => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
+            if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
               handleSend();
             }
