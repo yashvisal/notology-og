@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from ingestion.ingest import run_ingestion
+from ingest import run_ingestion
 import logging
 import traceback
 
@@ -23,4 +23,4 @@ async def ingest(request: IngestRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="localhost", port=8000)
+    uvicorn.run(app, host="localhost", port=8001)

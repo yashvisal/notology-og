@@ -14,7 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { JSONContent } from "novel";
 import { DocBanner } from "../../_components/doc-banner";
-import { Chatbot } from "../../_components/(chatbot)/chatbot";
+import { Chat } from "../../../../components/chatbot/chat";
 
 interface DocumentIdPageProps {
     params: {
@@ -102,7 +102,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
                         </div>
                     </div>
                 </div>
-                <Chatbot 
+                <Chat
                     isOpen={isChatbotOpen} 
                     onClose={() => setIsChatbotOpen(false)}
                     onResize={handleChatbotResize}

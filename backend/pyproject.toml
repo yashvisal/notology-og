@@ -11,10 +11,13 @@ langchain = "^0.2.11"
 langchain-openai = "^0.1.20"
 python-dotenv = "^1.0.1"
 unstructured = {extras = ["openai", "pinecone", "s3"], version = "^0.15.0"}
+langgraph = "^0.1.19"
 langserve = {extras = ["all"], version = "^0.2.2"}
 fastapi = "^0.111.1"
 uvicorn = "^0.30.4"
 
+[tool.poetry.scripts]
+start = "notology.server:start"
 
 [build-system]
 requires = ["poetry-core"]
