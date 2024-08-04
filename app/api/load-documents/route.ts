@@ -3,7 +3,6 @@ import axios from 'axios';
 import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
-import { useParams } from 'next/navigation';
 
 const FASTAPI_URL = process.env.FASTAPI_URL || 'http://localhost:8000';
 
@@ -18,17 +17,16 @@ export async function POST(request: Request) {
 
     const processFile = async (fileId: Id<"fileUploads">) => {
       try {        
-        // Get the file information from Convex
         const file = await fetchQuery(api.files.getFile, { fileId });
         if (!file) {
           throw new Error(`File not found for fileId: ${fileId}`);
         }
 
         const s3_key = file.fileId;
-        const namespace = `${file.userId}_${file.subjectId}`;
+        const namespace = file.namespace;
 
-        if (!s3_key) {
-          throw new Error(`S3 key missing for fileId: ${fileId}`);
+        if (!s3_key || !namespace) {
+          throw new Error(`S3 key or namespace missing for fileId: ${fileId}`);
         }
 
         await axios.post(`${FASTAPI_URL}/ingest`, { s3_key, namespace });

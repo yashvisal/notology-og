@@ -6,6 +6,7 @@ export const createFile = mutation({
     fileName: v.string(), 
     fileId: v.string(), 
     subjectId: v.id("subjects"),
+    namespace: v.string(),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -19,6 +20,7 @@ export const createFile = mutation({
       fileId: args.fileId,
       subjectId: args.subjectId,
       userId,
+      namespace: args.namespace,
     });
     
     return fileId;

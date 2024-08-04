@@ -31,6 +31,7 @@ export default defineSchema({
     fileId: v.string(),
     subjectId: v.id("subjects"),
     userId: v.string(),
+    namespace: v.string(),
   })
   .index("by_user", ["userId"])
   .index("by_user_and_subject", ["userId", "subjectId"])
