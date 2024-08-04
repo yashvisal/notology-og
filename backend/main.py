@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from ingestion import run_ingestion
+from ingestion.ingest import run_ingestion
 import logging
 import traceback
 
@@ -17,7 +17,7 @@ async def ingest(request: IngestRequest):
         run_ingestion(request.s3_key, request.namespace)
         return {"message": "Ingestion successful"}
     except Exception as e:
-        error_msg = f"Ingest error: {str(e)}\n{traceback.format_exc()}"
+        error_msg = f"Ingest error: {request.s3_key}\n{traceback.format_exc()}"
         logging.error(error_msg)
         raise HTTPException(status_code=500, detail=error_msg)
 
