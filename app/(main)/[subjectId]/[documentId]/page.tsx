@@ -14,7 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 import { JSONContent } from "novel";
 import { DocBanner } from "../../_components/doc-banner";
-import { Chatbot } from "../../_components/chatbot";
+import { Chatbot } from "../../_components/(chatbot)/chatbot";
 
 interface DocumentIdPageProps {
     params: {
