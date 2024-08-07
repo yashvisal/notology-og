@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 
-import { Home, LibraryBig, MenuIcon, Search, Settings } from "lucide-react";
+import { Home, LibraryBig, MenuIcon, Plus, Search, Settings } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -18,6 +18,9 @@ import { Navbar } from "./navbar";
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
 import { SubjectCombobox } from "./subject-combobox";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { toast } from "sonner";
 
 export const Navigation = () => {
     const settings = useSettings();
@@ -26,6 +29,7 @@ export const Navigation = () => {
     const router = useRouter();
     const isMobile = useMediaQuery("(max-width: 768px)");
     const params = useParams();
+    const create = useMutation(api.documents.createDocument);
         
     const [activeSubject, setActiveSubject] = useState<Id<"subjects"> | null>(null);
     const isResizingRef = useRef(false);
@@ -148,13 +152,30 @@ export const Navigation = () => {
             <div className="px-3">
                 <Separator className="my-2"/>
             </div>
-            <div className="mt-3">
+            <div className="mt-2">
                 <SidebarList 
                     onSubjectClick={handleSubjectClick}
                 />
             </div>
         </>
     );
+
+    const handleCreateDocument = () => {
+        if (!activeSubject) return;
+        const promise = create({
+            title: "Untitled",
+            subjectId: activeSubject,
+            parentDocument: undefined
+        }).then((documentId) => {
+            router.push(`/${activeSubject}/${documentId}`);
+        });
+
+        toast.promise(promise, {
+            loading: "Creating a new document...",
+            success: "New document created!",
+            error: "Failed to create a new document."
+        });
+    };
 
     const renderSubjectSidebar = () => (
         <>
@@ -185,13 +206,16 @@ export const Navigation = () => {
             <div className="px-3">
                 <Separator className="my-2"/>
             </div>
-            <div className="mt-2">
-                <SidebarList
+            <Item
+                label="Create Document"
+                icon={Plus}
+                onClick={handleCreateDocument}
+            />
+            <SidebarList
                 parentDocumentId={undefined} 
                 subjectId={activeSubject!}
                 onSubjectClick={handleSubjectClick}
-                />
-            </div>
+            />
         </>
     );
 
