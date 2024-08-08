@@ -136,17 +136,17 @@ const DocumentList = ({ subjectId, level, parentDocumentId }: DocumentListProps)
         return <Item.Skeleton level={level} />;
     }
 
-    if (documents.length === 0) {
-        // TODO: empty subject handling
-        return (
-            <p
-                style={{ paddingLeft: `${(level * 12) + 37}px` }}
-                className="text-sm font-medium text-muted-foreground/80"
-            >
-                No pages inside
-            </p>
-        );
-    }
+    // if (documents.length === 0) {
+    //     // TODO: empty state handling
+    //     return (
+    //         <p
+    //             style={{ paddingLeft: `${(level * 12) + 37}px` }}
+    //             className="text-sm font-medium text-muted-foreground/80"
+    //         >
+    //             No pages inside
+    //         </p>
+    //     );
+    // }
 
     return (
         <>
