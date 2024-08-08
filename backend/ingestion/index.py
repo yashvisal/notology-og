@@ -1,7 +1,6 @@
 from unstructured.ingest.connector.fsspec.s3 import SimpleS3Config, S3AccessConfig
 from unstructured.ingest.interfaces import (
     ChunkingConfig,
-    EmbeddingConfig,
     PartitionConfig,
     ProcessorConfig,
     ReadConfig,
@@ -29,9 +28,9 @@ def s3_index(s3_key: str, namespace: str):
             partition_endpoint=os.getenv("UNSTRUCTURED_API_URL"),
         ),
         chunking_config=ChunkingConfig(
-            chunking_strategy="by_title",
-            max_characters=500,
-            overlap=50
+            chunking_strategy="basic",
+            max_characters=750,
+            overlap=75
         ),
         connector_config=SimpleS3Config(
             access_config=S3AccessConfig(
