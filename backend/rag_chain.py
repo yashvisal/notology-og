@@ -132,10 +132,6 @@ def generate(state):
 
     llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0, streaming=True)
 
-    # Post-processing, not used though
-    # def format_docs(docs):
-    #     return "\n\n".join(doc.page_content for doc in docs)
-
     rag_chain = prompt | llm | StrOutputParser()
 
     response = rag_chain.invoke({"context": docs, "question": question})
