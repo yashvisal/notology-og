@@ -1,11 +1,12 @@
 import os
 from dotenv import load_dotenv
-load_dotenv()
 import json
 from langchain_community.vectorstores import Pinecone
 from langchain_openai import OpenAIEmbeddings
 from langchain.schema import Document
 import logging
+
+load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
