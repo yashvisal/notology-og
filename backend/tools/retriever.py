@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 from langchain.tools.retriever import create_retriever_tool
 from langchain_community.vectorstores import Pinecone
 from langchain_openai import OpenAIEmbeddings
-from langchain.prompts import PromptTemplate
 
 load_dotenv()
 
