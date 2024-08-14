@@ -16,6 +16,13 @@ fastapi = "^0.111.1"
 uvicorn = "^0.30.4"
 langchain-community = "^0.2.11"
 langgraph = "^0.2.2"
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+httpx = "^0.27.0"
+convex = "^0.6.0"
+
+[tool.poetry.scripts]
+start = "notology.server:start"
+ingest = "notology.main:start"
 
 [build-system]
 requires = ["poetry-core"]
