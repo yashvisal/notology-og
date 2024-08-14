@@ -85,3 +85,9 @@
       @apply bg-background text-foreground;
     }
   }
+
+  @layer utilities {
+    .scrollbar-gutter-stable {
+      scrollbar-gutter: stable;
+    }
+  }
