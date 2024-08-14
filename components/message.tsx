@@ -1,4 +1,6 @@
 import Markdown from "react-markdown";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { useUser } from "@clerk/clerk-react";
 
 export interface MessageTextProps {
   content: string;
@@ -6,18 +8,34 @@ export interface MessageTextProps {
 
 export function AIMessageText(props: MessageTextProps) {
   return (
-    <div className="flex mr-auto w-fit max-w-[700px] bg-blue-400 rounded-md px-2 py-2">
-      <p className="text-normal text-gray-50 text-left break-words">
+    <div className="flex flex-col">
+      <div className="flex items-center mb-2 mt-2">
+        <div className="relative h-3 w-3 mr-2">
+          <Avatar className="h-3 w-3 bg-gray-300"/>
+        </div>
+        <span className="text-xs text-black">NOTO</span>
+      </div>
+      <div className="text-normal text-black">
         <Markdown>{props.content}</Markdown>
-      </p>
+      </div>
     </div>
   );
 }
 
 export function HumanMessageText(props: MessageTextProps) {
+  const { user } = useUser();
+
   return (
-    <div className="flex ml-auto w-fit max-w-[700px] bg-gray-200 rounded-md px-2 py-2">
-      <p className="text-normal text-gray-800 text-left break-words">
+    <div className="flex flex-col">
+      <div className="flex items-center mb-2 mt-2">
+        <div className="relative h-3 w-3 mr-2">
+          <Avatar className="h-3 w-3">
+            <AvatarImage src={user?.imageUrl} />
+          </Avatar>
+        </div>
+        <span className="text-xs text-black">YOU</span>
+      </div>
+      <p className="text-normal text-black">
         {props.content}
       </p>
     </div>

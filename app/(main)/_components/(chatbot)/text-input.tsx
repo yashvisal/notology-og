@@ -15,7 +15,7 @@ export const TextInput = ({ onSend }: TextInputProps) => {
   const adjustTextareaHeight = () => {
     const textarea = textareaRef.current;
     if (textarea) {
-      textarea.style.height = input ? `${Math.min(textarea.scrollHeight, 320)}px` : "4rem"; // Max 20rem (320px)
+      textarea.style.height = input ? `${Math.min(textarea.scrollHeight, 240)}px` : "36px"; // Max 15rem (240px)
     }
   };
 
@@ -28,18 +28,18 @@ export const TextInput = ({ onSend }: TextInputProps) => {
       onSend(input.trim());
       setInput("");
       if (textareaRef.current) {
-        textareaRef.current.style.height = "4rem";
+        textareaRef.current.style.height = "36px";
       }
     }
   };
 
   return (
     <div className="sticky p-4 bottom-0 flex flex-col text-sm z-10 bg-none w-full">
-      <div className="flex flex-col justify-between gap-2 bg-white shadow-feint rounded-xl border border-border3 pt-1 pb-2 min-h-[4rem] max-h-[20rem]">
+      <div className="flex flex-col justify-between gap-2 bg-white shadow-feint rounded-xl border border-border3 pt-1 pb-2 min-h-[36px] max-h-[15rem]">
         <Textarea
           ref={textareaRef}
           placeholder="Ask Noto anything!"
-          className="w-full resize-none focus:outline-none focus:ring-0 border-none placeholder:placeholder-light-gray !outline-none !ring-0 !ring-offset-0 scrollbar-hide min-h-[4rem] overflow-y-auto"
+          className="w-full resize-none focus:outline-none focus:ring-0 border-none placeholder:placeholder-light-gray !outline-none !ring-0 !ring-offset-0 scrollbar-hide min-h-[36px] overflow-y-auto"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {

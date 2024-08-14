@@ -59,10 +59,10 @@ export default function Chat() {
     });
 
     newElements.push(
-      <div className="flex flex-col w-full gap-1 mt-auto" key={history.length}>
+      <div className="flex flex-col w-full gap-2 mt-2" key={history.length}>
         {selectedFile && <FileUploadMessage file={selectedFile} />}
         <HumanMessageText content={input} />
-        <div className="flex flex-col gap-1 w-full max-w-fit mr-auto">
+        <div className="flex flex-col gap-2 w-full max-w-fit mr-auto">
           {element.ui}
         </div>
       </div>,
@@ -107,9 +107,9 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col h-full justify-center w-full">
-      <div className="flex-grow overflow-y-auto p-4 text-sm">
+      <div className="flex-grow overflow-y-auto pt-1 pl-4 text-sm scrollbar-gutter-stable">
         <LocalContext.Provider value={onSubmit}>
-          <div className="flex flex-col w-full gap-1">
+          <div className="flex flex-col w-full">
             {elements}
           </div>
         </LocalContext.Provider>

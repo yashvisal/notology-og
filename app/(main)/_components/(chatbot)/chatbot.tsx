@@ -99,7 +99,6 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
             />
             <div className="flex flex-col items-center justify-between h-full w-full">
                 {/* ChatHeader component will go here */}
-                <div className="flex-1 flex flex-col items-center justify-center w-full text-center px-4 pt-4">
                     {/* For now, keeping the empty state here */}
                     {/* <Image 
                         src="/chatbot-empty-light.png" 
@@ -110,7 +109,6 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
                     <div className="text-center mt-4 text-primary">
                         Welcome back, send a message to get started!
                     </div> */}
-                </div>
                 <Chat />
             </div>
         </aside>
