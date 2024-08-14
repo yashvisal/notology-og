@@ -44,13 +44,17 @@ export const createSubject = mutation({
 
     const userId = identity.subject;
 
-    const subject = await ctx.db.insert("subjects", {
+    const subjectId = await ctx.db.insert("subjects", {
       name: args.name,
       userId,
       isArchived: false,
       namespace: "",
     });
 
-    return subject;
+    const subject = await ctx.db.patch(subjectId, {
+      namespace: `${userId}_${subjectId}`,
+    });
+
+    return subjectId;
   }
 });

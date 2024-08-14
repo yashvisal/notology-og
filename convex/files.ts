@@ -27,13 +27,6 @@ export const createFile = mutation({
   },
 });
 
-// export const processDocument = mutation({
-//   args: { fileId: v.string() },
-//   handler: async (ctx, args) => {
-//     return args.fileId;
-//   }
-// });
-
 export const getFilesBySubject = query({
   args: { subjectId: v.id("subjects"), userId: v.string() },
   handler: async (ctx, args) => {
@@ -55,7 +48,6 @@ export const getFilesBySubject = query({
   }
 });
 
-// New query to get file details
 export const getFile = query({
   args: { fileId: v.id("fileUploads") },
   handler: async (ctx, args) => {
