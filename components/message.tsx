@@ -1,7 +1,7 @@
 import Markdown from "react-markdown";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useUser } from "@clerk/clerk-react";
-import { Pencil, Sparkles, WandSparkles } from "lucide-react";
+import { Pencil, Sparkles } from "lucide-react";
 
 export interface MessageTextProps {
   content: string;
