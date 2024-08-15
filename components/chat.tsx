@@ -6,6 +6,7 @@ import { EndpointsContext } from "@/app/(main)/[subjectId]/[documentId]/agent";
 import { useActions } from "@/utils/client";
 import { LocalContext } from "@/app/(main)/[subjectId]/[documentId]/shared";
 import { HumanMessageText } from "./message";
+import Image from "next/image";
 
 export interface ChatProps {}
 
@@ -65,7 +66,7 @@ export default function Chat() {
         <div className="flex flex-col gap-2 w-full max-w-fit mr-auto">
           {element.ui}
         </div>
-      </div>,
+      </div>
     );
 
     // consume the value stream to obtain the final string value
@@ -106,11 +107,28 @@ export default function Chat() {
   }
 
   return (
-    <div className="flex flex-col h-full justify-center w-full">
+    <div className="flex flex-col h-full w-full">
       <div className="flex-grow overflow-y-auto pt-1 pl-4 text-sm scrollbar-gutter-stable">
         <LocalContext.Provider value={onSubmit}>
-          <div className="flex flex-col w-full">
-            {elements}
+          <div className="flex flex-col w-full h-full">
+            {elements.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full">
+                <div className="text-center w-full max-w-xs mx-auto">
+                  <Image 
+                    src="/chatbot-empty-light.png" 
+                    alt="Chatbot Empty State" 
+                    width={200} 
+                    height={200}
+                    className="mx-auto"
+                  />
+                  <div className="mt-4 text-primary">
+                    Welcome back, send a message to get started!
+                  </div>
+                </div>
+              </div>
+            ) : (
+              elements
+            )}
           </div>
         </LocalContext.Provider>
       </div>
