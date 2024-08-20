@@ -5,6 +5,11 @@ import { StreamEvent } from "@langchain/core/tracers/log_stream";
 import { EventHandlerFields } from "@/utils/server";
 import { createStreamableUI, createStreamableValue } from "ai/rsc";
 import { AIMessage } from "@/ai/message";
+import { RetrieverTool, RetrieverToolLoading } from "@/components/rag-ui";
+import { useParams } from "next/navigation";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 
 const API_URL = "http://localhost:8000/chat";
 
@@ -18,18 +23,10 @@ type ToolComponentMap = {
 };
 
 const TOOL_COMPONENT_MAP: ToolComponentMap = {
-  // "github-repo": {
-  //   loading: (props?: any) => <GithubLoading {...props} />,
-  //   final: (props?: any) => <Github {...props} />,
-  // },
-  // "invoice-parser": {
-  //   loading: (props?: any) => <InvoiceLoading {...props} />,
-  //   final: (props?: any) => <Invoice {...props} />,
-  // },
-  // "weather-data": {
-  //   loading: (props?: any) => <CurrentWeatherLoading {...props} />,
-  //   final: (props?: any) => <CurrentWeather {...props} />,
-  // },
+  "retriever-tool": {
+    loading: (props?: any) => <RetrieverToolLoading {...props} />,
+    final: (props?: any) => <RetrieverTool {...props} />,
+  },
 };
 
 async function agent(inputs: {
