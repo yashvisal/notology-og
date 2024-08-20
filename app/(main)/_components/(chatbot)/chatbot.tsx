@@ -2,9 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { ElementRef, useEffect, useRef, useState } from "react";
-import Image from 'next/image';
 import Chat from "@/components/chat";
-import { TextInput } from "./text-input";
 
 interface ChatbotProps {
     isOpen: boolean;
@@ -77,11 +75,6 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
         }
     };
 
-    const handleSendMessage = (message: string) => {
-        // TODO: Implement message sending logic
-        console.log("Sending message:", message);
-    };
-
     return (
         <aside
             ref={chatbotRef}
@@ -98,17 +91,6 @@ export const Chatbot = ({ isOpen, onClose, onResize }: ChatbotProps) => {
                 className="opacity-0 transition cursor-ew-resize absolute h-full w-1 bg-primary/20 left-0 top-0"
             />
             <div className="flex flex-col items-center justify-between h-full w-full">
-                {/* ChatHeader component will go here */}
-                    {/* For now, keeping the empty state here */}
-                    {/* <Image 
-                        src="/chatbot-empty-light.png" 
-                        alt="Chatbot Empty State" 
-                        width={200} 
-                        height={200}
-                    />
-                    <div className="text-center mt-4 text-primary">
-                        Welcome back, send a message to get started!
-                    </div> */}
                 <Chat />
             </div>
         </aside>
