@@ -51,10 +51,21 @@ export const createSubject = mutation({
       namespace: "",
     });
 
-    const subject = await ctx.db.patch(subjectId, {
+    await ctx.db.patch(subjectId, {
       namespace: `${userId}_${subjectId}`,
     });
 
     return subjectId;
   }
 });
+
+export const getNamespace = query({
+  args: { subjectId: v.id("subjects") },
+  handler: async (ctx, args) => {
+    const subject = await ctx.db.get(args.subjectId);
+    if (!subject) {
+      throw new Error("Subject not found");
+    }
+    return subject.namespace;
+  }
+})
